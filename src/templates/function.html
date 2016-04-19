@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="../static/styles/prism.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" href="../static/styles/bootstrap.min.css" >
+        <!--https://github.com/jonmiles/bootstrap-treeview-->
+        <link href="../static/styles/bootstrap-treeview.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="../static/styles/tooltipster.css" />
+    </head>
+    <style>
+        #main-page-container {
+            width: 100%;
+        }
+        #main-left {
+            float: left;
+            width: 100px;
+        }
+        #main-right {
+            float: right;
+            width: 20%;
+        }
+        #main-center {
+            margin: 0 auto;
+            width: 60%;
+        }
+        .line-highlight::before {
+            display:none !important;
+        }
+
+        row.no-gutters {
+          margin-right: 0;
+          margin-left: 0;
+        }
+        .row.no-gutters > [class^="col-"],
+        .row.no-gutters > [class*=" col-"] {
+          padding-right: 0;
+          padding-left: 0;
+        }
+
+
+        .axis {
+          font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+
+        .x.axis path {
+          display: none;
+        }
+    </style>
+    <body>
+        <script type="text/javascript" src="../static/prism.js"></script>
+        <script type="text/javascript" src="../static/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="../static/bootstrap.min.js"></script>
+        <script src="../static/d3.min.js" charset="utf-8"></script>
+        <script src="../static/d3-legend.min.js" charset="utf-8"></script>
+        <script src="../static/bootstrap-treeview.js"></script>
+        <script type="text/javascript" src="../static/jquery.tooltipster.min.js"></script>
+        <script type="text/javascript" src="../static/saveSvgAsPng.js"></script>
+        <script type="text/javascript" src="../static/jquery.bpopup.min.js"></script>
+        <div id="main-page-container">
+            <div id="main-left"></div>
+            <div id="main-right">
+                <div id="tree" style="width:80%;margin: 80px auto 0px;"></div>
+            </div>
+            <div id="main-center" class="container" >
+            <div class="">
+                <div class="row" style="overflow:auto;">
+                    <h1 style="    text-align: center;    display:block;font-family: 'Source Sans Pro', sans-serif;">FaultSight - {{functionName}}</h1>
+                    <hr />
+                </div>
+                <div class="row" style="overflow:auto;">
+                    <h2 id="code-anchor">Code - {{numInjectionsInFunction}} Injections</h2>
+                    <h5><a id="see-entire" href="">View entire function</a></h5>
+                    <h5><span>Unable to assign {{failedInjectionPercentage}}% of injections to source code. Highlighting values over {{highlightMinimumValue}}%.</span></h5>
+                    <h5><span>Click on highlighted lines to view machine instructions.</span></h5>
+                    <h4><span>{{mainCode}}</span></h4>
+                </div>
+                <div class="row" style="overflow:auto;margin-top:20px;">
+                    <div class="col-md-8">
+                        <h4>Injected lines</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <h4>Function</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <h4>Application</h4>
+                    </div>
+                </div>
+                <div class="row no-gutters" style="overflow:auto;">
+                    <div class="col-md-8">
+                        <pre class="language-clike line-numbers" data-start="{{partialStartLine}}" data-line-offset="{{partialStartLine - 2}}"  data-line="
+                        {% for val in partialCodeValues %}
+                        {% if val > highlightMinimumValue %}
+                        {{loop.index + partialStartLine - 2}},
+                        {% endif %}
+                        {% endfor %}">
+<code>{{partialCode|safe}}</code></pre>
+                    </div>
+                    <div class="col-md-2">
+                        <pre class="language-none">
+<code>{% for val in partialCodeValues%}{{ '%0.2f' | format(val )}}%
+{% endfor %}</code></pre>
+                    </div>
+                    <div class="col-md-2">
+                        <pre class="language-none">
+<code>{% for val in partialCodeValues%}{{ '%0.2f' | format(val * fractionOfApplciation)}}%
+{% endfor %}</code></pre>
+                    </div>
+
+                </div>
+                <div class="row" style="margin-top:5px;">
+                    <div class="col-xs-12">
+                    <hr />
+                    <h2 id="visualization-anchor">Visualizations</h2>
+                    <div class="row">
+                        <h4><span>Default Graphs </span></h4>
+                        <div id="my-graphs-container">
+                            {% for i in range(myGraphListLength) %}
+                            <div id="my-graph-input-{{loop.index}}" style="display:none;">
+                                <label><input type="radio" name="mode" value="grouped"> Grouped</label>
+                                <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
+                            </div>
+                            <div id="my-graph-{{loop.index}}"></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <h4><span>Custom Graphs</span></h4>
+                        <span>Let's create a custom graph to better understand our code.</span>
+                    </div>
+                    <div class="row">
+                        <div style='display:none'>
+                            {% set counter = 1 -%}
+                            {% for instructionArray in machineInstructions %}
+                            <div id='inline-tooltip-{{counter}}' >
+                                <div style="float:left;">
+                                <span>Instructions</span>
+                                <pre class="language-none">
+<code>{% for instructionDict in instructionArray -%}
+{{instructionDict['Opcode']}}
+{% endfor %}</code></pre>
+                                </div>
+                                <div style="float:left;">
+                                <span>Type</span>
+<pre class="language-none">
+<code>{% for instructionDict in instructionArray -%}
+{{instructionDict['Type']}}
+{% endfor %}</code></pre>
+                                </div>
+                                <div style="float:left;"><span>Result</span><pre class="language-none">
+<code>{% for instructionDict in instructionArray -%}
+{{instructionDict['Comment']}}
+{% endfor %}</code></pre>
+                                </div>
+                                <div style="float:left;"><span>Injections</span><pre class="language-none">
+<code>{% for instructionDict in instructionArray -%}
+{{instructionDict['InjectionCount']}}
+{% endfor %}</code></pre>
+                                </div>
+                                <div style="float:left;"><span>Percentage (Line)</span><pre class="language-none">
+<code>{% for instructionDict in instructionArray -%}
+{{instructionDict['InjectionPercentageLine']}}%
+{% endfor %}</code></pre>
+                                </div>
+                                <div style="float:left;"><span>Percentage (Function)</span><pre class="language-none">
+<code>{% for instructionDict in instructionArray -%}
+{{instructionDict['InjectionPercentageFunction']}}%
+{% endfor %}</code></pre>
+                                </div>
+                                <div style="float:left;"><span>Percentage (Application)</span><pre class="language-none">
+<code>{% for instructionDict in instructionArray -%}
+{{instructionDict['InjectionPercentageApplication']}}%
+{% endfor %}</code></pre>
+                                </div>
+                            </div>
+                            {% set counter = counter + 1 -%}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div id="element_to_pop_up" style="display:none;">
+                        <pre class="language-clike line-numbers"><code>{{entireCode|safe}}</code></pre>
+                    </div>
+                    <div class="row">
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" id="graph-focus-button" type="button" data-toggle="dropdown">
+                                    <span id="graph-focus-text">Focus</span>
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" id="graph-focus" aria-labelledby="menu1">
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Injections</a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Signals</a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Detections</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <div class="dropdown" id="graph-detail-dropdown" style="display:none;">
+                                    <button class="btn btn-primary dropdown-toggle" id="graph-detail-button" type="button" data-toggle="dropdown">
+                                    <span id="graph-detail-text">Detail</span>
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" id="graph-detail" aria-labelledby="menu2">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <div class="dropdown" id="graph-type-dropdown" style="display:none;">
+                                    <button class="btn btn-primary dropdown-toggle" id="graph-type-button" type="button" data-toggle="dropdown">
+                                    <span id="graph-type-text">Graph Type</span>
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" id="graph-type" aria-labelledby="menu3">
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Bar Chart/Histogram</a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Pie Chart</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <div class="dropdown" id="graph-code-region-dropdown" style="display:none;margin-right: 5px;">
+                                    <button class="btn btn-primary dropdown-toggle" id="graph-code-region-button" type="button" data-toggle="dropdown">
+                                    <span id="graph-code-region-text">{{functionName}} - Entire Function</span>
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" id="graph-code-region" aria-labelledby="menu3">
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" data-function-name="" data-region-type="0" href="#">Entire Application</a></li>
+                                        <li role="separator" class="divider"></li>
+{% for functionName in functionList -%}
+<li class="dropdown-header">{{functionName}}</li>
+<li role="presentation"><a role="menuitem" tabindex="-1" data-function-name="{{functionName}}" data-region-type="1" href="#">Entire Function</a></li>
+<li role="presentation"><a role="menuitem" tabindex="-1" data-function-name="{{functionName}}" data-region-type="2" href="#">Custom line numbers</a></li>
+{% endfor %}
+       
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="line-number-selection" style="display:none;">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="graph-code-region-start" placeholder="Starting line number">
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="graph-code-region-end" placeholder="Ending line number">
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="row graph-submit-row" style="margin-top:5px;">
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <div id="add-constraint-button" style="display:none;">
+                                    <button type="button" class="btn btn-success">Add a constraint (Optional)</button>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <div class="dropdown" id="add-constraint-multiple-dropdown" style="display:none;">
+                                    <button class="btn btn-primary dropdown-toggle" id="add-constraint-multiple-button" type="button" data-toggle="dropdown">
+                                    <span id="add-constraint-multiple-text">Add another constraint (Optional)</span>
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" id="constraint-type-selection" aria-labelledby="menu1">
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">AND Constraint</a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">OR Constraint</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <div id="create-graph-button" style="display:none;">
+                                    <button type="button" class="btn btn-success">Create Graph</button>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <div id="save-graph-button" style="display:none;">
+                                    <button type="button" class="btn btn-info">Save Graph</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="mplplot-input" style="display:none;">
+                            <label><input type="radio" name="mode" value="grouped"> Grouped</label>
+                            <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
+                        </div>
+                        <div id="mplplot" style="float:left;"></div>
+                    </div>
+                    <div class="row">
+                        <hr />
+                    </div>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="web-settings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h2 class="modal-title" style="text-align:center;">Settings</h2>
+                    </div>
+                    <div class="modal-body">
+                            <h3>Highlighting Value</h3>
+                            <p>Please enter a percentage at which to highlight lines (0-100).</p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                <div style="width:100px;">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="highlight-value-input" placeholder="Value" aria-describedby="basic-addon">
+                                            <span class="input-group-addon" id="basic-addon">%</span>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <h3>Default Graphs</h3>
+                            <p>Select the graphs that you would like to be automatically generated when this page is loaded.</p>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                <h5><strong>Injections</strong></h5>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-1"> Types of injected functions<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-2"> Bit Locations<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-3"> Injected functions<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-4"> Injection type per function<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-5"> Injections mapped to line numbers<br>
+                                </div>
+                                <div class="col-sm-4">     
+                                <h5><strong>Signals</strong></h5>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-6"> Unexpected Termination<br>
+                                </div>
+                                 <div class="col-sm-4">
+                                <h5><strong>Detections</strong></h5>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-7"> Number of trials with detection<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-8"> Detected injection bit location<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-9"> Detection latency<br>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <h3>Custom Constraints</h3>
+                            <p>Select the columns in the database that you would like to use in implementing constraints</p>
+{% for table,columns in databaseDetails.items() -%}
+{% if loop.index % 3 == 1 %}
+<div class="row">
+{% endif %}
+<div class="col-sm-4">
+<h5><strong>{{table}}</strong></h5>
+{% for column in columns -%}
+<input class="settings-constraint-checkbox" data-table-name="{{table}}" data-column-name="{{column}}" type="checkbox" name="settings-table-{{table}}-checkbox-{{loop.index - 1}}"> {{column}} - {{columns[column]}}<br>
+{% endfor %}
+</div>
+{% if loop.index % 3 == 0 %}
+</div>
+{% elif loop.last %}
+</div>
+{% endif %}
+{% endfor %}
+
+                    <div style="margin-top:10px;">
+                    <hr />
+                    <a>Restore config file to default (Not yet implemented)</a>
+                    <h5><strong>After saving, please refresh the page to see changes.</strong></h5>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="settings-save">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </body>
+    <script type="text/javascript">
+        var partialStartLine = {{partialStartLine}};
+        var partialEndLine = {{partialStartLine}} + {{partialCodeValues|length}} - 1;
+        var numHighlights = {{partialHighlightIndexes|length}};
+        var functionName = '{{functionName}}';
+        var functionList = {{functionList|tojson}};
+        var injectedFunctionList = {{injectedFunctionList|tojson}};
+        var notInjectedFunctionList = {{notInjectedFunctionList|tojson}};
+        var myGraphList = {{myGraphList|safe}};
+        var databaseDetails = {{databaseDetails|tojson|safe}};
+        var numInjectionsInFunction = {{numInjectionsInFunction}};
+        
+    </script>
+    <script type="text/javascript" charset="utf-8" src="../static/faultsight.js"></script>
+    <script type="text/javascript">
+        initFunctionPage();
+    </script>
+</html>

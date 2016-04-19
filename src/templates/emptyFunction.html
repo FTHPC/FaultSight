@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <!--<link href="prettify.css" type="text/css" rel="stylesheet" />-->
+    <head>
+        <link href="../static/styles/prism.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" href="../static/styles/bootstrap.min.css" >
+        <!--https://github.com/jonmiles/bootstrap-treeview-->
+        <link href="../static/styles/bootstrap-treeview.css" rel="stylesheet">
+        <!--<link rel="stylesheet" type="text/css" href="../static/styles/tipped.css"/>-->
+        <!--<link href="../static/styles/tooltip.css" rel="stylesheet" type="text/css" />-->
+        <!--<link href="../static/styles/tooltips.css" rel="stylesheet" type="text/css" />-->
+        <link rel="stylesheet" type="text/css" href="../static/styles/tooltipster.css" />
+    </head>
+    <style>
+        #main-page-container {
+            width: 100%;
+        }
+        #main-left {
+            float: left;
+            width: 100px;
+        }
+        #main-right {
+            float: right;
+            width: 20%;
+        }
+        #main-center {
+            margin: 0 auto;
+            width: 60%;
+        }
+        .line-highlight::before {
+            display:none !important;
+        }
+
+        row.no-gutters {
+          margin-right: 0;
+          margin-left: 0;
+        }
+        .row.no-gutters > [class^="col-"],
+        .row.no-gutters > [class*=" col-"] {
+          padding-right: 0;
+          padding-left: 0;
+        }
+
+
+        .axis {
+          font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+
+        .x.axis path {
+          display: none;
+        }
+    </style>
+    <body>
+        <script type="text/javascript" src="../static/prism.js"></script>
+        <script type="text/javascript" src="../static/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="../static/bootstrap.min.js"></script>
+        <script src="../static/d3.min.js" charset="utf-8"></script>
+        <script src="../static/d3-legend.min.js" charset="utf-8"></script>
+        <script src="../static/bootstrap-treeview.js"></script>
+        <script type="text/javascript" src="../static/jquery.tooltipster.min.js"></script>
+        <script type="text/javascript" src="../static/saveSvgAsPng.js"></script>
+        <script type="text/javascript" src="../static/jquery.bpopup.min.js"></script>
+        <div id="main-page-container">
+            <div id="main-left">
+            </div>
+            <div id="main-right">
+                <div id="tree" style="width:80%;margin: 80px auto 0px;"></div>
+            </div>
+            <div id="main-center" class="container" >
+                <div class="row" style="overflow:auto;">
+                    <h1 style="    text-align: center;    display:block;font-family: 'Source Sans Pro', sans-serif;">FaultSight - {{functionName}}</h1>
+                    <hr />
+                </div>
+                <div class="row" style="overflow:auto;">
+                    <h2 id="code-anchor">Code</h2>
+                    <h5><a id="see-entire" href="">View entire function</a></h5>
+                    <h5><span>No Injections in function</span></h5>
+                    <h4><span>{{mainCode}}</span></h4>
+                </div>
+                <div id="element_to_pop_up" style="display:none;">
+                        <pre class="language-clike line-numbers"><code>{{entireCode|safe}}</code></pre>
+                    </div>
+                <div style="margin-top:5px;">
+                    <div class="row">
+                        <hr />
+                        <h2 id="visualization-anchor">Visualizations</h2>
+                        <span>No visualizations to show</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="web-settings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h2 class="modal-title" style="text-align:center;">Settings</h2>
+                    </div>
+                    <div class="modal-body">
+                            <h3>Default Graphs</h3>
+                            <p>Select the graphs that you would like to be automatically generated when this page is loaded.</p>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                <h5><strong>Injections</strong></h5>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-1"> Types of injected functions<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-2"> Bit Locations<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-3"> Injected functions<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-4"> Injection type per function<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-5"> Injections mapped to line numbers<br>
+                                </div>
+                                <div class="col-sm-4">     
+                                <h5><strong>Signals</strong></h5>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-6"> Unexpected Termination<br>
+                                </div>
+                                 <div class="col-sm-4">
+                                <h5><strong>Detections</strong></h5>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-7"> Number of trials with detection<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-8"> Detected injection bit location<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-9"> Detection latency<br>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <h3>Custom Constraints</h3>
+                            <p>Select the columns in the database that you would like to use in implementing constraints</p>
+{% for table,columns in databaseDetails.items() -%}
+{% if loop.index % 3 == 1 %}
+<div class="row">
+{% endif %}
+<div class="col-sm-4">
+<h5><strong>{{table}}</strong></h5>
+{% for column in columns -%}
+<input class="settings-constraint-checkbox" data-table-name="{{table}}" data-column-name="{{column}}" type="checkbox" name="settings-table-{{table}}-checkbox-{{loop.index - 1}}"> {{column}} - {{columns[column]}}<br>
+{% endfor %}
+</div>
+{% if loop.index % 3 == 0 %}
+</div>
+{% elif loop.last %}
+</div>
+{% endif %}
+{% endfor %}
+
+                    <div style="margin-top:10px;">
+                    <hr />
+                    <a>Restore config file to default (Not yet implemented)</a>
+                    <h5><strong>A re-run of the analysis scripts may be required on certain configuration changes.</strong></h5>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="settings-save">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </body>
+    <script type="text/javascript">
+
+
+
+        var functionName = '{{functionName}}';
+        var functionList = {{functionList|tojson}};
+        var injectedFunctionList = {{injectedFunctionList|tojson}};
+        var notInjectedFunctionList = {{notInjectedFunctionList|tojson}};
+        var myGraphList = [];
+        var databaseDetails = {{databaseDetails|tojson|safe}};
+        var numHighlights = 0;
+
+        
+    </script>
+    <script type="text/javascript" charset="utf-8" src="../static/vis.common.js"></script>
+
+</html>

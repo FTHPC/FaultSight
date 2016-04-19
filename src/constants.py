@@ -1,0 +1,45 @@
+#Configuration
+DATABASE = 'campaign.db'
+DEBUG_STATUS = False
+
+#Constants
+numFigs = 0
+numTrials = 0
+numTrialsInj = 0
+TYPES = ["Arith-FP", "Pointer", "Arith-Fix", "Ctrl-Loop", "Ctrl-Branch"]
+TYPES_LONG = ["Floating-Point", "Pointer", "Fixed-Point", "Control-Loop", "Control-Branch"]
+BIT_64 = ["Bits 1-8", "Bits 9-16", "Bits 17-24", "Bits 25-32", "Bits 33-40", "Bits 41-48", "Bits 49-56", "Bits 57-64"]
+DETECTED_YES_NO = ["Detected","Not Detected"]
+typeIdx= {"Arith-FP":0, "Arithmetic":0, "Control": 6, "Pointer":1, "Arith-Fix":2, "Control-Loop":3, "Control-Branch":4}
+nClassifications = len(TYPES)
+VIS_CLASSIFICATIONS = 1
+VIS_FUNCTIONS = 2
+VIS_CRASHES = 3
+VIS_SIGNALS = 4
+VIS_DETECTIONS = 5
+VIS_DETECTED_INJECTIONS = 6
+VIS_DETECTION_LATENCY = 7
+CHART_BAR = 1
+CHART_PIE = 2
+CHART_HIST = 3
+FOCUS_INJECTIONS = 1;
+FOCUS_SIGNALS = 2;
+FOCUS_DETECTIONS = 3;
+TYPE_OF_INJECTED_FUNCTION = 1;
+BIT_LOCATION = 2;
+INJECTED_FUNCTIONS = 3;
+INJECTION_TYPE_FUNCTION = 4;
+INJECTIONS_MAPPED_TO_LINE = 5;
+UNEXPECTED_TERMINATION = 6;
+NUM_TRIAL_WITH_DETECTION = 7;
+DETECTED_BIT_LOCATION = 8;
+DETECTION_LATENCY = 9;
+REGION_ALL = 1;
+REGION_STENCIL = 2;
+REGION_SPECIFIC = 3;
+REGION_ALL_SUFFIX = " for the entire application"
+REGION_FUNCTION_SUFFIX = " for the entire application"
+REGION_SPECIFIC_SUFFIX = " for the entire application"
+mainProgramCode = ""
+FAULTSIGHT_CUSTOM_LINK_START = 'flipItWebStart'
+FAULTSIGHT_CUSTOM_LINK_END = 'flipItWebEnd'
