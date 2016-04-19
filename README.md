@@ -5,12 +5,12 @@ FaultSight is a web-based visualization tool meant to be used together with [Fli
 
 Such graphs include:
 
-    - Classification of injections based on instruction type
-    - Percent of injections based on function (includes type information
-    - Signals generated
-    - Trials with detection (includes bit locations and types)
-    - Latency of detection
-    - Trials that unexpectedly terminate (includes bit locations and types)
+- Classification of injections based on instruction type
+- Percent of injections based on function (includes type information
+- Signals generated
+- Trials with detection (includes bit locations and types)
+- Latency of detection
+- Trials that unexpectedly terminate (includes bit locations and types)
 
 Users can also produce custom graphs by imposing multiple custom constraints through the tool, in addition to extending existing visualization scripts by defining new custom functions.
 
@@ -30,7 +30,7 @@ To use this tool:
 
 1.) Run an injection campaign via FlipIt.
 
-2.) Place the 'src' directory and 'web.py' within the 'analysis' directory in FlipIt.
+2.) Place the `src` directory and `web.py` within the `analysis` directory in FlipIt.
 
 3.) Run the following command:
     
