@@ -44,4 +44,9 @@ python web.py
 http://127.0.0.1:5000/
 ```
 
+Need more help?
+-----
+Use the [wiki](https://github.com/einarhorn/FaultSight/wiki) for now. More detailed documentation will be uploaded shortly.
+
+
 
