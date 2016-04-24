@@ -20,7 +20,7 @@ This program depends on:
 - Flask
 - numpy
 
-[Libraries included in FlipIt](https://github.com/einarhorn/FaultSight/wiki/Libraries-used-in-FlipIt)
+[Libraries included in FaultSight](https://github.com/einarhorn/FaultSight/wiki/Libraries-used-in-FlipIt)
 
 Usage
 -----
