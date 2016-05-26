@@ -462,7 +462,7 @@ def injectionBitLocation(regionData, constraintData):
         for j in range(64):
             currVariableTypeInjections.append({'x':j,'y':bits[i][j]})
         d.append(currVariableTypeInjections)
-    dataTypes = {'x':'Injection Type', 'y': 'Frequency', 'type':'multiple', 'layers':nClassifications,'samples':64, 'layerLabels':TYPES, 'isEmpty':False, 'title':'Classification of injections by bit'}
+    dataTypes = {'x':'Bit Location', 'y': 'Frequency', 'type':'multiple', 'layers':nClassifications,'samples':64, 'layerLabels':TYPES, 'isEmpty':False, 'title':'Classification of injections by bit'}
     return d, dataTypes
     
 
