@@ -52,6 +52,19 @@
         .x.axis path {
           display: none;
         }
+
+        .tooltip-d3 {                                                       
+            background: #eee;                                               
+            box-shadow: 0 0 5px #999999;                                    
+            color: #333;                                                 
+            display: none;                                                 
+            font-size: 18px;                                               
+            padding: 10px;                                               
+            position: absolute;                                         
+            text-align: center;                                          
+            width: 200px;                                                  
+            z-index: 100;                                                   
+        }  
     </style>
     <body>
         <script type="text/javascript" src="../static/prism.js"></script>
@@ -126,7 +139,7 @@
                                 <label><input type="radio" name="mode" value="grouped"> Grouped</label>
                                 <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
                             </div>
-                            <div id="my-graph-{{loop.index}}"></div>
+                            <div id="my-graph-{{loop.index}}" style="position:relative;"></div>
                             {% endfor %}
                         </div>
                     </div>
@@ -295,7 +308,7 @@
                             <label><input type="radio" name="mode" value="grouped"> Grouped</label>
                             <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
                         </div>
-                        <div id="mplplot" style="float:left;"></div>
+                        <div id="mplplot" style="float:left;position:relative;"></div>
                     </div>
                     <div class="row">
                         <hr />
