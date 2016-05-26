@@ -83,6 +83,6 @@ def getNumTrials(c):
 if __name__ == "__main__":
     rebuild_database = checkConfig(CONFIG_FILE_NAME)
     c = init(database, LLVM_log_path, trial_path +"/"+ trial_prefix,\
-        rebuild_database, customFuncs=(customInit, customParser))
+        customFuncs=(customInit, customParser))
     allFunctionList, injectedFunctionList, notInjectedFunctionList = getFunctionLists(c)
     web.initFlaskApplication(injectedFunctionList, notInjectedFunctionList, allFunctionList, getNumTrialsInj(c), getNumTrials(c), CONFIG_FILE_NAME)  
