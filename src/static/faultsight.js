@@ -439,14 +439,15 @@ function createGraph(queryObject){
                 if (queryObject.type == CHART_BAR){
                     drawGraph(graph, "#mplplot");
                 } else if (queryObject.type == CHART_PIE){
-                    pieChart(graph);
+                    pieChartDonut(graph, "#mplplot");
+                    //pieChart(graph);
                 }
             } else if (graph[1].type === "multiple"){
                 if (queryObject.type == CHART_BAR){
                     showStackedInput("#mplplot-input");
                     stackedBarGraph(graph,"#mplplot","#mplplot-input");
                 } else if (queryObject.type == CHART_PIE){
-                    stackedPieChart(graph);
+                    pieChartDonutStacked(graph, "#mplplot");
                 }
             }
 	    },
@@ -473,8 +474,9 @@ function drawGraph(allData, drawLocation) {
     var data = allData[0];
     var axisData = allData[1];
 
-	var width = 460, height = 400;
+	var width = 1000, height = 500;
 	var margin = {top: 40, right: 20, bottom: 40, left: 40};
+    var legendWidth = 200;
 
 	//x and y Scales
 	var xScale = d3.scale.ordinal()
@@ -495,7 +497,7 @@ function drawGraph(allData, drawLocation) {
 	    .scale(yScale)
 	    .orient("left")
 
-    var color = d3.scale.linear().domain([1,data.length])
+    var color = d3.scale.linear().domain([0,data.length -1])
       .interpolate(d3.interpolateHcl)
       .range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
 		
@@ -524,9 +526,41 @@ function drawGraph(allData, drawLocation) {
 	    .attr("x", function(d) { return xScale(d.x); })
 	    .attr("width", xScale.rangeBand())
 	    .attr("y", function(d) { return yScale(d.y); })
-	    .attr("height", function(d) { return height - yScale(d.y); })
+	    .attr("height", function(d) { return height - yScale(d.y) ; })
         .style("fill", function(d, i) { return color(i); });
     
+var tooltip = d3.select(drawLocation)                               
+          .append('div')                                                
+          .attr('class', 'tooltip-d3')
+           .style("left", ((width-legendWidth)/2) + "px")     
+  .style("top", (height/2 + legendWidth/2) + "px");                            
+                      
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'functionLabel');                                      // NEW
+             
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'count');                                      // NEW
+
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'percent');                                    // NEW
+
+    bars.on('mouseover', function(d) {                            // NEW
+                  
+
+var total = d3.sum(data.map(function(d) {                // NEW
+              return d.y;                                           // NEW
+            }));   
+    var percent = Math.round(1000 * d.y / total) / 10; // NEW
+    tooltip.select('.functionLabel').html(d.x);                // NEW
+    tooltip.select('.count').html("Injections: " + d.y);                // NEW
+    tooltip.select('.percent').html(percent + '%');             // NEW
+    tooltip.style('display', 'block');                          // NEW
+  });                                                           // NEW
+  
+  bars.on('mouseout', function() {                              // NEW
+    tooltip.style('display', 'none');                           // NEW
+  });   
+
     svg.select(".x.axis").call(xAxis);
     svg.select(".y.axis").call(yAxis);
 	
@@ -566,6 +600,8 @@ function drawGraph(allData, drawLocation) {
 
 function stackedBarGraph(allData, drawLocation, inputLocation){
     var axisData = allData[1];
+    var legendWidth = 200;
+    var data = allData[0];
     var n = allData[1].layers, // number of layers
         m = allData[1].samples, // number of samples per layer
         stack = d3.layout.stack(),
@@ -574,7 +610,7 @@ function stackedBarGraph(allData, drawLocation, inputLocation){
         yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); });
     
     var margin = {top: 40, right: 100, bottom: 40, left: 30},
-        width = 960 - margin.left - margin.right,
+        width = 1100 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
     var x = d3.scale.ordinal()
@@ -585,7 +621,7 @@ function stackedBarGraph(allData, drawLocation, inputLocation){
         .domain([0, yStackMax])
         .range([height, 0]);
 
-    var color = d3.scale.linear().domain([1,n])
+    var color = d3.scale.linear().domain([0,n-1])
 		.interpolate(d3.interpolateHcl)
 		.range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
 
@@ -626,6 +662,46 @@ function stackedBarGraph(allData, drawLocation, inputLocation){
         .attr("y", function(d) { return y(d.y0 + d.y); })
         .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); });
 
+var tooltip = d3.select(drawLocation)                               
+          .append('div')                                                
+          .attr('class', 'tooltip-d3')
+           .style("left", ((width-legendWidth)/2) + "px")     
+  .style("top", (height/2 + legendWidth/2) + "px");                            
+                      
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'functionLabel');                                      // NEW
+             
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'count');                                      // NEW
+
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'percent');                                    // NEW
+
+
+var total = 0;
+data.map(function(d) { 
+    d.map(function(d2){total += d2.y;})
+}); 
+
+    rect.on('mouseover', function(d) {                            // NEW
+                  
+
+
+
+    var percent = Math.round(1000 * d.y / total) / 10; // NEW
+    console.log(d);
+    tooltip.select('.functionLabel').html(axisData['x'] + ": " + d.x);                // NEW
+    tooltip.select('.count').html(axisData['y'] + ": " + d.y);                // NEW
+    tooltip.select('.percent').html(percent + '%');             // NEW
+    tooltip.style('display', 'block');                          // NEW
+  });                                                           // NEW
+  
+  rect.on('mouseout', function() {                              // NEW
+    tooltip.style('display', 'none');                           // NEW
+  });   
+
+
+
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
@@ -665,7 +741,7 @@ function stackedBarGraph(allData, drawLocation, inputLocation){
 
     var legendColor = d3.scale.ordinal()
         .domain(["Arith-FP", "Pointer", "Arith-Fix", "Ctrl-Loop", "Ctrl-Branch"])
-        .range(linearColor.ticks(n).map(linearColor));
+        .range(linearColor.ticks(n-1).map(linearColor));
         
     var legendOrdinal = d3.legend.color()
       	.shape("rect")
@@ -678,12 +754,10 @@ function stackedBarGraph(allData, drawLocation, inputLocation){
               
     d3.selectAll(inputLocation).selectAll("input").on("change", change);
 
-    var timeout = setTimeout(function() {
-  		d3.select("input[value=\"grouped\"]").property("checked", true).each(change);
-    }, 2000);
+ 
 
     function change() {
-		clearTimeout(timeout);
+		//clearTimeout(timeout);
 		if (this.value === "grouped") transitionGrouped();
 		else transitionStacked();
     }
@@ -731,10 +805,12 @@ function pieChartMainApplicationGraph(allData,location){
         var min = Math.min(width, height);
         var oRadius = min / 2 * 0.9;
         var iRadius = min / 2 * 0.8;
-        var donutWidth = 75;                            // NEW
- var legendRectSize = 18;                                  // NEW
-        var legendSpacing = 4;                                    // NEW
+        var donutWidth = 75;                            
+ var legendRectSize = 18;                                  
+        var legendSpacing = 4;                                   
         var legendWidth = 200;
+
+
         var color = d3.scale.category20();
 
         var svg = d3.select(location)
@@ -753,11 +829,11 @@ function pieChartMainApplicationGraph(allData,location){
           .value(function(d) { return d.y; })
           .sort(null);
 
-var tooltip = d3.select(location)                               // NEW
-          .append('div')                                                // NEW
+var tooltip = d3.select(location)                               
+          .append('div')                                                
           .attr('class', 'tooltip-d3')
            .style("left", ((width-legendWidth)/2) + "px")     
-  .style("top", (height/2 + legendWidth/2) + "px");                             // NEW
+  .style("top", (height/2 + legendWidth/2) + "px");                            
                       
         tooltip.append('div')                                           // NEW
           .attr('class', 'functionLabel');                                      // NEW
@@ -784,7 +860,7 @@ var total = d3.sum(data.map(function(d) {                // NEW
           });
 
 
- path.on('mouseover', function(d) {                            // NEW
+          path.on('mouseover', function(d) {                            // NEW
                   
 
             var percent = Math.round(1000 * d.data.y / total) / 10; // NEW
@@ -831,6 +907,273 @@ var total = d3.sum(data.map(function(d) {                // NEW
         .style("font-size", "16px") 
         .style("text-decoration", "underline")  
         .text("Functions injected into");
+
+}
+
+function pieChartDonut(allData, location){
+        var data = allData[0];
+        var width = 960;
+        var height = 500;
+        var radius = Math.min(width, height) / 2;
+        var min = Math.min(width, height);
+        var oRadius = min / 2 * 0.9;
+        var iRadius = min / 2 * 0.8;
+        var donutWidth = 75;                            
+ var legendRectSize = 18;                                  
+        var legendSpacing = 4;                                   
+        var legendWidth = 200;
+        console.log(data.length);
+        var color = d3.scale.linear().domain([0,data.length -1])
+      .interpolate(d3.interpolateHcl)
+      .range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
+
+        var svg = d3.select(location)
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .append('g')
+          .attr('transform', 'translate(' + (width / 2) + 
+            ',' + (height / 2) + ')');
+
+        var arc = d3.svg.arc()
+      .outerRadius(oRadius)
+      .innerRadius(iRadius);
+          
+        var pie = d3.layout.pie()
+          .value(function(d) { return d.y; })
+          .sort(null);
+
+var tooltip = d3.select(location)                               
+          .append('div')                                                
+          .attr('class', 'tooltip-d3')
+           .style("left", ((width-legendWidth)/2) + "px")     
+  .style("top", (height/2 - legendWidth/4) + "px");                            
+                      
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'functionLabel');                                      // NEW
+             
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'count');                                      // NEW
+
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'percent');                                    // NEW
+
+
+var total = d3.sum(data.map(function(d) {                // NEW
+              return d.y;                                           // NEW
+            }));   
+
+        var path = svg.selectAll('path')
+          .data(pie(data))
+          .enter()
+          .append('path')
+          .attr('d', arc)
+          .attr('fill', function(d, i) { 
+            var percent = Math.round(1000 * d.data.y / total) / 10;
+
+
+            return color(i);
+          });
+
+
+ path.on('mouseover', function(d) {                            // NEW
+                  
+
+            var percent = Math.round(1000 * d.data.y / total) / 10; // NEW
+            tooltip.select('.functionLabel').html(d.data.x);                // NEW
+            tooltip.select('.count').html("Injections: " + d.data.y);                // NEW
+            tooltip.select('.percent').html(percent + '%');             // NEW
+            tooltip.style('display', 'block');                          // NEW
+          });                                                           // NEW
+          
+          path.on('mouseout', function() {                              // NEW
+            tooltip.style('display', 'none');                           // NEW
+          });   
+
+console.log(color.domain());
+ var legend = svg.selectAll('.legend')                     // NEW
+          .data(pie(data))                                   // NEW
+          .enter()                                                // NEW
+          .append('g')                                            // NEW
+          .attr('class', 'legend')                                // NEW
+          .attr('transform', function(d, i) {                     // NEW
+            var height = legendRectSize + legendSpacing;          // NEW
+            var offset =  height * (data.length - 1) / 2;     // NEW
+            var horz = -4 * legendRectSize;                       // NEW
+            var vert = i * height - offset;                       // NEW
+            return 'translate(' + horz + ',' + vert + ')';        // NEW
+          });                                                     // NEW
+
+        legend.append('rect')                                     // NEW
+          .attr('width', legendRectSize)                          // NEW
+          .attr('height', legendRectSize)                         // NEW
+          .style('fill', function(d,i){
+                console.log(d);
+                return color(i);
+            })                                   // NEW
+          .style('stroke', color);                                // NEW
+          
+        legend.append('text')                                     // NEW
+          .attr('x', legendRectSize + legendSpacing)              // NEW
+          .attr('y', legendRectSize - legendSpacing)              // NEW
+          .text(function(d) { console.log(d);
+                var percent = Math.round(1000 * d.data.y / total) / 10;
+                return percent + "%: " + d.data.x;
+          });                       // NEW
+
+
+        svg.append("text")
+        .attr("x", (0))             
+        .attr("y", 0 - (min / 2 * 0.95) )
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .style("text-decoration", "underline")  
+        .text("Functions injected into");
+
+
+
+}
+
+
+function pieChartDonutStacked(allData,location){
+
+    var oldData = allData[0];
+    //Adjust data to fit pie chart
+    var numSlices = 5;
+    var sliceSize = Math.floor(oldData[0].length/numSlices);
+    var data = [];
+    for (var i = 0; i<numSlices; i++){
+        var startIndex = i * sliceSize;
+        //var endIndex = Math.min(startIndex + sliceSize, oldData[0].length);
+        var endIndex = (i == numSlices - 1) ? oldData[0].length - 1 : startIndex + sliceSize - 1;
+        var sliceObject = {'x':startIndex + '-' + endIndex,'y':0};
+        for (var j = 0; j<oldData.length; j++){
+
+            for (var k = startIndex; k<endIndex; k++){
+                sliceObject.y += oldData[j][k].y;
+            }
+        }
+        //sliceObject.y = 10;
+        data.push(sliceObject);
+    }
+        //var data = allData[0];
+        var width = 960;
+        var height = 500;
+        var radius = Math.min(width, height) / 2;
+        var min = Math.min(width, height);
+        var oRadius = min / 2 * 0.9;
+        var iRadius = min / 2 * 0.8;
+        var donutWidth = 75;                            
+ var legendRectSize = 18;                                  
+        var legendSpacing = 4;                                   
+        var legendWidth = 200;
+        
+        var color = d3.scale.linear().domain([0,data.length -1])
+      .interpolate(d3.interpolateHcl)
+      .range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
+
+        var svg = d3.select(location)
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .append('g')
+          .attr('transform', 'translate(' + (width / 2) + 
+            ',' + (height / 2) + ')');
+
+        var arc = d3.svg.arc()
+      .outerRadius(oRadius)
+      .innerRadius(iRadius);
+          
+        var pie = d3.layout.pie()
+          .value(function(d) { return d.y; })
+          .sort(null);
+
+var tooltip = d3.select(location)                               
+          .append('div')                                                
+          .attr('class', 'tooltip-d3')
+           .style("left", ((width-legendWidth)/2) + "px")     
+  .style("top", (height/2 - legendWidth/4) + "px");                            
+                      
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'functionLabel');                                      // NEW
+             
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'count');                                      // NEW
+
+        tooltip.append('div')                                           // NEW
+          .attr('class', 'percent');                                    // NEW
+
+
+var total = d3.sum(data.map(function(d) {                // NEW
+              return d.y;                                           // NEW
+            }));   
+
+        var path = svg.selectAll('path')
+          .data(pie(data))
+          .enter()
+          .append('path')
+          .attr('d', arc)
+          .attr('fill', function(d, i) { 
+            var percent = Math.round(1000 * d.data.y / total) / 10;
+            return color(i);
+          });
+
+
+ path.on('mouseover', function(d) {                            // NEW
+                  
+
+            var percent = Math.round(1000 * d.data.y / total) / 10; // NEW
+            tooltip.select('.functionLabel').html(d.data.x);                // NEW
+            tooltip.select('.count').html("Injections: " + d.data.y);                // NEW
+            tooltip.select('.percent').html(percent + '%');             // NEW
+            tooltip.style('display', 'block');                          // NEW
+          });                                                           // NEW
+          
+          path.on('mouseout', function() {                              // NEW
+            tooltip.style('display', 'none');                           // NEW
+          });   
+
+
+ var legend = svg.selectAll('.legend')                     // NEW
+          .data(pie(data))                                   // NEW
+          .enter()                                                // NEW
+          .append('g')                                            // NEW
+          .attr('class', 'legend')                                // NEW
+          .attr('transform', function(d, i) {                     // NEW
+            var height = legendRectSize + legendSpacing;          // NEW
+            var offset =  height * (data.length - 1) / 2;     // NEW
+            var horz = -4 * legendRectSize;                       // NEW
+            var vert = i * height - offset;                       // NEW
+            return 'translate(' + horz + ',' + vert + ')';        // NEW
+          });                                                     // NEW
+
+        legend.append('rect')                                     // NEW
+          .attr('width', legendRectSize)                          // NEW
+          .attr('height', legendRectSize)                         // NEW
+          .style('fill', function(d,i){
+                console.log(d);
+                return color(i);
+            })                                   // NEW
+          .style('stroke', color);                                // NEW
+          
+        legend.append('text')                                     // NEW
+          .attr('x', legendRectSize + legendSpacing)              // NEW
+          .attr('y', legendRectSize - legendSpacing)              // NEW
+          .text(function(d) { console.log(d);
+                var percent = Math.round(1000 * d.data.y / total) / 10;
+                return percent + "%: " + d.data.x;
+          });                       // NEW
+
+
+
+        svg.append("text")
+        .attr("x", (0))             
+        .attr("y", 0 - (min / 2 * 0.95) )
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .style("text-decoration", "underline")  
+        .text("Functions injected into");
+
 
 }
 
