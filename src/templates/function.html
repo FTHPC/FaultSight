@@ -135,11 +135,18 @@
                         <h4><span>Default Graphs </span></h4>
                         <div id="my-graphs-container">
                             {% for i in range(myGraphListLength) %}
-                            <div id="my-graph-input-{{loop.index}}" style="display:none;">
-                                <label><input type="radio" name="mode" value="grouped"> Grouped</label>
-                                <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
+                            <div class="row">
+                            <div class="save-graph-button" id="my-graph-save-button-{{loop.index}}" data-location="my-graph-{{loop.index}}-svd" style="display:none;">
+                                    <button type="button" class="btn btn-info">Save Graph</button>
+                                </div>
                             </div>
-                            <div id="my-graph-{{loop.index}}" style="position:relative;"></div>
+                            <div class="row">
+                                <div id="my-graph-input-{{loop.index}}" style="display:none;">
+                                    <label><input type="radio" name="mode" value="grouped"> Grouped</label>
+                                    <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
+                                </div>
+                                <div id="my-graph-{{loop.index}}" style="position:relative;"></div>
+                            </div>
                             {% endfor %}
                         </div>
                     </div>
@@ -297,7 +304,7 @@
                                 </div>
                             </div>
                             <div class="btn-group">
-                                <div id="save-graph-button" style="display:none;">
+                                <div class="save-graph-button" id="save-graph-button" data-location="custom-graph-svd" style="display:none;">
                                     <button type="button" class="btn btn-info">Save Graph</button>
                                 </div>
                             </div>
