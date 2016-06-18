@@ -362,7 +362,7 @@ function clickBindInFunctionPage(){
 	$(".save-graph-button").click(function(e){
 		console.log("Clicked");
 		var dataLocation = $(this).attr("data-location");
-	    saveSvgAsPng(document.getElementById(dataLocation), "diagram.png");
+	    saveSvgAsPng(document.getElementById(dataLocation), "diagram.png", {backgroundColor:"#FFF"});
 	});
 }
 
@@ -372,7 +372,7 @@ function clickBindInMainPage(){
 	//This will contain the id of the svd we want to save
 	$(".save-graph-button").click(function(e){
 		var dataLocation = $(this).attr("data-location");
-	    saveSvgAsPng(document.getElementById(dataLocation), "diagram.png");
+	    saveSvgAsPng(document.getElementById(dataLocation), "diagram.png", {backgroundColor:"#FFF"});
 	});
 }
 
