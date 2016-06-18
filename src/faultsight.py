@@ -530,9 +530,9 @@ def injectionsInEachFunction(regionData, constraintData):
         for index, f in enumerate(funcs):
             print(len(totalDict[f[0]]))
             print i
-            currVariableTypeInjections.append({'x':index,'y':totalDict[f[0]][i]})
+            currVariableTypeInjections.append({'x':f[0],'y':totalDict[f[0]][i]})
         returnData.append(currVariableTypeInjections)
-    dataTypes = {'x':'Functions', 'y': 'Frequency of injections', 'type':'multiple', 'layers':nClassifications,'samples':len(funcs), 'barLabels':funcList, 'isEmpty':isEmpty,'title':'Injection type per function'}
+    dataTypes = {'x':'Function', 'y': 'Frequency of injections', 'type':'multiple', 'layers':nClassifications,'samples':len(funcs), 'barLabels':funcList, 'isEmpty':isEmpty,'title':'Injection type per function'}
     return returnData, dataTypes
 
 

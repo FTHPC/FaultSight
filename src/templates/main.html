@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="../static/styles/bootstrap.min.css" >
         <!--https://github.com/jonmiles/bootstrap-treeview-->
         <link href="../static/styles/bootstrap-treeview.css" rel="stylesheet">
+
     </head>
     <style>
         #main-page-container {
@@ -26,23 +27,37 @@
             display:none !important;
         }
 
-#chart {                                                          
-        height: 360px;                                            
-        position: relative;                                           
-        width: 360px;                                               
-      }                                                                 
-      .tooltip-d3 {                                                       
-        background: #eee;                                               
-        box-shadow: 0 0 5px #999999;                                    
-        color: #333;                                                 
-        display: none;                                                 
-        font-size: 18px;                                               
-        padding: 10px;                                               
-        position: absolute;                                         
-        text-align: center;                                          
-        width: 200px;                                                  
-        z-index: 100;                                                   
-      }         
+        #chart {                                                          
+            height: 360px;                                            
+            position: relative;                                           
+            width: 360px;                                               
+        }                                                                 
+        .tooltip-d3 {                                                       
+            background: #eee;                                               
+            box-shadow: 0 0 5px #999999;                                    
+            color: #333;                                                 
+            display: none;                                                 
+            font-size: 18px;                                               
+            padding: 10px;                                               
+            position: absolute;                                         
+            text-align: center;                                          
+            width: 200px;                                                  
+            z-index: 100;                                                   
+        }       
+        .axis {
+          font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+
+        .x.axis path {
+          display: none;
+        }  
     </style>
     <body>
         <script type="text/javascript" src="../static/prism.js"></script>
@@ -240,7 +255,7 @@
                             <label><input type="radio" name="mode" value="grouped"> Grouped</label>
                             <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
                         </div>
-                        <div id="mplplot" style="float:left;"></div>
+                        <div id="mplplot" style="position: relative;"></div>
                     </div>
             </div>
             </div>
