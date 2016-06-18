@@ -54,6 +54,7 @@ function initApplicationPage(){
 
 	//Set up page itself
 	setupGraphCreation(false);
+	clickBindInMainPage();
 	createMainPageGraph();
 }
 
@@ -64,11 +65,13 @@ function drawMyGraphs(){
 	for (var i = 0; i < myGraphList.length; i++){
 
 	    if (myGraphList[i][1].type === "single"){
-	        drawGraph(myGraphList[i], "#my-graph-" + (i + 1));
+	        drawGraph(myGraphList[i], "#my-graph-" + (i + 1), "my-graph-" + (i+1) + "-svd");
+	        $("#my-graph-save-button-" + (i+1)).fadeIn()
 	    }
 	    else if (myGraphList[i][1].type === "multiple"){
 	        showStackedInput("#my-graph-input-"+ (i + 1));
-	        stackedBarGraph(myGraphList[i], "#my-graph-" + (i + 1),"#my-graph-input-"+ (i + 1));
+	        stackedBarGraph(myGraphList[i], "#my-graph-" + (i + 1),"#my-graph-input-"+ (i + 1), "my-graph-" + (i+1) + "-svd");
+	        $("#my-graph-save-button-" + (i+1)).fadeIn()
 	    }
 
 
@@ -356,8 +359,20 @@ function clickBindInFunctionPage(){
 	});
 
 	//For saving graphs that you have just created
-	$("#save-graph-button").click(function(e){
-	    saveSvgAsPng(document.getElementsByClassName("mpld3-figure")[0], "diagram.png");
+	$(".save-graph-button").click(function(e){
+		console.log("Clicked");
+		var dataLocation = $(this).attr("data-location");
+	    saveSvgAsPng(document.getElementById(dataLocation), "diagram.png");
+	});
+}
+
+function clickBindInMainPage(){
+	//For saving graphs that you have just created
+	//Each save-graph-button class will have a data-location associated with it
+	//This will contain the id of the svd we want to save
+	$(".save-graph-button").click(function(e){
+		var dataLocation = $(this).attr("data-location");
+	    saveSvgAsPng(document.getElementById(dataLocation), "diagram.png");
 	});
 }
 
@@ -421,7 +436,7 @@ function saveSettingsToFile(){
 
 
 
-function createGraph(queryObject){
+function createGraph(queryObject, svdIdName){
 	$("#mplplot").empty();
 	$.ajax({
 	    url: '/createGraph',
@@ -437,17 +452,17 @@ function createGraph(queryObject){
             }
             if (graph[1].type === "single"){
                 if (queryObject.type == CHART_BAR){
-                    drawGraph(graph, "#mplplot");
+                    drawGraph(graph, "#mplplot", svdIdName);
                 } else if (queryObject.type == CHART_PIE){
-                    pieChartDonut(graph, "#mplplot");
+                    pieChartDonut(graph, "#mplplot", svdIdName);
                     //pieChart(graph);
                 }
             } else if (graph[1].type === "multiple"){
                 if (queryObject.type == CHART_BAR){
                     showStackedInput("#mplplot-input");
-                    stackedBarGraph(graph,"#mplplot","#mplplot-input");
+                    stackedBarGraph(graph,"#mplplot","#mplplot-input", svdIdName);
                 } else if (queryObject.type == CHART_PIE){
-                    pieChartDonutStacked(graph, "#mplplot");
+                    pieChartDonutStacked(graph, "#mplplot", svdIdName);
                 }
             }
 	    },
@@ -466,11 +481,11 @@ function showStackedInput(location){
 
 
 function createMainPageGraph(){
-    pieChartMainApplicationGraph(mainGraphList[0], "#main-page-graph");
+    pieChartMainApplicationGraph(mainGraphList[0], "#main-page-graph", "main-page-graph-svd");
 }
 
 
-function drawGraph(allData, drawLocation) {
+function drawGraph(allData, drawLocation, svdIdName) {
     var data = allData[0];
     var axisData = allData[1];
 
@@ -504,6 +519,7 @@ function drawGraph(allData, drawLocation) {
 	//create svg container
 	var svg = d3.select(drawLocation)
 	    .append("svg")
+	    .attr("id", svdIdName)
 	    .attr("width", width + margin.left + margin.right)
 	    .attr("height", height + margin.top + margin.bottom)
 	    .append("g")
@@ -598,7 +614,7 @@ var total = d3.sum(data.map(function(d) {                // NEW
 };
 
 
-function stackedBarGraph(allData, drawLocation, inputLocation){
+function stackedBarGraph(allData, drawLocation, inputLocation, svdIdName){
     var axisData = allData[1];
     var legendWidth = 200;
     var data = allData[0];
@@ -638,6 +654,7 @@ function stackedBarGraph(allData, drawLocation, inputLocation){
 	    .orient("left")
 
     var svg = d3.select(drawLocation).append("svg")
+		.attr("id", svdIdName)
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -689,7 +706,6 @@ data.map(function(d) {
 
 
     var percent = Math.round(1000 * d.y / total) / 10; // NEW
-    console.log(d);
     tooltip.select('.functionLabel').html(axisData['x'] + ": " + d.x);                // NEW
     tooltip.select('.count').html(axisData['y'] + ": " + d.y);                // NEW
     tooltip.select('.percent').html(percent + '%');             // NEW
@@ -797,7 +813,7 @@ data.map(function(d) {
     }
 }
 
-function pieChartMainApplicationGraph(allData,location){
+function pieChartMainApplicationGraph(allData,location, svdIdName){
         var data = allData[0];
         var width = 960;
         var height = 500;
@@ -806,7 +822,7 @@ function pieChartMainApplicationGraph(allData,location){
         var oRadius = min / 2 * 0.9;
         var iRadius = min / 2 * 0.8;
         var donutWidth = 75;                            
- var legendRectSize = 18;                                  
+ 		var legendRectSize = 18;                                  
         var legendSpacing = 4;                                   
         var legendWidth = 200;
 
@@ -815,6 +831,7 @@ function pieChartMainApplicationGraph(allData,location){
 
         var svg = d3.select(location)
           .append('svg')
+          .attr('id', svdIdName)
           .attr('width', width)
           .attr('height', height)
           .append('g')
@@ -910,7 +927,7 @@ var total = d3.sum(data.map(function(d) {                // NEW
 
 }
 
-function pieChartDonut(allData, location){
+function pieChartDonut(allData, location, svdIdName){
         var data = allData[0];
         var width = 960;
         var height = 500;
@@ -922,12 +939,12 @@ function pieChartDonut(allData, location){
  var legendRectSize = 18;                                  
         var legendSpacing = 4;                                   
         var legendWidth = 200;
-        console.log(data.length);
         var color = d3.scale.linear().domain([0,data.length -1])
       .interpolate(d3.interpolateHcl)
       .range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
 
         var svg = d3.select(location)
+          .attr("id", svdIdName)
           .append('svg')
           .attr('width', width)
           .attr('height', height)
@@ -990,7 +1007,6 @@ var total = d3.sum(data.map(function(d) {                // NEW
             tooltip.style('display', 'none');                           // NEW
           });   
 
-console.log(color.domain());
  var legend = svg.selectAll('.legend')                     // NEW
           .data(pie(data))                                   // NEW
           .enter()                                                // NEW
@@ -1008,7 +1024,6 @@ console.log(color.domain());
           .attr('width', legendRectSize)                          // NEW
           .attr('height', legendRectSize)                         // NEW
           .style('fill', function(d,i){
-                console.log(d);
                 return color(i);
             })                                   // NEW
           .style('stroke', color);                                // NEW
@@ -1016,7 +1031,7 @@ console.log(color.domain());
         legend.append('text')                                     // NEW
           .attr('x', legendRectSize + legendSpacing)              // NEW
           .attr('y', legendRectSize - legendSpacing)              // NEW
-          .text(function(d) { console.log(d);
+          .text(function(d) { 
                 var percent = Math.round(1000 * d.data.y / total) / 10;
                 return percent + "%: " + d.data.x;
           });                       // NEW
@@ -1035,7 +1050,7 @@ console.log(color.domain());
 }
 
 
-function pieChartDonutStacked(allData,location){
+function pieChartDonutStacked(allData,location, svdIdName){
 
     var oldData = allData[0];
     //Adjust data to fit pie chart
@@ -1073,6 +1088,7 @@ function pieChartDonutStacked(allData,location){
       .range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
 
         var svg = d3.select(location)
+          .attr("id", svdIdName)
           .append('svg')
           .attr('width', width)
           .attr('height', height)
@@ -1151,7 +1167,6 @@ var total = d3.sum(data.map(function(d) {                // NEW
           .attr('width', legendRectSize)                          // NEW
           .attr('height', legendRectSize)                         // NEW
           .style('fill', function(d,i){
-                console.log(d);
                 return color(i);
             })                                   // NEW
           .style('stroke', color);                                // NEW
@@ -1159,7 +1174,7 @@ var total = d3.sum(data.map(function(d) {                // NEW
         legend.append('text')                                     // NEW
           .attr('x', legendRectSize + legendSpacing)              // NEW
           .attr('y', legendRectSize - legendSpacing)              // NEW
-          .text(function(d) { console.log(d);
+          .text(function(d) { 
                 var percent = Math.round(1000 * d.data.y / total) / 10;
                 return percent + "%: " + d.data.x;
           });                       // NEW
@@ -1177,7 +1192,7 @@ var total = d3.sum(data.map(function(d) {                // NEW
 
 }
 
-function pieChart(allData){
+function pieChart(allData, svdIdName){
     var axisData = allData[1];
     var data = allData[0];
     var margin = {top: 40, right: 40, bottom: 40, left: 40},
@@ -1202,6 +1217,7 @@ function pieChart(allData){
         .value(function(d) { return d.y; });
 
     var svg = d3.select("#mplplot").append("svg")
+    	.attr("id", svdIdName)
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -1235,7 +1251,7 @@ function pieChart(allData){
     }
 }
 
-function stackedPieChart(allData){
+function stackedPieChart(allData, svdIdName){
     var oldData = allData[0];
     //Adjust data to fit pie chart
     var numSlices = 5;
@@ -1278,6 +1294,7 @@ function stackedPieChart(allData){
         .value(function(d) { return d.y; });
 
     var svg = d3.select("#mplplot").append("svg")
+    	.attr("id", svdIdName)
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -1551,7 +1568,8 @@ function setupGraphCreation(isFunctionPage){
 		        selectedGraph['regionEnd'] = parseInt($("#graph-code-region-end").val());
 	        }
 	    }
-		createGraph(selectedGraph);
+		createGraph(selectedGraph, "custom-graph-svd");
+		$("#save-graph-button").fadeIn();
 	    e.preventDefault();
 	});
 
