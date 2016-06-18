@@ -522,12 +522,14 @@ def injectionsInEachFunction(regionData, constraintData):
                 "( Control-Branch )"
                 idx = 4
             per[idx] += 1
-            totalDict[i].append(per[idx])
             isEmpty=False
+        totalDict[i] = (per)
     returnData = []
     for i in range(nClassifications):
         currVariableTypeInjections = []
         for index, f in enumerate(funcs):
+            print(len(totalDict[f[0]]))
+            print i
             currVariableTypeInjections.append({'x':index,'y':totalDict[f[0]][i]})
         returnData.append(currVariableTypeInjections)
     dataTypes = {'x':'Functions', 'y': 'Frequency of injections', 'type':'multiple', 'layers':nClassifications,'samples':len(funcs), 'barLabels':funcList, 'isEmpty':isEmpty,'title':'Injection type per function'}
