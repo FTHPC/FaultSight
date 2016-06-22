@@ -4,6 +4,7 @@ from analysis_config import *
 import ConfigParser
 import os
 import src.faultsight as web
+import sys
 
 
 CONFIG_FILE_NAME = "analysis_config.ini"
@@ -69,7 +70,7 @@ def getNumTrialsInj(c):
     cur = c.execute("SELECT * FROM trials WHERE trials.numInj > 0")
     numTrialsInj = 1. * len(cur.fetchall())
     if numTrialsInj == 0:
-        print "No injections found to visualize..."
+        logging.error("No injections found to visualize...")
         sys.exit(1)
     return numTrialsInj
 
@@ -81,6 +82,8 @@ def getNumTrials(c):
 
 """Set up databse, config file, etc.. then launch the application"""
 if __name__ == "__main__":
+    import logging
+    logging.basicConfig(filename='faultsight.log',level=logging.DEBUG)
     rebuild_database = checkConfig(CONFIG_FILE_NAME)
     c = init(database, LLVM_log_path, trial_path +"/"+ trial_prefix,\
         customFuncs=(customInit, customParser))

@@ -13,6 +13,7 @@ load_src("helper", "../binaryParser.py")
 import binaryParser
 from binaryParser import opcode2Str
 from constants import *
+import logging
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -65,9 +66,13 @@ def showFunction(functionName):
     if not checkIfFunctionExists(functionName):
         return render_template('error.html', functionList = app.config['FUNCTIONS'])
     readFunctionResult = readFunction(functionName)
+    myGraphList = getMyGraphs(functionName)
     if len(readFunctionResult) == 1:
-        return render_template('emptyFunction.html', functionName=functionName, functionList = app.config['FUNCTIONS'], entireCode = readFunctionResult[0],  databaseDetails=getDatabaseTables(),injectedFunctionList = app.config['INJECTED_FUNCTIONS'], notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'])
-    
+        return render_template('emptyFunction.html', functionName=functionName, functionList = app.config['FUNCTIONS'], entireCode = readFunctionResult[0],  databaseDetails=getDatabaseTables(),injectedFunctionList = app.config['INJECTED_FUNCTIONS'], notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'], myGraphList=json.dumps(myGraphList),myGraphListLength=len(myGraphList))
+    elif len(readFunctionResult) == 0:
+        # No file found. Perhaps the analysis was run on a different computer?
+        return render_template('missingFunction.html', functionName=functionName, functionList = app.config['FUNCTIONS'],  databaseDetails=getDatabaseTables(),injectedFunctionList = app.config['INJECTED_FUNCTIONS'], notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'], myGraphList=json.dumps(myGraphList),myGraphListLength=len(myGraphList))
+
     config = ConfigParser.ConfigParser()
     config.read(app.config['CONFIG_PATH'])
     highlightMinimumValue = config.get("FaultSight", "highlightValue")
@@ -80,7 +85,7 @@ def showFunction(functionName):
     failedInjectionPercentage = readFunctionResult[5]
     fractionOfApplciation = readFunctionResult[6]
     machineInstructions, numInjectionsInFunction = getMachineInstructionData(functionName,partialHighlightIndexes,partialStartLine)
-    myGraphList = getMyGraphs(functionName)
+    
     return render_template('function.html', functionName=functionName, functionList = app.config['FUNCTIONS'], failedInjectionPercentage=failedInjectionPercentage, \
          partialCode=partialCode, partialCodeValues=partialCodeValues[1:], partialHighlightIndexes=partialHighlightIndexes,  machineInstructions=machineInstructions, highlightMinimumValue=highlightMinimumValue, partialStartLine=partialStartLine, entireCode=entireCode, myGraphList=json.dumps(myGraphList), myGraphListLength=len(myGraphList), fractionOfApplciation=fractionOfApplciation,  databaseDetails=getDatabaseTables(),injectedFunctionList = app.config['INJECTED_FUNCTIONS'], notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'], numInjectionsInFunction=numInjectionsInFunction)
 
@@ -145,7 +150,7 @@ def getMyGraph(detail,regionData,constraintData):
     elif detail == 9:
         data, dataInfo = focusDetections(detail, regionData, constraintData)
     else:
-        print('Error in getting graphs')
+        logging.error('Error in getting graphs')
     return [data, dataInfo]
 
 """Gets data about the specified function
@@ -206,15 +211,18 @@ def readFunction(func):
         failedInjection = 0
         if minimum == 0:
             failedInjection = str(values[0])
-            minimum = np.min(np.trim_zeros(lines)) - 1
+            try:
+                minimum = np.min(np.trim_zeros(lines)) - 1
+            except ValueError:  #lines is empty? i.e. missing file it seems
+                pass
             values = values[minimum:]    
     srcPath = ""
     if os.path.isfile(file):
         srcPath = ""
     if not os.path.isfile(srcPath+file):
-        print "Warning (visInjectionsInCode): source file not found -- ", srcPath + file
+        logging.warning("Warning (visInjectionsInCode): source file not found -- " +  str(srcPath) + str(file))
         return []
-    print "\nRelating injections to source code in file: ", srcPath+file
+    logging.info("\nRelating injections to source code in file: " +  str(srcPath) + str(file))
     
     if not mainCodeOnly:
         # Getting 'relevant' lines of code
@@ -409,13 +417,12 @@ def injectionClassification(regionData,constraintData):
         if currType in typeIdx:
             idx = typeIdx[currType]
             if idx == 6:
-                print "Warning: mapping type (", currType,\
-                    ") to type ( Control-Branch )"
+                logging.warning("Warning: mapping type (" + str(currType) + ") to type ( Control-Branch )")
                 idx = 4
             typeBuckets[idx] += 1
             
         else:
-            print "VIZ: not classified = ", i
+            logging.warning("VIZ: not classified = " + str(i))
             typeBuckets[nClassifications] += 1
     d = []
     for i in range(nClassifications):
@@ -446,15 +453,14 @@ def injectionBitLocation(regionData, constraintData):
         if currType in typeIdx:
             idx = typeIdx[currType]
             if idx == 6:
-                print "Warning: mapping type (", currType,\
-                    ") to type ( Control-Branch )"
+                logging.warning("Warning: mapping type (" + str(currType) + ") to type ( Control-Branch )")
                 idx = 4
             typeBuckets[idx] += 1
             locs[idx][currSite] += 1
             bits[idx][currBit] += 1
             barbits[idx][0] += 1
         else:
-            print "VIZ: not classified = ", i
+            logging.warning("VIZ: not classified = " + str(i))
             typeBuckets[nClassifications] += 1
     d = []
     for i in range(nClassifications):
@@ -518,8 +524,7 @@ def injectionsInEachFunction(regionData, constraintData):
         for t in types:
             idx = typeIdx[t[0]]
             if idx == 6:
-                print "Warning: mapping type ( Control ) to type "\
-                "( Control-Branch )"
+                logging.warning("Warning: mapping type ( Control ) to type ( Control-Branch )")
                 idx = 4
             per[idx] += 1
             isEmpty=False
@@ -528,8 +533,6 @@ def injectionsInEachFunction(regionData, constraintData):
     for i in range(nClassifications):
         currVariableTypeInjections = []
         for index, f in enumerate(funcs):
-            print(len(totalDict[f[0]]))
-            print i
             currVariableTypeInjections.append({'x':f[0],'y':totalDict[f[0]][i]})
         returnData.append(currVariableTypeInjections)
     dataTypes = {'x':'Function', 'y': 'Frequency of injections', 'type':'multiple', 'layers':nClassifications,'samples':len(funcs), 'barLabels':funcList, 'isEmpty':isEmpty,'title':'Injection type per function'}
@@ -556,7 +559,7 @@ def injectionMappedToLine(regionData, constraintData):
         cur = g.db.execute(queryString)
         result = cur.fetchall()
         if len(result) == 0:
-            print "Warning (visInjectionsInCode): no injections in target function -- ", func
+            logging.warning("Warning (visInjectionsInCode): no injections in target function -- " + str(func))
             return [], {'isEmpty':True}
         # locate the min and max source line num to shrink output file size
         # we only want to show the section of code that we inject in
@@ -605,8 +608,7 @@ def signalUnexpectedTermination(regionData, constraintData):
         #bits[typeIdx[type]][bit] += 1
         idx = typeIdx[type]
         if idx == 6:
-            print "Warning: mapping type ( Control ) to type "\
-            "( Control-Branch )"
+            logging.warning("Warning: mapping type ( Control ) to type ( Control-Branch )")
             idx = 4
         bits[idx][bit] += 1
         isEmpty=False
@@ -699,8 +701,7 @@ def detectionsBitLocation(regionData, constraintData):
         #bits[typeIdx[type]][bit] += 1
         idx = typeIdx[type]
         if idx == 6:
-            print "Warning: mapping type ( Control ) to type "\
-            "( Control-Branch )"
+            logging.warning("Warning: mapping type ( Control ) to type ( Control-Branch )")
             idx = 4
         bits[idx][bit] += 1
         isEmpty=False
