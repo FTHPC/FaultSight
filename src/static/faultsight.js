@@ -630,7 +630,7 @@ function stackedBarGraph(allData, drawLocation, inputLocation, svdIdName){
         height = 500 - margin.top - margin.bottom;
 
     var x = d3.scale.ordinal()
-        .domain(d3.range(m))
+        .domain(axisData.barLabels)
         .rangeRoundBands([0, width], .08);
 
     var y = d3.scale.linear()

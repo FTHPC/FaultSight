@@ -468,7 +468,8 @@ def injectionBitLocation(regionData, constraintData):
         for j in range(64):
             currVariableTypeInjections.append({'x':j,'y':bits[i][j]})
         d.append(currVariableTypeInjections)
-    dataTypes = {'x':'Bit Location', 'y': 'Frequency', 'type':'multiple', 'layers':nClassifications,'samples':64, 'layerLabels':TYPES, 'isEmpty':False, 'title':'Classification of injections by bit'}
+    barLabels = range(0,64)
+    dataTypes = {'x':'Bit Location', 'y': 'Frequency', 'type':'multiple', 'layers':nClassifications,'samples':64, 'barLabels':barLabels, 'layerLabels':TYPES, 'isEmpty':False, 'title':'Classification of injections by bit'}
     return d, dataTypes
     
 
@@ -624,7 +625,8 @@ def signalUnexpectedTermination(regionData, constraintData):
         for j in range(bits.shape[1]):
             currInjectionType.append({'x':j,'y':bits[i][j]})
         returnData.append(currInjectionType)
-    dataTypes = {'x':'Line Number', 'y': 'Frequency', 'type':'multiple', 'layers':bits.shape[0], 'samples':bits.shape[1], 'barLabels':'None', 'isEmpty':isEmpty,'title':'Unexpected Termination'}
+    barLabels = range(bits.shape[1])
+    dataTypes = {'x':'Line Number', 'y': 'Frequency', 'type':'multiple', 'layers':bits.shape[0], 'samples':bits.shape[1], 'barLabels':barLabels, 'isEmpty':isEmpty,'title':'Unexpected Termination'}
     return returnData, dataTypes
 
 
