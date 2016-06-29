@@ -713,7 +713,8 @@ def detectionsBitLocation(regionData, constraintData):
         for j in range(bits.shape[1]):
             currInjectionType.append({'x':j,'y':bits[i][j]})
         returnData.append(currInjectionType)
-    dataTypes = {'x':'Line Number', 'y': 'Frequency', 'type':'multiple', 'layers':bits.shape[0], 'samples':bits.shape[1], 'barLabels':'None', 'isEmpty':isEmpty,'title':'Detected Injection bit location'}
+    barLabels = range(bits.shape[1])
+    dataTypes = {'x':'Line Number', 'y': 'Frequency', 'type':'multiple', 'layers':bits.shape[0], 'samples':bits.shape[1], 'barLabels':barLabels, 'isEmpty':isEmpty,'title':'Detected Injection bit location'}
     return returnData, dataTypes
 
 
