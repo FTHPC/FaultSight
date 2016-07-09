@@ -217,10 +217,12 @@ def readFunction(func):
             except ValueError:  #lines is empty? i.e. missing file it seems
                 pass
             values = values[minimum:]
-	srcPath = ""
-    if not os.path.isfile(file):
-        srcPath = "../" 
-        file = file.split("/")[-1]
+
+    sys.path.insert(0, '../')
+    import analysis_config
+    srcPath = analysis_config.srcPath
+    if os.path.isfile(file):
+        srcPath = "" 
     if not os.path.isfile(srcPath+file):
         logging.warning("Warning (visInjectionsInCode): source file not found -- " +  str(srcPath) + str(file))
         return []
