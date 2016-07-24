@@ -5,13 +5,6 @@ from flask import Flask, request, session, g, redirect, url_for, \
 import numpy as np
 import ConfigParser
 
-def load_src(name, fpath):
-    import os, imp
-    return imp.load_source(name, os.path.join(os.path.dirname(__file__), fpath))
-load_src("helper", "../binaryParser.py")
-
-import binaryParser
-from binaryParser import opcode2Str
 from constants import *
 import logging
 
@@ -26,17 +19,59 @@ CONFIG_PATH: Path to configuration file. This is stored in the parent directory 
 DATABASE: Path to database file. This is stored in the parent directory (file called campaign.db by default)
 """
 
-def initFlaskApplication(injectedFunctionList, notInjectedFunctionList, allFunctionList, numTrialsInjLocal, numTrialsLocal, config_path):
+def initFlaskApplication(config_path):
+    c = sqlite3.connect(DATABASE).cursor()
+    allFunctionList, injectedFunctionList, notInjectedFunctionList = getFunctionLists(c)
     app.debug = DEBUG_STATUS
     app.config['INJECTED_FUNCTIONS'] = injectedFunctionList
     app.config['NOT_INJECTED_FUNCTIONS'] = notInjectedFunctionList
     app.config['FUNCTIONS'] = allFunctionList
     app.config['CONFIG_PATH'] = config_path
     global numTrialsInj
-    numTrialsInj = numTrialsInjLocal
+    numTrialsInj = getNumTrialsInj(c)
     global numTrials
-    numTrials = numTrialsLocal
+    numTrials = getNumTrials(c)
     app.run()
+
+"""Query databse for a list of functions that have been injected into"""
+"""Returns a list of the form: ['functionA', 'functionB',...]"""
+
+def getFunctionLists(c):
+    allFunctionList = getFunctionListAll(c)
+    injectedFunctionList = getFunctionListInjected(c)
+    notInjectedFunctionList = getFunctionListNotInjected(allFunctionList,injectedFunctionList)
+    return allFunctionList, injectedFunctionList, notInjectedFunctionList
+
+"""List of all functions in database"""
+def getFunctionListAll(c):
+    c.execute("SELECT DISTINCT function FROM sites")
+    functionList = [x[0].encode('UTF8') for x in c.fetchall()]
+    return functionList
+
+"""List of function that have been injected into"""
+def getFunctionListInjected(c):
+    c.execute("SELECT DISTINCT function FROM sites INNER JOIN injections ON sites.site = injections.site")
+    functionList = [x[0].encode('UTF8') for x in c.fetchall()]
+    return functionList
+
+"""List of functions that have not been injected into"""
+def getFunctionListNotInjected(allFunctionList, injectedFunctionList):
+    return [x for x in allFunctionList if x not in injectedFunctionList]
+
+"""Get total number of injections"""
+def getNumTrialsInj(c):
+    cur = c.execute("SELECT * FROM trials WHERE trials.numInj > 0")
+    numTrialsInj = 1. * len(cur.fetchall())
+    if numTrialsInj == 0:
+        logging.error("No injections found to visualize...")
+        sys.exit(1)
+    return numTrialsInj
+
+"""Get total number of trials"""
+def getNumTrials(c):
+    cur = c.execute("SELECT * FROM trials")
+    numTrials = 1. * len(cur.fetchall())
+    return numTrials
 
 
 @app.before_request
@@ -54,6 +89,8 @@ def teardown_request(exception):
     if db is not None:
         db.close()
 
+
+#---Page Requests---#
 """Request for entire Application page"""
 @app.route('/')
 def index():
@@ -760,7 +797,29 @@ def detectionsLatency(regionData, constraintData):
     return returnData, dataTypes
 
 
+""" Stolen from Jon's FlipIt source code - binaryParser.py"""
+def opcode2Str(opcode):
+    """Converts an opcode into an ASCII string.
+    Parameters
+    ----------
+    opcode : int
+        opcode to express as a string
+    """
 
+    INST_STR = ["Unknown", "Ret", "Br", "Switch", "IndirectBr", "Invoke", "Resume",\
+    "Unreachable", "Add", "FAdd", "Sub", "FSub", "Mul", "FMul", "UDiv", "SDiv",\
+    "FDiv", "URem", "SRem", "FRem", "Shl", "LShr", "Ashr", "And", "Or", "Xor", \
+    "Alloca", "Load", "Store", "GetElementPtr", "Fence", "AtomicCmpXchg", \
+    "AtomicRMW", "Truc", "ZExt", "SExt", "FPToUI", "FPToSI", "UIToFP", "SIToFP",\
+    "FPTrunc", "FPExt", "PtrToInt", "IntToPtr", "BitCast", "AddrSpaceCast", \
+    "ICmp", "FCmp", "PHI", "Call", "Select", "UserOp1", "UserOp2", "VAArg", \
+    "ExtractElement", "InsertElement", "ShuffleVector", "ExtractValue", \
+    "InsertValue", "LandingPad"]
+
+    if opcode < len(INST_STR):
+        return INST_STR[opcode]
+    else: 
+        return INST_STR[0]
     
 if __name__ == '__main__':
     print('Please run this application through web.py')
