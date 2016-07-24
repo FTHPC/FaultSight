@@ -27,7 +27,7 @@ def createConfig(path):
     config.add_section("FaultSight")
     config.set("FaultSight", "myGraphList", [0,1,2,6])
     config.set("FaultSight", "highlightValue", 10)
-    config.set("srcPath", SRC_PATH)
+    config.set("FaultSight", "srcPath", SRC_PATH)
     config.add_section("CustomConstraint")
     config.set("CustomConstraint","trials",'["crashed","detection"]')
     config.set("CustomConstraint","sites",'["type"]')

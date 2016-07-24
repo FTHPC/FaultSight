@@ -110,9 +110,7 @@ def showFunction(functionName):
         # No file found. Perhaps the analysis was run on a different computer?
         return render_template('missingFunction.html', functionName=functionName, functionList = app.config['FUNCTIONS'],  databaseDetails=getDatabaseTables(),injectedFunctionList = app.config['INJECTED_FUNCTIONS'], notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'], myGraphList=json.dumps(myGraphList),myGraphListLength=len(myGraphList))
 
-    config = ConfigParser.ConfigParser()
-    config.read(app.config['CONFIG_PATH'])
-    highlightMinimumValue = config.get("FaultSight", "highlightValue")
+    highlightMinimumValue = readIdFromConfig("FaultSight", "highlightValue")
 
     partialCode = readFunctionResult[0]
     partialCodeValues = readFunctionResult[1]
@@ -154,9 +152,7 @@ def getMainGraph():
 
 """Get a list of 'My Graph' graph data (These are specified in config file)"""
 def getMyGraphs(functionName):
-    config = ConfigParser.ConfigParser()
-    config.read(app.config['CONFIG_PATH'])
-    myGraphArray = json.loads(config.get("FaultSight", "myGraphList"))
+    myGraphArray = json.loads(readIdFromConfig("FaultSight", "myGraphList"))
     myGraphList = []
     regionData = {'Region':functionName, 'Start':"",'End':""}
     constraintData = {}
@@ -256,9 +252,7 @@ def readFunction(func):
             values = values[minimum:]
 
     sys.path.insert(0, '../')
-    config = ConfigParser.ConfigParser()
-    config.read(app.config['CONFIG_PATH'])
-    srcPath = config.get("FaultSight", "srcPath")
+    srcPath = readIdFromConfig("FaultSight", "srcPath")
     if os.path.isfile(file):
         srcPath = "" 
     if not os.path.isfile(srcPath+file):
@@ -273,9 +267,7 @@ def readFunction(func):
         FILE.close()
         partialFunction = ""
         partialHighlightIndexes = []
-        config = ConfigParser.ConfigParser()
-        config.read(app.config['CONFIG_PATH'])
-        highlightMinimumValue = int(config.get("FaultSight", "highlightValue"))
+        highlightMinimumValue = int(readIdFromConfig("FaultSight", "highlightValue"))
         for i in range(1,len(function)):
             if values[i] > int(highlightMinimumValue):
                 partialFunction += addCustomLinkToLine(str2html(function[i-1]))
@@ -322,7 +314,12 @@ def str2html(s):
         string to convert to a vaild html string to display properly
     """
     return s.replace("&", "&amp;").replace(">", "&gt;").replace("<", "&lt;")
-            
+       
+
+def readIdFromConfig(section, id):
+    config = ConfigParser.ConfigParser()
+    config.read(app.config['CONFIG_PATH'])
+    return config.get(section, id)
 
 """Read in config file settings"""
 @app.route('/getSettingsFromFile', methods=['GET'])    
