@@ -256,8 +256,9 @@ def readFunction(func):
             values = values[minimum:]
 
     sys.path.insert(0, '../')
-    import analysis_config
-    srcPath = analysis_config.srcPath
+    config = ConfigParser.ConfigParser()
+    config.read(app.config['CONFIG_PATH'])
+    srcPath = config.get("FaultSight", "srcPath")
     if os.path.isfile(file):
         srcPath = "" 
     if not os.path.isfile(srcPath+file):
