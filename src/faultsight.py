@@ -235,7 +235,7 @@ def readFunction(func):
         result = curQuery.fetchall()
     lines = [i[1] for i in result] 
     file = result[0][0]
-    if ".LLVM.txt" in file:
+    if ".LLVM.txt" in file or "__NF" in file:
         file = result[-1][0]
     if not mainCodeOnly:
         minimum = np.min(lines)-1
@@ -249,13 +249,17 @@ def readFunction(func):
         if minimum == 0:
             failedInjection = str(values[0])
             try:
-                minimum = np.min(np.trim_zeros(lines)) - 1
+                mask = np.all(np.equal(lines, 0), axis=1)
+                minimum = np.min(lines[~mask]) - 1
             except ValueError:  #lines is empty? i.e. missing file it seems
                 pass
-            values = values[minimum:]    
-    srcPath = ""
+            values = values[minimum:]
+
+    sys.path.insert(0, '../')
+    import analysis_config
+    srcPath = analysis_config.srcPath
     if os.path.isfile(file):
-        srcPath = ""
+        srcPath = "" 
     if not os.path.isfile(srcPath+file):
         logging.warning("Warning (visInjectionsInCode): source file not found -- " +  str(srcPath) + str(file))
         return []
