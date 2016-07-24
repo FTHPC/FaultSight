@@ -31,7 +31,7 @@ To use this tool:
 
 1.) Run an injection campaign via FlipIt.
 
-2.) Place the `src` directory and `web.py` within the `analysis` directory in FlipIt.
+2.) Create a database (.db) file through the `analysis` directory in FlipIt. Place this file in the home directory of FaultSight.
 
 3.) Run the following command:
     
