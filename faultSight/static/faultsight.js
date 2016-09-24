@@ -360,7 +360,6 @@ function clickBindInFunctionPage(){
 
 	//For saving graphs that you have just created
 	$(".save-graph-button").click(function(e){
-		console.log("Clicked");
 		var dataLocation = $(this).attr("data-location");
 	    saveSvgAsPng(document.getElementById(dataLocation), "diagram.png", {backgroundColor:"#FFF"});
 	});
@@ -551,30 +550,30 @@ var tooltip = d3.select(drawLocation)
            .style("left", ((width-legendWidth)/2) + "px")     
   .style("top", (height/2 + legendWidth/2) + "px");                            
                       
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'functionLabel');                                      // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'functionLabel');                                      
              
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'count');                                      // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'count');                                      
 
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'percent');                                    // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'percent');                                    
 
-    bars.on('mouseover', function(d) {                            // NEW
+    bars.on('mouseover', function(d) {                            
                   
 
-var total = d3.sum(data.map(function(d) {                // NEW
-              return d.y;                                           // NEW
+var total = d3.sum(data.map(function(d) {                
+              return d.y;                                           
             }));   
-    var percent = Math.round(1000 * d.y / total) / 10; // NEW
-    tooltip.select('.functionLabel').html(d.x);                // NEW
-    tooltip.select('.count').html("Injections: " + d.y);                // NEW
-    tooltip.select('.percent').html(percent + '%');             // NEW
-    tooltip.style('display', 'block');                          // NEW
-  });                                                           // NEW
+    var percent = Math.round(1000 * d.y / total) / 10; 
+    tooltip.select('.functionLabel').html(d.x);                
+    tooltip.select('.count').html("Injections: " + d.y);                
+    tooltip.select('.percent').html(percent + '%');             
+    tooltip.style('display', 'block');                          
+  });                                                           
   
-  bars.on('mouseout', function() {                              // NEW
-    tooltip.style('display', 'none');                           // NEW
+  bars.on('mouseout', function() {                              
+    tooltip.style('display', 'none');                           
   });   
 
     svg.select(".x.axis").call(xAxis);
@@ -685,14 +684,14 @@ var tooltip = d3.select(drawLocation)
            .style("left", ((width-legendWidth)/2) + "px")     
   .style("top", (height/2 + legendWidth/2) + "px");                            
                       
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'functionLabel');                                      // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'functionLabel');                                      
              
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'count');                                      // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'count');                                      
 
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'percent');                                    // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'percent');                                    
 
 
 var total = 0;
@@ -700,20 +699,20 @@ data.map(function(d) {
     d.map(function(d2){total += d2.y;})
 }); 
 
-    rect.on('mouseover', function(d) {                            // NEW
+    rect.on('mouseover', function(d) {                            
                   
 
 
 
-    var percent = Math.round(1000 * d.y / total) / 10; // NEW
-    tooltip.select('.functionLabel').html(axisData['x'] + ": " + d.x);                // NEW
-    tooltip.select('.count').html(axisData['y'] + ": " + d.y);                // NEW
-    tooltip.select('.percent').html(percent + '%');             // NEW
-    tooltip.style('display', 'block');                          // NEW
-  });                                                           // NEW
+    var percent = Math.round(1000 * d.y / total) / 10; 
+    tooltip.select('.functionLabel').html(axisData['x'] + ": " + d.x);                
+    tooltip.select('.count').html(axisData['y'] + ": " + d.y);                
+    tooltip.select('.percent').html(percent + '%');             
+    tooltip.style('display', 'block');                          
+  });                                                           
   
-  rect.on('mouseout', function() {                              // NEW
-    tooltip.style('display', 'none');                           // NEW
+  rect.on('mouseout', function() {                              
+    tooltip.style('display', 'none');                           
   });   
 
 
@@ -815,7 +814,7 @@ data.map(function(d) {
 
 function pieChartMainApplicationGraph(allData,location, svdIdName){
         var data = allData[0];
-        var width = 960;
+        var width = 600;
         var height = 500;
         var radius = Math.min(width, height) / 2;
         var min = Math.min(width, height);
@@ -834,6 +833,8 @@ function pieChartMainApplicationGraph(allData,location, svdIdName){
           .attr('id', svdIdName)
           .attr('width', width)
           .attr('height', height)
+          .style('display','block')
+          .style('margin','auto')
           .append('g')
           .attr('transform', 'translate(' + (width / 2) + 
             ',' + (height / 2) + ')');
@@ -852,18 +853,18 @@ var tooltip = d3.select(location)
            .style("left", ((width-legendWidth)/2) + "px")     
   .style("top", (height/2 + legendWidth/2) + "px");                            
                       
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'functionLabel');                                      // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'functionLabel');                                      
              
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'count');                                      // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'count');                                      
 
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'percent');                                    // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'percent');                                    
 
 
-var total = d3.sum(data.map(function(d) {                // NEW
-              return d.y;                                           // NEW
+var total = d3.sum(data.map(function(d) {                
+              return d.y;                                           
             }));   
 
         var path = svg.selectAll('path')
@@ -877,44 +878,44 @@ var total = d3.sum(data.map(function(d) {                // NEW
           });
 
 
-          path.on('mouseover', function(d) {                            // NEW
+          path.on('mouseover', function(d) {                            
                   
 
-            var percent = Math.round(1000 * d.data.y / total) / 10; // NEW
-            tooltip.select('.functionLabel').html(d.data.x);                // NEW
-            tooltip.select('.count').html("Injections: " + d.data.y);                // NEW
-            tooltip.select('.percent').html(percent + '%');             // NEW
-            tooltip.style('display', 'block');                          // NEW
-          });                                                           // NEW
+            var percent = Math.round(1000 * d.data.y / total) / 10; 
+            tooltip.select('.functionLabel').html(d.data.x);                
+            tooltip.select('.count').html("Injections: " + d.data.y);                
+            tooltip.select('.percent').html(percent + '%');             
+            tooltip.style('display', 'block');                          
+          });                                                           
           
-          path.on('mouseout', function() {                              // NEW
-            tooltip.style('display', 'none');                           // NEW
+          path.on('mouseout', function() {                              
+            tooltip.style('display', 'none');                           
           });   
 
 
- var legend = svg.selectAll('.legend')                     // NEW
-          .data(color.domain())                                   // NEW
-          .enter()                                                // NEW
-          .append('g')                                            // NEW
-          .attr('class', 'legend')                                // NEW
-          .attr('transform', function(d, i) {                     // NEW
-            var height = legendRectSize + legendSpacing;          // NEW
-            var offset =  height * color.domain().length / 2;     // NEW
-            var horz = -4 * legendRectSize;                       // NEW
-            var vert = i * height - offset;                       // NEW
-            return 'translate(' + horz + ',' + vert + ')';        // NEW
-          });                                                     // NEW
+ var legend = svg.selectAll('.legend')                     
+          .data(color.domain())                                   
+          .enter()                                                
+          .append('g')                                            
+          .attr('class', 'legend')                                
+          .attr('transform', function(d, i) {                     
+            var height = legendRectSize + legendSpacing;          
+            var offset =  height * color.domain().length / 2;     
+            var horz = -4 * legendRectSize;                       
+            var vert = i * height - offset;                       
+            return 'translate(' + horz + ',' + vert + ')';        
+          });                                                     
 
-        legend.append('rect')                                     // NEW
-          .attr('width', legendRectSize)                          // NEW
-          .attr('height', legendRectSize)                         // NEW
-          .style('fill', color)                                   // NEW
-          .style('stroke', color);                                // NEW
+        legend.append('rect')                                     
+          .attr('width', legendRectSize)                          
+          .attr('height', legendRectSize)                         
+          .style('fill', color)                                   
+          .style('stroke', color);                                
           
-        legend.append('text')                                     // NEW
-          .attr('x', legendRectSize + legendSpacing)              // NEW
-          .attr('y', legendRectSize - legendSpacing)              // NEW
-          .text(function(d) { return d; });                       // NEW
+        legend.append('text')                                     
+          .attr('x', legendRectSize + legendSpacing)              
+          .attr('y', legendRectSize - legendSpacing)              
+          .text(function(d) { return d; });                       
 
 
         svg.append("text")
@@ -966,18 +967,18 @@ var tooltip = d3.select(location)
            .style("left", ((width-legendWidth)/2) + "px")     
   .style("top", (height/2 - legendWidth/4) + "px");                            
                       
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'functionLabel');                                      // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'functionLabel');                                      
              
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'count');                                      // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'count');                                      
 
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'percent');                                    // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'percent');                                    
 
 
-var total = d3.sum(data.map(function(d) {                // NEW
-              return d.y;                                           // NEW
+var total = d3.sum(data.map(function(d) {                
+              return d.y;                                           
             }));   
 
         var path = svg.selectAll('path')
@@ -993,48 +994,48 @@ var total = d3.sum(data.map(function(d) {                // NEW
           });
 
 
- path.on('mouseover', function(d) {                            // NEW
+ path.on('mouseover', function(d) {                            
                   
 
-            var percent = Math.round(1000 * d.data.y / total) / 10; // NEW
-            tooltip.select('.functionLabel').html(d.data.x);                // NEW
-            tooltip.select('.count').html("Injections: " + d.data.y);                // NEW
-            tooltip.select('.percent').html(percent + '%');             // NEW
-            tooltip.style('display', 'block');                          // NEW
-          });                                                           // NEW
+            var percent = Math.round(1000 * d.data.y / total) / 10; 
+            tooltip.select('.functionLabel').html(d.data.x);                
+            tooltip.select('.count').html("Injections: " + d.data.y);                
+            tooltip.select('.percent').html(percent + '%');             
+            tooltip.style('display', 'block');                          
+          });                                                           
           
-          path.on('mouseout', function() {                              // NEW
-            tooltip.style('display', 'none');                           // NEW
+          path.on('mouseout', function() {                              
+            tooltip.style('display', 'none');                           
           });   
 
- var legend = svg.selectAll('.legend')                     // NEW
-          .data(pie(data))                                   // NEW
-          .enter()                                                // NEW
-          .append('g')                                            // NEW
-          .attr('class', 'legend')                                // NEW
-          .attr('transform', function(d, i) {                     // NEW
-            var height = legendRectSize + legendSpacing;          // NEW
-            var offset =  height * (data.length - 1) / 2;     // NEW
-            var horz = -4 * legendRectSize;                       // NEW
-            var vert = i * height - offset;                       // NEW
-            return 'translate(' + horz + ',' + vert + ')';        // NEW
-          });                                                     // NEW
+ var legend = svg.selectAll('.legend')                     
+          .data(pie(data))                                   
+          .enter()                                                
+          .append('g')                                            
+          .attr('class', 'legend')                                
+          .attr('transform', function(d, i) {                     
+            var height = legendRectSize + legendSpacing;          
+            var offset =  height * (data.length - 1) / 2;     
+            var horz = -4 * legendRectSize;                       
+            var vert = i * height - offset;                       
+            return 'translate(' + horz + ',' + vert + ')';        
+          });                                                     
 
-        legend.append('rect')                                     // NEW
-          .attr('width', legendRectSize)                          // NEW
-          .attr('height', legendRectSize)                         // NEW
+        legend.append('rect')                                     
+          .attr('width', legendRectSize)                          
+          .attr('height', legendRectSize)                         
           .style('fill', function(d,i){
                 return color(i);
-            })                                   // NEW
-          .style('stroke', color);                                // NEW
+            })                                   
+          .style('stroke', color);                                
           
-        legend.append('text')                                     // NEW
-          .attr('x', legendRectSize + legendSpacing)              // NEW
-          .attr('y', legendRectSize - legendSpacing)              // NEW
+        legend.append('text')                                     
+          .attr('x', legendRectSize + legendSpacing)              
+          .attr('y', legendRectSize - legendSpacing)              
           .text(function(d) { 
                 var percent = Math.round(1000 * d.data.y / total) / 10;
                 return percent + "%: " + d.data.x;
-          });                       // NEW
+          });                       
 
 
         svg.append("text")
@@ -1110,18 +1111,18 @@ var tooltip = d3.select(location)
            .style("left", ((width-legendWidth)/2) + "px")     
   .style("top", (height/2 - legendWidth/4) + "px");                            
                       
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'functionLabel');                                      // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'functionLabel');                                      
              
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'count');                                      // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'count');                                      
 
-        tooltip.append('div')                                           // NEW
-          .attr('class', 'percent');                                    // NEW
+        tooltip.append('div')                                           
+          .attr('class', 'percent');                                    
 
 
-var total = d3.sum(data.map(function(d) {                // NEW
-              return d.y;                                           // NEW
+var total = d3.sum(data.map(function(d) {                
+              return d.y;                                           
             }));   
 
         var path = svg.selectAll('path')
@@ -1135,49 +1136,49 @@ var total = d3.sum(data.map(function(d) {                // NEW
           });
 
 
- path.on('mouseover', function(d) {                            // NEW
+ path.on('mouseover', function(d) {                            
                   
 
-            var percent = Math.round(1000 * d.data.y / total) / 10; // NEW
-            tooltip.select('.functionLabel').html(d.data.x);                // NEW
-            tooltip.select('.count').html("Injections: " + d.data.y);                // NEW
-            tooltip.select('.percent').html(percent + '%');             // NEW
-            tooltip.style('display', 'block');                          // NEW
-          });                                                           // NEW
+            var percent = Math.round(1000 * d.data.y / total) / 10; 
+            tooltip.select('.functionLabel').html(d.data.x);                
+            tooltip.select('.count').html("Injections: " + d.data.y);                
+            tooltip.select('.percent').html(percent + '%');             
+            tooltip.style('display', 'block');                          
+          });                                                           
           
-          path.on('mouseout', function() {                              // NEW
-            tooltip.style('display', 'none');                           // NEW
+          path.on('mouseout', function() {                              
+            tooltip.style('display', 'none');                           
           });   
 
 
- var legend = svg.selectAll('.legend')                     // NEW
-          .data(pie(data))                                   // NEW
-          .enter()                                                // NEW
-          .append('g')                                            // NEW
-          .attr('class', 'legend')                                // NEW
-          .attr('transform', function(d, i) {                     // NEW
-            var height = legendRectSize + legendSpacing;          // NEW
-            var offset =  height * (data.length - 1) / 2;     // NEW
-            var horz = -4 * legendRectSize;                       // NEW
-            var vert = i * height - offset;                       // NEW
-            return 'translate(' + horz + ',' + vert + ')';        // NEW
-          });                                                     // NEW
+ var legend = svg.selectAll('.legend')                     
+          .data(pie(data))                                   
+          .enter()                                                
+          .append('g')                                            
+          .attr('class', 'legend')                                
+          .attr('transform', function(d, i) {                     
+            var height = legendRectSize + legendSpacing;          
+            var offset =  height * (data.length - 1) / 2;     
+            var horz = -4 * legendRectSize;                       
+            var vert = i * height - offset;                       
+            return 'translate(' + horz + ',' + vert + ')';        
+          });                                                     
 
-        legend.append('rect')                                     // NEW
-          .attr('width', legendRectSize)                          // NEW
-          .attr('height', legendRectSize)                         // NEW
+        legend.append('rect')                                     
+          .attr('width', legendRectSize)                          
+          .attr('height', legendRectSize)                         
           .style('fill', function(d,i){
                 return color(i);
-            })                                   // NEW
-          .style('stroke', color);                                // NEW
+            })                                   
+          .style('stroke', color);                                
           
-        legend.append('text')                                     // NEW
-          .attr('x', legendRectSize + legendSpacing)              // NEW
-          .attr('y', legendRectSize - legendSpacing)              // NEW
+        legend.append('text')                                     
+          .attr('x', legendRectSize + legendSpacing)              
+          .attr('y', legendRectSize - legendSpacing)              
           .text(function(d) { 
                 var percent = Math.round(1000 * d.data.y / total) / 10;
                 return percent + "%: " + d.data.x;
-          });                       // NEW
+          });                       
 
 
 
@@ -1343,10 +1344,10 @@ function setupGraphCreation(isFunctionPage){
 	};
 
 	var constraintItem = {
-	        "constraintType": 0,
-	        "constraintValue": 0,
-	        "constraintTable":0,
-	        "constraintColumn": 0,
+	        "type": 0,
+	        "value": 0,
+	        "table":0,
+	        "column": 0,
 	};
 
 	var injectionDetail = [
@@ -1477,8 +1478,8 @@ function setupGraphCreation(isFunctionPage){
 	        var constraintId = $(this).parents(".constraint-container").attr("data-constraint-id");
 	        var selectedTable = $(this).attr("data-table-name");
 	        var selectedColumn = $(this).attr("data-col-name");
-	        selectedGraph['constraintArray'][constraintId]['constraintTable'] = selectedTable;
-	        selectedGraph['constraintArray'][constraintId]['constraintColumn'] = selectedColumn
+	        selectedGraph['constraintArray'][constraintId]['table'] = selectedTable;
+	        selectedGraph['constraintArray'][constraintId]['column'] = selectedColumn
 	        $(this).parents(".constraint-container").find(".graph-constraint-type-selection-dropdown").fadeIn();
 		    $(this).parents(".constraint-container").find(".constraint-table-selection-text").text(this.text);
 		    e.preventDefault();
@@ -1487,7 +1488,7 @@ function setupGraphCreation(isFunctionPage){
 	    $('.constraint-type-selection > li > a').on("click",function(e) {
 	        var constraintId = $(this).parents(".constraint-container").attr("data-constraint-id");
 		    var constraintType = determineConstraintType(this.text);
-	        selectedGraph['constraintArray'][constraintId]['constraintType'] = String(constraintType);
+	        selectedGraph['constraintArray'][constraintId]['type'] = String(constraintType);
 	        $(this).parents(".constraint-container").find(".constraint-selection-container").fadeIn();
 	        $(this).parents(".constraint-container").find(".constraint-type-selection-text").text(this.text);
 		    e.preventDefault();
@@ -1540,23 +1541,30 @@ function setupGraphCreation(isFunctionPage){
 	                    </div>';
 
 	$("#create-graph-button").click(function(e){
+
+	    // Check if "InjectionMappedToLine" graph, and one function not selected
+	    if (selectedGraph['detail'] == 5 && selectedGraph['focus'] == 1 && selectedGraph['type'] == 1 && selectedGraph['region'] == ""){
+    		alert("For this graph type, please select a specific function");
+    		return;
+	    }
+
 	    var endFunction = false;
-	    //Fill out constraint details
+	    // Fill out constraint details
 	    $(".constraint-container").each(function() {
 	            var constraintId = $(this).attr("data-constraint-id");
 	            var constraintValue = $(this).find(".constraint-selection-input").val();
 	            if (constraintValue.trim() == ""){
-	                alert("Input missing data");
+	                alert("Input is missing data");
 	                endFunction = true;
 	                return;
 	            }
-	            selectedGraph['constraintArray'][constraintId]['constraintValue'] = constraintValue;
+	            selectedGraph['constraintArray'][constraintId]['value'] = constraintValue;
 	    });
 
 	    if (endFunction){
 	        return;
 	    }
-		//Get line numbers
+		// Get line numbers
 		if (selectedGraph['region'] != ""){
 	        var regionStart = $("#graph-code-region-start").val().trim();
 	        var regionEnd = $("#graph-code-region-end").val().trim();

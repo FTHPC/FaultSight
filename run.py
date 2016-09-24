@@ -1,8 +1,11 @@
 import ConfigParser
 import os, sys
-import src.faultsight as web
+from faultSight import app
 
-CONFIG_FILE_NAME = "analysis_config.ini"
+
+# User adjustable constants
+
+
 # Link to original program source. This is useful when your database was created
 # on another machine. Your database would contain the absolute path of each
 # file. If the actual source code is available on this machine, we can try to
@@ -16,17 +19,24 @@ CONFIG_FILE_NAME = "analysis_config.ini"
 # it using SRC_PATH?
 SRC_PATH = "../SRC-GOES-HERE" 
 
+RECREATE_CONFIG_FILE = False
+
+
+CONFIG_FILE_NAME = "faultSight/analysis_config.ini"
+
+
+
 """Check if config file at path exists and create config if necessary"""
-def checkConfig(path):
-    if not os.path.exists(path):
-        createConfig(path)
+def checkConfig():
+    if RECREATE_CONFIG_FILE or not os.path.exists(CONFIG_FILE_NAME):
+        createConfig(CONFIG_FILE_NAME)
 
 """Create the default config file at path"""
 def createConfig(path):
     config = ConfigParser.ConfigParser()
     config.add_section("FaultSight")
     config.set("FaultSight", "myGraphList", [0,1,2,6])
-    config.set("FaultSight", "highlightValue", 10)
+    config.set("FaultSight", "highlightValue", '10')
     config.set("FaultSight", "srcPath", SRC_PATH)
     config.add_section("CustomConstraint")
     config.set("CustomConstraint","trials",'["crashed","detection"]')
@@ -36,9 +46,26 @@ def createConfig(path):
     with open(path, "wb") as config_file:
         config.write(config_file)
 
-"""Set up databse, config file, etc.. then launch the application"""
-if __name__ == "__main__":
-    import logging
-    logging.basicConfig(filename='faultsight.log',level=logging.DEBUG)
-    checkConfig(CONFIG_FILE_NAME)
-    web.initFlaskApplication(CONFIG_FILE_NAME)  
+
+
+def checkDatabase():
+    if not os.path.exists("faultSight/database/campaign.db"):
+        sys.exit()
+
+
+
+
+
+
+# Enable logging for various errors
+import logging
+logging.basicConfig(filename='faultSight.log',level=logging.DEBUG)
+
+# Check configuration file is in place.
+checkConfig()
+
+# Check database file is in place
+checkDatabase()
+
+# Start main application
+app.run(debug=True)

@@ -84,19 +84,49 @@
             <div id="main-center" class="container" >
             <div class="">
                 <div class="row" style="overflow:auto;">
-                    <h1 style="    text-align: center;    display:block;font-family: 'Source Sans Pro', sans-serif;">FaultSight - {{functionName}}</h1>
+                    <h1 style="    text-align: center;    display:block;font-family: 'Source Sans Pro', sans-serif;">Function: {{functionName}}</h1>
                     <hr />
                 </div>
                 <div class="row" style="overflow:auto;">
                     <h2 id="code-anchor">Code - {{numInjectionsInFunction}} Injections</h2>
+                    <h5><a id="see-entire" href="">View entire function</a></h5>
+                    <h5><span>Unable to assign {{failedInjectionPercentage}}% of injections to source code. Highlighting values over {{highlightMinimumValue}}%.</span></h5>
+                    <h5><span>Click on highlighted lines to view machine instructions.</span></h5>
+                    <h4><span>{{mainCode}}</span></h4>
                 </div>
-                <div class="row" style="overflow:auto;">
-                    <h5>The file containing the requested function ({{functionName}}) was not found! There are usually two causes for this: </h5>
-                    <h5>- The analysis was run on another computer</h5>
-                    <h5>- FlipIt was unable to map an injection to a source line number, and given the file name "__NF"</h5>
-                    <h5>You can still (most likely) query the database for details about the function for visualizations (if it has injections!), but you will not be able to view the actual function code.</h5>
+                <div class="row" style="overflow:auto;margin-top:20px;">
+                    <div class="col-md-8">
+                        <h4>Injected lines</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <h4>Function</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <h4>Application</h4>
+                    </div>
                 </div>
-      
+                <div class="row no-gutters" style="overflow:auto;">
+                    <div class="col-md-8">
+                        <pre class="language-clike line-numbers" data-start="{{partialStartLine}}" data-line-offset="{{partialStartLine - 2}}"  data-line="
+                        {% for val in partialCodeValues %}
+                        {% if val > highlightMinimumValue %}
+                        {{loop.index + partialStartLine - 2}},
+                        {% endif %}
+                        {% endfor %}">
+<code>{{partialCode|safe}}</code></pre>
+                    </div>
+                    <div class="col-md-2">
+                        <pre class="language-none">
+<code>{% for val in partialCodeValues%}{{ '%0.2f' | format(val )}}%
+{% endfor %}</code></pre>
+                    </div>
+                    <div class="col-md-2">
+                        <pre class="language-none">
+<code>{% for val in partialCodeValues%}{{ '%0.2f' | format(val * fractionOfApplciation)}}%
+{% endfor %}</code></pre>
+                    </div>
+
+                </div>
                 <div class="row" style="margin-top:5px;">
                     <div class="col-xs-12">
                     <hr />
@@ -377,13 +407,16 @@
        
     </body>
     <script type="text/javascript">
-          var functionName = '{{functionName}}';
+        var partialStartLine = {{partialStartLine}};
+        var partialEndLine = {{partialStartLine}} + {{partialCodeValues|length}} - 1;
+        var numHighlights = {{partialHighlightIndexes|length}};
+        var functionName = '{{functionName}}';
         var functionList = {{functionList|tojson}};
         var injectedFunctionList = {{injectedFunctionList|tojson}};
         var notInjectedFunctionList = {{notInjectedFunctionList|tojson}};
         var myGraphList = {{myGraphList|safe}};
         var databaseDetails = {{databaseDetails|tojson|safe}};
-        var numHighlights = 0;
+        var numInjectionsInFunction = {{numInjectionsInFunction}};
         
     </script>
     <script type="text/javascript" charset="utf-8" src="../static/faultsight.js"></script>
