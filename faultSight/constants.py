@@ -1,11 +1,5 @@
-#Configuration
-DATABASE = 'campaign.db'
-DEBUG_STATUS = False
+# TODO: Probably a lot of constants here we no longer need.
 
-#Constants
-numFigs = 0
-numTrials = 0
-numTrialsInj = 0
 TYPES = ["Arith-FP", "Pointer", "Arith-Fix", "Ctrl-Loop", "Ctrl-Branch"]
 TYPES_LONG = ["Floating-Point", "Pointer", "Fixed-Point", "Control-Loop", "Control-Branch"]
 BIT_64 = ["Bits 1-8", "Bits 9-16", "Bits 17-24", "Bits 25-32", "Bits 33-40", "Bits 41-48", "Bits 49-56", "Bits 57-64"]
