@@ -1,6 +1,13 @@
 import sqlite3, os, sys
 
 
+# TO-DO:
+# - Add documentation to functions
+# - Add support for multiple bit injections (bit mask)
+# - Return a dict containing connection information (instead of using global variables)
+#
+#
+#
 
 # API Calls - Wrappers to SQL queries
 
