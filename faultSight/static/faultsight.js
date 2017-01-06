@@ -64,7 +64,10 @@ function drawMyGraphs(){
 	// Draw MyGraphs (Default graphs for user - Determined in settings)
 	for (var i = 0; i < myGraphList.length; i++){
 
-	    if (myGraphList[i][1].type === "single"){
+		if (myGraphList[i][1].isEmpty){
+            $("#my-graph-" + (i + 1)).append("<p>Attempted to create chart: <b>" + myGraphList[i][1].title + "</b>. Empty dataset returned. No chart will be generated.</p>")
+        }
+	    else if (myGraphList[i][1].type === "single"){
 	        drawGraph(myGraphList[i], "#my-graph-" + (i + 1), "my-graph-" + (i+1) + "-svd");
 	        $("#my-graph-save-button-" + (i+1)).fadeIn()
 	    }
@@ -446,7 +449,8 @@ function createGraph(queryObject, svdIdName){
             var graph = JSON.parse(response);
             hideStackedInput("#mplplot-input");
             if (graph[1].isEmpty){
-                alert("Empty dataset! No chart will be made");
+                // alert("Empty dataset returned. No chart will be generated.");
+                $("#mplplot").append("<b>Empty dataset returned. No chart will be generated.</b>")
                 return;
             }
             if (graph[1].type === "single"){

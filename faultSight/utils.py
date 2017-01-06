@@ -55,9 +55,9 @@ def read_lines_from_file(src_path, file, start_line = 0, end_line = 0):
     file_lines = FILE.readlines()
     FILE.close()
 
-    # Adjust return lines if specified by user
+    # Adjust return lines if specified
     if start_line != 0 and end_line != 0:
-      file_lines = file_lines[start_line:end_line]
+      file_lines = file_lines[start_line - 1:end_line - 1]
 
     return file_lines
 

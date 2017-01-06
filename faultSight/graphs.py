@@ -32,7 +32,8 @@ def get_my_graphs(function_name):
     my_graph_list = []
     region_data = generate_region_object(region = function_name)
     for i in range(len(my_graph_array)):
-        my_graph_list.append(get_graph(my_graph_array[i],region_data))
+        generated_graph = get_graph(my_graph_array[i],region_data)
+        my_graph_list.append(generated_graph)
     return my_graph_list
 
 
@@ -42,29 +43,38 @@ def get_graph(graph_type,region_data,constraint_data = {}):
 
     # Injections category
     if graph_type == TYPE_OF_INJECTED_FUNCTION:
+        print("a")
         return injection_classification(region_data, constraint_data)
     elif graph_type == BIT_LOCATION:
+        print("b")
         return injection_bit_location(region_data, constraint_data)
     elif graph_type == INJECTED_FUNCTIONS:
+        print("c")
         return injection_which_function(region_data, constraint_data)
     elif graph_type == INJECTION_TYPE_FUNCTION:
+        print("d")
         return injections_in_each_function(region_data, constraint_data)
     elif graph_type == INJECTIONS_MAPPED_TO_LINE:
+        print("e")
         return injection_mapped_to_line(region_data, constraint_data)
 
     # Signals category
     elif graph_type == UNEXPECTED_TERMINATION:
+        print("f")
         return signal_unexpected_termination(region_data, constraint_data)
 
     # Detections category
     elif graph_type == NUM_TRIAL_WITH_DETECTION:
+        print("g")
         return detections_num_trials_with_detection(region_data, constraint_data)
     elif graph_type == DETECTED_BIT_LOCATION:
+        print("h")
         return detections_bit_location(region_data, constraint_data)
     elif graph_type == DETECTION_LATENCY:
+        print("i")
         return detections_latency(region_data, constraint_data)
     else:
-        logging.error('Error in getting graphs')
+        logging.error("Error in getting graphs" + str(graph_type))
         return [[],[]]
 
 
@@ -110,10 +120,10 @@ def filter_query_on_region(region_data, query):
         return query
     # Entire Function
     if region_data['Start'] == "":
-        return query.filter(sites.function == region_data['Region'])
+        return query.filter(sites.func == region_data['Region'])
     # Specific Lines within function
     else:
-        return query.filter(sites.function == region_data['Region'])\
+        return query.filter(sites.func == region_data['Region'])\
                     .filter(sites.line >= region_data['Start'])\
                     .filter(sites.line <= region_data['End'])
 
@@ -125,14 +135,20 @@ def filter_query_on_region(region_data, query):
 """GRAPH - Types of Injected Functions"""
 def injection_classification(region_data,constraint_data):
 
+    title = 'Classification based on injection type'
+    title_edited = False
+
     type_buckets = np.zeros(nClassifications + 1)
 
     # The basic query
-    query = db.session.query(sites)\
-        .join(injections, sites.site==injections.site)
+    query = db.session.query(injections)\
+        .join(sites, sites.siteId==injections.siteId)
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
+
+    # Request the specifc values we are interested in
+    query = query.values(sites.type)
     
     # Create a list of injected types
     injected_types = []
@@ -149,12 +165,15 @@ def injection_classification(region_data,constraint_data):
             type_buckets[idx] += 1
             
         else:
-            logging.warning("VIZ: not classified = " + str(i))
-            type_buckets[nClassifications] += 1
+            logging.warning("Unknown injection type. Incrementing injection type for last item in type_buckets instead.")
+            type_buckets[nClassifications - 1] += 1
 
+            if title_edited == False:
+                title += " - Error: Unknown injection type found. Check that the types in the database and constants.py match."
+    print("injected type size: ", len(injected_types))
     # Store data in appropriate dictionary
     data = []
-    for i in range(nClassifications):
+    for i in range(len(TYPES)):
         data.append({'x':TYPES[i],'y':type_buckets[i]})
 
     # Graph information dictionary
@@ -163,7 +182,7 @@ def injection_classification(region_data,constraint_data):
         'y': 'Frequency', 
         'type':'single', 
         'isEmpty':len(injected_types) == 0,
-        'title':'Classification based on injection type'
+        'title':title
         }
     return [data, graph_info]
 
@@ -172,8 +191,8 @@ def injection_bit_location(region_data, constraint_data):
     bits = np.zeros((nClassifications, 64))
 
     # Basic query
-    query = db.session.query(sites)\
-        .join(injections, sites.site==injections.site)
+    query = db.session.query(injections)\
+        .join(sites, sites.siteId==injections.siteId)
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
@@ -192,7 +211,7 @@ def injection_bit_location(region_data, constraint_data):
 
     # If there were no injections, just return an empty dataset
     if len(injection_info) == 0:
-        return [[], {'isEmpty':True}]
+        return [[], {'isEmpty':True, 'title':'Classification of injections by bit'}]
 
     # Go through each injection, categorizing it into bit and injection type
     for injection_item in injection_info:
@@ -205,7 +224,8 @@ def injection_bit_location(region_data, constraint_data):
                 idx = 4
             bits[idx][curr_bit] += 1
         else:
-            logging.warning("VIZ: not classified = " + str(i))
+            logging.warning("Current type not found in type index! Was the database generated correctly?")
+            return [[], {'isEmpty':True, 'title':'Classification of injections by bit - Error: Invalid injection type found'}]
 
     # Store the data in our return array
     data = []
@@ -240,9 +260,9 @@ def injection_which_function(region_data, constraint_data):
 
     # The building block of our query
     query = db.session.query(sites)\
-        .join(injections, sites.site==injections.site)\
-        .distinct(sites.function)\
-        .group_by(sites.function)
+        .join(injections, sites.siteId==injections.siteId)\
+        .distinct(sites.func)\
+        .group_by(sites.func)
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
@@ -250,15 +270,15 @@ def injection_which_function(region_data, constraint_data):
     # Execute the query, store the results
     injected_functions = []
     for item in query:
-       injected_functions.append(item.function)
+       injected_functions.append(item.func)
 
 
     data = []
 
     for index, function in enumerate(injected_functions):
         # Same as before, we generate the basic query...
-        query = db.session.query(sites)\
-            .join(injections, and_(sites.site==injections.site, sites.function == function))
+        query = db.session.query(injections)\
+            .join(sites, and_(sites.siteId==injections.siteId, sites.func == function))
 
         # ... and then filter on region and constraints
         query = query_filter(query, region_data, constraint_data)
@@ -287,9 +307,9 @@ def injections_in_each_function(region_data,constraint_data):
 
     # The building block of our query
     query = db.session.query(sites)\
-        .join(injections, sites.site==injections.site)\
-        .distinct(sites.function)\
-        .group_by(sites.function)
+        .join(injections, sites.siteId==injections.siteId)\
+        .distinct(sites.func)\
+        .group_by(sites.func)
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
@@ -297,12 +317,12 @@ def injections_in_each_function(region_data,constraint_data):
     # Execute the query, store the results
     injected_functions = []
     for item in query:
-       injected_functions.append(item.function)
+       injected_functions.append(item.func)
 
 
     # If there were no injections, just return an empty dataset
     if len(injected_functions) == 0:
-        return [[], {'isEmpty':True}]
+        return [[], {'isEmpty':True, 'title':'Injection type per function'}]
 
 
     # Dict we will be storing the parsed data in
@@ -311,13 +331,16 @@ def injections_in_each_function(region_data,constraint_data):
     for func in injected_functions:
 
         # The building block of our query
-        query = db.session.query(sites)\
-            .join(injections, sites.site==injections.site)\
-            .filter(sites.function == func)
+        query = db.session.query(injections)\
+            .join(sites, sites.siteId==injections.siteId)\
+            .filter(sites.func == func)
 
         # Filter the query on region and constraint
         query = query_filter(query, region_data, constraint_data)
         
+        # Request the specifc values we are interested in
+        query = query.values(sites.type)
+
         # Execute the query, store the results
         injected_types = []
         for item in query:
@@ -326,11 +349,15 @@ def injections_in_each_function(region_data,constraint_data):
         # Parse the data, figure out the different types of injections in this function
         injection_buckets = [ 0 for j in xrange(nClassifications)]
         for injected_type in injected_types:
-            idx = typeIdx[injected_type]
-            if idx == 6:
-                logging.warning("Warning: mapping type ( Control ) to type ( Control-Branch )")
-                idx = 4
-            injection_buckets[idx] += 1
+            if injected_type in typeIdx:
+                idx = typeIdx[injected_type]
+                if idx == 6:
+                    logging.warning("Warning: mapping type ( Control ) to type ( Control-Branch )")
+                    idx = 4
+                injection_buckets[idx] += 1
+            else:
+                logging.warning("Current type not found in type index! Was the database generated correctly?")
+                return [[], {'isEmpty':True, 'title':'Injection type per function - Error: Invalid injection type found'}]
 
         total_dict[func] = injection_buckets
 
@@ -362,9 +389,9 @@ def injection_mapped_to_line(region_data,constraint_data):
 
     # The building block of our query
     query = db.session.query(sites)\
-        .join(injections, sites.site==injections.site)\
-        .distinct(sites.function)\
-        .group_by(sites.function)
+        .join(injections, sites.siteId==injections.siteId)\
+        .distinct(sites.func)\
+        .group_by(sites.func)
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
@@ -372,19 +399,22 @@ def injection_mapped_to_line(region_data,constraint_data):
     # Execute the query, store the results
     injected_functions = []
     for item in query:
-       injected_functions.append(item.function)
+       injected_functions.append(item.func)
 
 
     for func in injected_functions:
 
         # Grab all injections in this function, the building block of our query
-        query = db.session.query(sites)\
-            .join(injections, sites.site==injections.site)\
-            .filter(sites.function == func)
+        query = db.session.query(injections)\
+            .join(sites, sites.siteId==injections.siteId)\
+            .filter(sites.func == func)
 
         # Filter the query on region and constraint
         query = query_filter(query, region_data, constraint_data)
         
+        # Request the specifc values we are interested in
+        query = query.values(sites.line)
+
         # Execute the query, store the results
         injected_lines = []
         for item in query:
@@ -392,8 +422,8 @@ def injection_mapped_to_line(region_data,constraint_data):
 
 
         if len(injected_lines) == 0:
-            logging.warning("Warning (visInjectionsInCode): no injections in target function -- " + str(func))
-            return [[], {'isEmpty':True}]
+            logging.warning("Warning (injection_mapped_to_line): no injections in target function -- " + str(func))
+            return [[], {'isEmpty':True, 'title':'Injections mapped to line numbers - Function: {0}'.format(func)}]
 
 
         # locate the min and max source line num to shrink output file size
@@ -404,7 +434,7 @@ def injection_mapped_to_line(region_data,constraint_data):
         bins = np.arange(minimum, maximum+1)    
         values, bins = np.histogram(injected_lines, bins, density=False) # <------------ check here
         bins = np.arange(minimum, maximum)
-        values = 1.*values/np.sum(values)*100 # percents
+        #values = 1.*values/np.sum(values)*100 # percents
         data = []
         for i in range(len(bins)):
             data.append({'x':(i + minimum),'y':values[i]})
@@ -418,6 +448,8 @@ def injection_mapped_to_line(region_data,constraint_data):
         }
         return [data, graph_info]
 
+    # If there were no functions injected into whatsoever
+    return [[], {'isEmpty':True, 'title':'Injections mapped to line numbers - No Injected functions'}]
 
 """GRAPH - Unexpected Termination"""
 """Graphs trials that crashed - bit location and type of corresponding injection"""
@@ -426,8 +458,8 @@ def signal_unexpected_termination(region_data,constraint_data):
     bits =  np.zeros((nClassifications, 64))
 
     # The building block of our query
-    query = db.session.query(sites)\
-        .join(injections, sites.site==injections.site)\
+    query = db.session.query(injections)\
+        .join(sites, sites.siteId==injections.siteId)\
         .join(trials, trials.trial == injections.trial)\
         .filter(trials.crashed == 1)
 
@@ -488,18 +520,21 @@ def detections_num_trials_with_detection(region_data,constraint_data):
 
     # Get number of detected trials
     query = db.session.query(sites)\
-        .join(injections, sites.site==injections.site)\
+        .join(injections, sites.siteId==injections.siteId)\
         .join(trials,trials.trial == injections.trial)\
-        .filter(trials.detection == 1)
+        .filter(trials.detected == 1)
     query = query_filter(query, region_data, constraint_data)
     detected = query.count()
 
     # Get number of injections
     query = db.session.query(sites)\
-        .join(injections, sites.site==injections.site)\
+        .join(injections, sites.siteId==injections.siteId)\
         .join(trials,trials.trial == injections.trial)
     query = query_filter(query, region_data, constraint_data)
     num_inj = query.with_entities(sqlFunc.sum(trials.numInj)).scalar()
+
+    if num_inj == None:
+        num_inj = 0
 
     data = []
     data.append({'x':'Detected','y':detected})
@@ -532,8 +567,8 @@ def detections_bit_location(region_data,constraint_data):
 
     # The building block of our query
     query = db.session.query(injections)\
-        .join(sites, sites.site==injections.site)\
-        .join(trials, and_(trials.trial == injections.trial, trials.detection == 1))
+        .join(sites, sites.siteId==injections.siteId)\
+        .join(trials, and_(trials.trial == injections.trial, trials.detected == 1))
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
@@ -608,7 +643,7 @@ def detections_latency(region_data,constraint_data):
     # The building block of our query
     query = db.session.query(detections)\
         .join(injections, injections.trial == detections.trial)\
-        .join(sites, sites.site==injections.site)
+        .join(sites, sites.siteId==injections.siteId)
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)

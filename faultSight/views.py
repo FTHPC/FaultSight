@@ -53,15 +53,15 @@ def showFunction(function_name):
     # Sites relevant to the function, that were injected into
     injected_function_sites = []
     for site in db.session.query(sites)\
-                              .join(injections, sites.site==injections.site)\
-                              .filter(sites.function == function_name):
+                              .join(injections, sites.siteId==injections.siteId)\
+                              .filter(sites.func == function_name):
         site_dict = {'file': site.file, 'line': site.line}
         injected_function_sites.append(site_dict)
 
     # All sites relevant to the function
     all_function_sites = []
     for site in db.session.query(sites)\
-                              .filter(sites.function == function_name):
+                              .filter(sites.func == function_name):
         site_dict = {'file': site.file, 'line': site.line}
         all_function_sites.append(site_dict)
 
@@ -74,7 +74,7 @@ def showFunction(function_name):
 
 
     # List of possible file paths - Depending on the database, these may include filepaths that are invalid, so we need to check them
-    # For example, some file paths are stored as '__NF', if the file was not found during database generation.
+    # For example, some file paths used to be stored as '__NF', if the file was not found during database generation.
     possible_file_paths = [site['file'] for site in all_function_sites]
 
     # Parse the list of possible paths, get the correct one
@@ -133,8 +133,8 @@ def showFunction(function_name):
 
 
     num_injections_in_function = db.session.query(sites)\
-                    .join(injections, sites.site==injections.site)\
-                    .filter(sites.function == function_name)\
+                    .join(injections, sites.siteId==injections.siteId)\
+                    .filter(sites.func == function_name)\
                     .count()
 
     # Franction of injections in the function compared to in the application
@@ -156,7 +156,7 @@ def showFunction(function_name):
                            partialHighlightIndexes=highlight_indexes,  
                            machineInstructions=machine_instructions, 
                            highlightMinimumValue=float(read_id_from_config("FaultSight", "highlightValue")),  
-                           partialStartLine=start_line + 1, 
+                           partialStartLine=start_line, 
                            entireCode=entire_function_html, 
                            myGraphList=json.dumps(my_graph_list), 
                            myGraphListLength=len(my_graph_list), 
@@ -257,8 +257,8 @@ def get_machine_instructions(func, highlight_lines, num_injections_in_applicatio
     for line in highlight_lines:
 
         num_injections_in_line = db.session.query(sites)\
-                                      .join(injections, sites.site==injections.site)\
-                                      .filter(sites.function == func)\
+                                      .join(injections, sites.siteId==injections.siteId)\
+                                      .filter(sites.func == func)\
                                       .filter(sites.line == line)\
                                       .count()
 
@@ -267,11 +267,11 @@ def get_machine_instructions(func, highlight_lines, num_injections_in_applicatio
 
 
         for site in db.session.query(sites)\
-                                      .filter(sites.function == func)\
+                                      .filter(sites.func == func)\
                                       .filter(sites.line == line):
 
             num_injections_at_site = db.session.query(sites)\
-                                               .join(injections, sites.site == injections.site)\
+                                               .join(injections, sites.siteId == injections.siteId)\
                                                .filter(sites.site == site.site)\
                                                .count()
 

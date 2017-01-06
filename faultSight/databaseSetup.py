@@ -19,6 +19,16 @@ import sqlite3, os, sys
 # Insert sites - Only if site information is known prior to inserting injections into database
 #   insert_site(db_connection, row_arguments)
 #
+# Check site has been inserted previously and return site dictionary
+#   check_site_exists(db_connection, site) 
+#
+# Manually update site information (If sites inserted using insert_site())
+#   update_site_type(db_connection, site, type)
+#   update_site_comment(db_connection, site, comment):
+#   update_site_location(db_connection, site, file = "", func = "", line = ""):
+#   update_site_opcode(db_connection, site, opcode):
+#
+#
 #
 # Start storing injection campaign information for a specific trial.
 #   start_trial(db_connection, row_arguments)
@@ -26,9 +36,9 @@ import sqlite3, os, sys
 #
 # Insert injection campaign information
 #
-#   insert_injection(db_connection, auto_update_trial_table_injection_count, row_arguments, site_arguments = {})
-#   insert_signal(db_connection, auto_update_trial_table_signal_crashed, row_arguments, has_crashed)
-#   insert_detection(db_connection, auto_update_trial_table_detected, row_arguments)
+#   insert_injection(db_connection, row_arguments, site_arguments = {})
+#   insert_signal(db_connection, row_arguments, has_crashed)
+#   insert_detection(db_connection, row_arguments)
 #
 # Manually update current trial information
 #   update_trial_num_inj(db_connection, num_inj)
@@ -45,6 +55,7 @@ import sqlite3, os, sys
 
 
 # Set up database
+
 
 
 def connect_to_existing(database_directory):
@@ -147,9 +158,9 @@ def create_and_connect_database(database_directory):
 
     # Schema for the database we will create
     sites = Table('sites', metadata,
-        Column('id', Integer, primary_key=True,autoincrement=True),
+        Column('siteId', Integer, primary_key=True,autoincrement=True),
         Column('site', Integer, nullable=True),
-        Column('type', Integer, nullable=True),
+        Column('type', String, nullable=True),
         Column('comment', String, nullable=True),
         Column('file', String, nullable=True),
         Column('func', String, nullable=True),
@@ -159,11 +170,11 @@ def create_and_connect_database(database_directory):
 
     trials = Table('trials', metadata,
         Column('trial', Integer, primary_key=True,autoincrement=True),
-        Column('numInj', Integer, nullable=False),
-        Column('crashed', Integer, nullable=False), # Boolean
-        Column('detected', Integer, nullable=False), # Boolean
+        Column('numInj', Integer, nullable=False, default=0),
+        Column('crashed', Integer, nullable=False, default=0), # Boolean
+        Column('detected', Integer, nullable=False, default=0), # Boolean
         Column('path', String, nullable=True),
-        Column('signal', Integer, nullable=False), # Boolean
+        Column('signal', Integer, nullable=False, default=0), # Boolean
     )
 
     injections = Table('injections', metadata,
@@ -197,10 +208,13 @@ def create_and_connect_database(database_directory):
 
     metadata.create_all(engine)
 
-    # Update database reflection
-    reflect_database()
+    
 
     db_connection = generate_db_connection(engine = engine, metadata = metadata, Base = Base)
+
+    # Update database reflection
+    reflect_database(db_connection)
+    
     return db_connection
 
 
@@ -381,7 +395,6 @@ def extend_detections_table(db_connection, column_name, column_type, default_val
 
 
 
-
 def insert_site(db_connection, row_arguments):
     """Insert a row into the sites table, if site information is known by user
 
@@ -391,23 +404,23 @@ def insert_site(db_connection, row_arguments):
 
             row_arguments = {
                 'site': Integer (Optional),
-                'type': Integer (Optional),
+                'type': String (Optional),
                 'comment': String (Optional),
                 'file': String (Optional),
                 'func': String (Optional),
-                'line': String (Optional),
+                'line': Integer (Optional),
                 'opcode': Integer (Optional)
             }
 
             Site: If you have a customized identifier for your site. E.g. memory address. Please ensure that this identifier is unique!
 
             Type: Please use the following:
-                0: "Arith-FP",
-                1: "Pointer",
-                2: "Arith-Fix",
-                3: "Ctrl-Loop",
-                4: "Ctrl-Branch",
-                5: "Unknown"
+                "Arith-FP",
+                "Pointer",
+                "Arith-Fix",
+                "Ctrl-Loop",
+                "Ctrl-Branch",
+                "Unknown"
 
             File: Please use absolute paths
 
@@ -427,6 +440,73 @@ def insert_site(db_connection, row_arguments):
     session.add(insert)
     session.commit()
 
+def check_site_exists(db_connection, site):
+    """Checks if the site exists and return site dictionary if it exists. Returns false otherwise
+
+    Args:
+        db_connection (dictionary): Custom dictionary containing database connection information
+        site: (integer) site identifier -  the identifier used when calling insert_site() with 'site' key included in row_arguments
+
+
+    Returns:
+        site table entry: (dictionary) or None if entry does not exist
+            site_entry = {
+                'id': Integer
+                'site': Integer
+                'type': Integer
+                'comment': String
+                'file': String
+                'func': String
+                'line': Integer
+                'opcode': Integer
+            }
+           
+    """
+
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
+
+    table = get_reflected_table(db_connection, 'sites')
+
+    curr_site = session.query(table).filter(table.site == site)
+
+    if curr_site.count() != 0:
+        return curr_site.first()
+    return False
+
+
+def check_detection_exists(db_connection):
+    """Checks if a detection exists for the current trial and return detection dictionary if it exists
+
+    Args:
+        db_connection (dictionary): Custom dictionary containing database connection information
+        
+
+    Returns:
+        site table entry: (dictionary) or None if entry does not exist
+            site_entry = {
+                'detectionId': Integer
+                'trial': Integer
+                'latency': Integer
+                'detector': String
+                'rank': Integer
+                'threadId': Integer
+            }
+
+           
+    """
+
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
+
+    table = get_reflected_table(db_connection, 'detections')
+
+    curr_site = session.query(table).filter(table.trial == trial)
+
+    if curr_site.count() == 1:
+        return curr_site.one()
+    return False
+
 
 # Start/End trial
 
@@ -440,46 +520,21 @@ def start_trial(db_connection, row_arguments):
         row_arguments (dictionary): dictionary containing the information to insert. 
 
             row_arguments = {
-                'numInj': Integer (Optional),
-                'crashed': Boolean (Optional),
-                'detected': Boolean (Optional),
                 'path': String (Optional),
-                'signal': Boolean (Optional)
             }
 
-            All the above attributes can also be set later via:
-                update_trial_num_inj(db_connection, trial_number, num_inj)
-                update_trial_crashed(db_connection, trial_number, is_crashed)
-                update_trial_detected(db_connection,trial_number, is_detected)
-                update_trial_signal(db_connection,trial_number, is_signal)
 
             For optional attributes, please exclude that key from the dictionary if not used.
             Therefore if none of the attributes will be set, please pass an empty dictionary ({})
 
     """
 
-    if 'numInj' not in row_arguments:
-        row_arguments['numInj'] = 0
-
-    if if 'crashed' not in row_arguments:
-        row_arguments['crashed'] = False
-
-    if if 'detected' not in row_arguments:
-        row_arguments['detected'] = False
-
-    if if 'signal' not in row_arguments:
-        row_arguments['signal'] = False
-
-    row_arguments['crashed'] = row_arguments['crashed'] == True ? 1 : 0
-    row_arguments['detected'] = row_arguments['detected'] == True ? 1 : 0
-    row_arguments['signal'] = row_arguments['signal'] == True ? 1 : 0
-
     from sqlalchemy.orm import sessionmaker
     session = sessionmaker(bind=db_connection['engine'])()
 
     table = get_reflected_table(db_connection, 'trials')
 
-    insert = trials(**row_arguments)
+    insert = table(**row_arguments)
 
     session.add(insert)
     session.commit()
@@ -495,6 +550,72 @@ def end_trial(db_connection):
     """
 
     db_connection['trial_number'] = None
+
+# Update site entries - for pre-inserted sites
+def update_site_type(db_connection, site, type):
+    table = get_reflected_table(db_connection, 'sites')
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
+    session.query(table)\
+        .filter(table.site == site)\
+        .update({"type": type})
+    session.commit()
+
+    #query = table.update().\
+    #    where(table.site == site).\
+    #    values(type=type)
+    #
+    #conn = db_connection['engine'].connect()
+    #conn.execute(query)
+
+def update_site_comment(db_connection, site, comment):
+    table = get_reflected_table(db_connection, 'sites')
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
+    session.query(table)\
+        .filter(table.site == site)\
+        .update({"comment": comment})
+    session.commit()
+
+    #query = table.update().\
+    #    where(table.site == site).\
+    #    values(comment=comment)
+    #
+    #conn = db_connection['engine'].connect()
+    #conn.execute(query)
+
+def update_site_location(db_connection, site, file = "", func = "", line = ""):
+    table = get_reflected_table(db_connection, 'sites')
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
+    session.query(table)\
+        .filter(table.site == site)\
+        .update({"file": file, "func": func, "line": line})
+    session.commit()
+
+    #query = table.update().\
+    #    where(table.site == site).\
+    #    values(file=file, func=func, line=line)
+    #
+    #conn = db_connection['engine'].connect()
+    #conn.execute(query)
+
+def update_site_opcode(db_connection, site, opcode):
+    table = get_reflected_table(db_connection, 'sites')
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
+    session.query(table)\
+        .filter(table.site == site)\
+        .update({"opcode": opcode})
+    session.commit()
+
+    #query = table.update().\
+    #    where(table.site == site).\
+    #    values(opcode=opcode)
+    #
+    #conn = db_connection['engine'].connect()
+    #conn.execute(query)
+
 
 
 
@@ -515,12 +636,20 @@ def update_trial_num_inj(db_connection, num_inj):
         sys.exit(0)
 
     table = get_reflected_table(db_connection, 'trials')
-    query = users.update().\
-        where(table.trial == db_connection['trial_number']).\
-        values(numInj=num_inj)
+    #query = table.update().\
+    #    where(table.trial == db_connection['trial_number']).\
+    #    values(numInj=num_inj)
+    #
+    #conn = db_connection['engine'].connect()
+    #conn.execute(query)
 
-    conn = db_connection['engine'].connect()
-    conn.execute(query)
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
+    session.query(table)\
+        .filter(table.trial == db_connection['trial_number'])\
+        .update({"numInj": num_inj})
+
+    session.commit()
 
 def update_trial_increment_num_inj(db_connection):
     """Increment the number of injections for the current trial by one
@@ -539,19 +668,26 @@ def update_trial_increment_num_inj(db_connection):
 
     from sqlalchemy.orm import sessionmaker
     session = sessionmaker(bind=db_connection['engine'])()
+    
     current_trial = session.query(table)\
-                              .filter(table.trial == db_connection['trial_number'])
-                              .first()
+                            .filter(table.trial == db_connection['trial_number'])\
+                            .first()
     if not current_trial:
         print('No existing trial found')
         sys.exit(0)
 
-    query = users.update().\
-        where(table.trial == db_connection['trial_number']).\
-        values(numInj=current_trial.numInj + 1)
+    session.query(table)\
+        .filter(table.trial == db_connection['trial_number'])\
+        .update({"numInj": current_trial.numInj + 1})
 
-    conn = db_connection['engine'].connect()
-    conn.execute(query)
+    session.commit()
+
+    #query = table.update().\
+    #    where(table.trial == db_connection['trial_number']).\
+    #    values(numInj=current_trial.numInj + 1)
+    #
+    #conn = db_connection['engine'].connect()
+    #conn.execute(query)
 
 def update_trial_crashed(db_connection, is_crashed):
     """Update whether the current trial has crashed
@@ -567,16 +703,23 @@ def update_trial_crashed(db_connection, is_crashed):
         print('Trial has not been started')
         sys.exit(0)
 
-
-    is_crashed = is_crashed == True ? 1 : 0
+    is_crashed = int(is_crashed == True)
     
     table = get_reflected_table(db_connection, 'trials')
-    query = users.update().\
-        where(table.trial == db_connection['trial_number']).\
-        values(isCrashed=is_crashed)
 
-    conn = db_connection['engine'].connect()
-    conn.execute(query)
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
+    session.query(table)\
+        .filter(table.trial == db_connection['trial_number'])\
+        .update({"crashed": is_crashed})
+    session.commit()
+
+    #query = table.update().\
+    #    where(table.trial == db_connection['trial_number']).\
+    #    values(crashed=is_crashed)
+    #
+    #conn = db_connection['engine'].connect()
+    #conn.execute(query)
 
 def update_trial_detected(db_connection, is_detected):
     """Update whether silent data corruption has been detected for the current trial
@@ -592,16 +735,23 @@ def update_trial_detected(db_connection, is_detected):
         print('Trial has not been started')
         sys.exit(0)
 
+    is_detected = int(is_detected == True)
 
-    is_detected = is_detected == True ? 1 : 0
 
     table = get_reflected_table(db_connection, 'trials')
-    query = users.update().\
-        where(table.trial == db_connection['trial_number']).\
-        values(isDetected=is_detected)
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
+    session.query(table)\
+        .filter(table.trial == db_connection['trial_number'])\
+        .update({"detected": is_detected})
+    session.commit()
 
-    conn = db_connection['engine'].connect()
-    conn.execute(query)
+    #query = table.update().\
+    #    where(table.trial == db_connection['trial_number']).\
+    #    values(detected=is_detected)
+    #
+    #conn = db_connection['engine'].connect()
+    #conn.execute(query)
 
 def update_trial_signal(db_connection, is_signal):
     """Update whether a signal has been detected for the current trial
@@ -617,27 +767,33 @@ def update_trial_signal(db_connection, is_signal):
         print('Trial has not been started')
         sys.exit(0)
 
-    is_signal = is_signal == True ? 1 : 0
+
+    is_signal = int(is_signal == True)
 
     table = get_reflected_table(db_connection, 'trials')
-    query = users.update().\
-        where(table.trial == db_connection['trial_number']).\
-        values(isSignal=is_signal)
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
+    session.query(table)\
+        .filter(table.trial == db_connection['trial_number'])\
+        .update({"signal": is_signal})
+    session.commit()
 
-    conn = db_connection['engine'].connect()
-    conn.execute(query)
+    #query = table.update().\
+    #    where(table.trial == db_connection['trial_number']).\
+    #    values(signal=is_signal)
+    #
+    #conn = db_connection['engine'].connect()
+    #conn.execute(query)
 
 
 # Insert rows into database
-def insert_injection(db_connection, auto_update_trial_table_injection_count, row_arguments, site_arguments = {}):
+def insert_injection(db_connection, row_arguments, site_arguments = {}):
     """Insert a row into the injections table. If the site of the injection
-    has not been created by the user in the preprocessing stage, it will be created here.
+    has not been created by the user in the preprocessing stage, it will be created here. Automatically
+    adjusts the entry in the trial table corresponding to the current trial. Increments the trial's injection count by one.
 
     Args:
         db_connection (dictionary): Custom dictionary containing database connection information
-
-        auto_update_trial_table_injection_count: If true, automatically adjusts the entry in the trial table corresponding to the current trial. Increments the trial's injection count by one.
-        Equivalent to a call to update_trial_increment_num_inj(db_connection)
 
         row_arguments (dictionary): dictionary containing the row to insert. 
 
@@ -703,21 +859,21 @@ def insert_injection(db_connection, auto_update_trial_table_injection_count, row
     # Change the user-included site, to the actual site id in the sites table
     if 'site' in row_arguments:
         current_site = session.query(sites)\
-                              .filter(sites.site == row_arguments['site'])
+                              .filter(sites.site == row_arguments['site'])\
                               .first()
         if not current_site:
             print('Included site does not exist in database. Have you inserted the site via insert_site(db_connection, row_arguments)?')
             sys.exit(0)
 
-        row_arguments['site'] = current_site.id
+        row_arguments['site'] = current_site.siteId
 
 
-    # Insert a new site into the sites table, since no site was provided by the user
+    # Insert a new site into the sites table, if no site was provided by the user
     if 'site' not in row_arguments:
         sites = get_reflected_table(db_connection, 'sites')
         insert = sites(site_arguments)
         session.add(insert)
-        row_arguments['site'] = insert.id
+        row_arguments['site'] = insert.siteId
 
     table = get_reflected_table(db_connection, 'injections')
 
@@ -733,33 +889,38 @@ def insert_injection(db_connection, auto_update_trial_table_injection_count, row
     session.add(insert)
     session.commit()
 
-    if auto_update_trial_table_injection_count:
-        update_trial_increment_num_inj(db_connection)
+    update_trial_increment_num_inj(db_connection)
 
 
 
-def insert_signal(db_connection, auto_update_trial_table_signal_crashed, row_arguments, has_crashed):
+def insert_signal(db_connection, row_arguments):
     """Insert a row into the signals table. If the site of the injection
-    has not been created by the user in the preprocessing stage, it will be created here.
+    has not been created by the user in the preprocessing stage, it will be created here. Automatically adjusts
+    the entry in the trial table corresponding to the current trial, setting the trial's signal/crashed attribute to true.
 
     Args:
         db_connection (dictionary): Custom dictionary containing database connection information
-
-        auto_update_trial_table_signal_crashed: If true, automatically adjusts the entry in the trial table corresponding to the current trial, setting the trial's signal/crashed attribute to true.
-        Equivalent to a call to update_trial_signal(db_connection, True) and/or update_trial_crashed(db_connection, True)
 
         row_arguments (dictionary): dictionary containing the row to insert. 
 
             row_arguments = {
                 'signal': Integer,
+                'crashed': Boolean,
                 'rank': Integer (Optional),
                 'threadId': Integer (Optional),
             }
 
             Signal: The unix signal number that occured
 
+            crashed: Whether the trial crashed because of this signal - Will simply set the crashed entry in the trial table to true
+
             For optional attributes, please exclude that key from the dictionary if not used.
     """
+
+    has_crashed = row_arguments['crashed']
+    # Remove crashed from dict, as this is not a column in the signals table
+    row_arguments.pop('crashed', None)
+    
     from sqlalchemy.orm import sessionmaker
     session = sessionmaker(bind=db_connection['engine'])()
 
@@ -768,26 +929,24 @@ def insert_signal(db_connection, auto_update_trial_table_signal_crashed, row_arg
     # Set the trial number
     row_arguments['trial'] = db_connection['trial_number']
 
+
     insert = table(**row_arguments)
 
     session.add(insert)
     session.commit()
 
-    if auto_update_trial_table_signal_crashed:
-        update_trial_signal(db_connection, True)
-        if has_crashed:
-            update_trial_crashed(db_connection, True)
+    update_trial_signal(db_connection, True)
+    if has_crashed:
+        update_trial_crashed(db_connection, True)
 
 
-def insert_detection(db_connection, auto_update_trial_table_detected, row_arguments):
+def insert_detection(db_connection, row_arguments):
     """Insert a row into the signals table. If the site of the injection
-    has not been created by the user in the preprocessing stage, it will be created here.
+    has not been created by the user in the preprocessing stage, it will be created here. Automatically adjusts
+    the entry in the trial table corresponding to the current trial. Sets the trial's detected attribute to true.
 
     Args:
         db_connection (dictionary): Custom dictionary containing database connection information
-
-        auto_update_trial_table_detected: If true, automatically adjusts the entry in the trial table corresponding to the current trial. Sets the trial's detected attribute to true.
-        Equivalent to a call to update_trial_detected(db_connection, True)
 
         row_arguments (dictionary): dictionary containing the row to insert. 
 
@@ -817,8 +976,7 @@ def insert_detection(db_connection, auto_update_trial_table_detected, row_argume
     session.add(insert)
     session.commit()
 
-    if auto_update_trial_table_detected:
-        update_trial_detected(db_connection, True)
+    update_trial_detected(db_connection, True)
 
 
 # Utils

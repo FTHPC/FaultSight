@@ -105,12 +105,12 @@
                         <h4><span>Default Graphs </span></h4>
                         <div id="my-graphs-container">
                             {% for i in range(myGraphListLength) %}
-                            <div class="row">
+                            <div class="row col-xs-12">
                             <div class="save-graph-button" id="my-graph-save-button-{{loop.index}}" data-location="my-graph-{{loop.index}}-svd" style="display:none;">
                                     <button type="button" class="btn btn-info">Save Graph</button>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row col-xs-12">
                                 <div id="my-graph-input-{{loop.index}}" style="display:none;">
                                     <label><input type="radio" name="mode" value="grouped"> Grouped</label>
                                     <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>

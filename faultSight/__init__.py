@@ -1,4 +1,6 @@
 from flask import Flask
+import logging
+import os, sys
 
 app = Flask(__name__)
 app.config.from_object('config.default')
@@ -13,28 +15,28 @@ from faultSight.database import db, relevant_tables, sites, trials, injections
 
 # List of all functions found in database
 distinct_functions = []
-for site in db.session.query(sites).distinct(sites.function).group_by(sites.function):
-    distinct_functions.append(site.function)
+for site in db.session.query(sites).distinct(sites.func).group_by(sites.func):
+    distinct_functions.append(site.func)
 app.config['FUNCTIONS'] = distinct_functions
 
 
 # List of functions injected into
 injected_functions = []
 for site in db.session.query(sites)\
-							  .join(injections, sites.site==injections.site)\
-							  .distinct(sites.function)\
-                              .group_by(sites.function):
-	injected_functions.append(site.function)
+							  .join(injections, sites.siteId==injections.siteId)\
+							  .distinct(sites.func)\
+                              .group_by(sites.func):
+	injected_functions.append(site.func)
 app.config['INJECTED_FUNCTIONS'] = injected_functions
 
 
 # List of functions not injected into
 not_injected_functions = []
 for site in db.session.query(sites)\
-							  .join(injections, sites.site!=injections.site)\
-							  .distinct(sites.function)\
-                              .group_by(sites.function):
-	not_injected_functions.append(site.function)
+							  .join(injections, sites.siteId!=injections.siteId)\
+							  .distinct(sites.func)\
+                              .group_by(sites.func):
+	not_injected_functions.append(site.func)
 app.config['NOT_INJECTED_FUNCTIONS'] = not_injected_functions
 
 
