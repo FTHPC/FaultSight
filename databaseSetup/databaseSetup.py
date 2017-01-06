@@ -180,7 +180,7 @@ def create_and_connect_database(database_directory):
     injections = Table('injections', metadata,
         Column('injectionId',Integer, primary_key=True,autoincrement=True),
         Column('trial', Integer, nullable=False),
-        Column('site', Integer, nullable=False),
+        Column('siteId', Integer, nullable=False),
         Column('rank', Integer, nullable=True),
         Column('threadId', Integer, nullable=True),
         Column('prob', Float, nullable=True),
@@ -883,6 +883,10 @@ def insert_injection(db_connection, row_arguments, site_arguments = {}):
 
     # Set the trial number
     row_arguments['trial'] = db_connection['trial_number']
+
+    row_arguments['siteId'] = row_arguments['site']
+    row_arguments.pop('site', None)
+
 
     insert = table(**row_arguments)
 
