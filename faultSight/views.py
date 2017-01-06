@@ -113,7 +113,8 @@ def showFunction(function_name):
                                injectedFunctionList = app.config['INJECTED_FUNCTIONS'], 
                                notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'], 
                                myGraphList=json.dumps(my_graph_list),
-                               myGraphListLength=len(my_graph_list))
+                               myGraphListLength=len(my_graph_list),
+                               fileName=file_path)
 
 
     # Assumptions we can make now for all functions that reach this point:
@@ -162,7 +163,8 @@ def showFunction(function_name):
                            myGraphListLength=len(my_graph_list), 
                            fractionOfApplciation=fraction_of_injections,  
                            databaseDetails=get_database_tables(),
-                           numInjectionsInFunction=num_injections_in_function)
+                           numInjectionsInFunction=num_injections_in_function,
+                           fileName=file_path)
 
 
 def get_entire_function(srcPath, file):
@@ -207,7 +209,7 @@ def get_subsection_function(src_path, file, start_line, end_line, highlight_inde
 def get_function_file(possible_files):
     file = ""
     for possible_file in possible_files:
-        if ".LLVM.txt" not in possible_file or "__NF" not in possible_file:
+        if ".LLVM.txt" not in possible_file and "__NF" not in possible_file:
             file = possible_file
             pass
 
@@ -216,6 +218,8 @@ def get_function_file(possible_files):
     # sys.path.insert(0, '../')
 
     srcPath = read_id_from_config("FaultSight", "srcPath")
+
+    print(str(srcPath) + str(file))
 
     # Check if the path in the database is correct
     if os.path.isfile(file):
