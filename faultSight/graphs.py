@@ -43,35 +43,26 @@ def get_graph(graph_type,region_data,constraint_data = {}):
 
     # Injections category
     if graph_type == TYPE_OF_INJECTED_FUNCTION:
-        print("a")
         return injection_classification(region_data, constraint_data)
     elif graph_type == BIT_LOCATION:
-        print("b")
         return injection_bit_location(region_data, constraint_data)
     elif graph_type == INJECTED_FUNCTIONS:
-        print("c")
         return injection_which_function(region_data, constraint_data)
     elif graph_type == INJECTION_TYPE_FUNCTION:
-        print("d")
         return injections_in_each_function(region_data, constraint_data)
     elif graph_type == INJECTIONS_MAPPED_TO_LINE:
-        print("e")
         return injection_mapped_to_line(region_data, constraint_data)
 
     # Signals category
     elif graph_type == UNEXPECTED_TERMINATION:
-        print("f")
         return signal_unexpected_termination(region_data, constraint_data)
 
     # Detections category
     elif graph_type == NUM_TRIAL_WITH_DETECTION:
-        print("g")
         return detections_num_trials_with_detection(region_data, constraint_data)
     elif graph_type == DETECTED_BIT_LOCATION:
-        print("h")
         return detections_bit_location(region_data, constraint_data)
     elif graph_type == DETECTION_LATENCY:
-        print("i")
         return detections_latency(region_data, constraint_data)
     else:
         logging.error("Error in getting graphs" + str(graph_type))
@@ -170,7 +161,7 @@ def injection_classification(region_data,constraint_data):
 
             if title_edited == False:
                 title += " - Error: Unknown injection type found. Check that the types in the database and constants.py match."
-    print("injected type size: ", len(injected_types))
+
     # Store data in appropriate dictionary
     data = []
     for i in range(len(TYPES)):

@@ -219,8 +219,6 @@ def get_function_file(possible_files):
 
     srcPath = read_id_from_config("FaultSight", "srcPath")
 
-    print(str(srcPath) + str(file))
-
     # Check if the path in the database is correct
     if os.path.isfile(file):
         return "", file
