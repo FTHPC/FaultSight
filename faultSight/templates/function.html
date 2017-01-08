@@ -187,17 +187,17 @@
                                 </div>
                                 <div style="float:left;"><span>Percentage (Line)</span><pre class="language-none">
 <code>{% for instructionDict in instructionArray -%}
-{{instructionDict['InjectionPercentageLine']}}%
+{{ '%0.2f' | format(instructionDict['InjectionPercentageLine'])}}%
 {% endfor %}</code></pre>
                                 </div>
                                 <div style="float:left;"><span>Percentage (Function)</span><pre class="language-none">
 <code>{% for instructionDict in instructionArray -%}
-{{instructionDict['InjectionPercentageFunction']}}%
+{{ '%0.2f' | format(instructionDict['InjectionPercentageFunction'])}}%
 {% endfor %}</code></pre>
                                 </div>
                                 <div style="float:left;"><span>Percentage (Application)</span><pre class="language-none">
 <code>{% for instructionDict in instructionArray -%}
-{{instructionDict['InjectionPercentageApplication']}}%
+{{ '%0.2f' | format(instructionDict['InjectionPercentageApplication'])}}%
 {% endfor %}</code></pre>
                                 </div>
                             </div>

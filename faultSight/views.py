@@ -78,10 +78,10 @@ def showFunction(function_name):
     possible_file_paths = [site['file'] for site in all_function_sites]
 
     # Parse the list of possible paths, get the correct one
-    src_path, file_path = get_function_file(possible_file_paths)
+    file_path = get_function_file(possible_file_paths)
 
     # If we were unable to find a valid file
-    if src_path == "" and file_path == "":
+    if file_path == "":
         # No file found. Perhaps the analysis was run on a different computer and the files have not been transferred over?
         return render_template('missingFunction.html', 
                                functionName=function_name, 
@@ -93,11 +93,11 @@ def showFunction(function_name):
                                myGraphListLength=len(my_graph_list))
  
 
-    logging.info("\nRelating injections to source code in file: " +  str(src_path) + str(file))
+    logging.info("\nRelating injections to source code in file: " +  str(file_path))
 
 
     # Get the entire function code - html escaped
-    entire_function_html = get_entire_function(src_path, file_path)
+    entire_function_html = get_entire_function(file_path)
 
 
 
@@ -130,7 +130,7 @@ def showFunction(function_name):
     highlight_indexes = get_highlighted_indexes(line_injection_count)
 
     # Get the partial function code - this is html escaped and ready for highlighting client side.
-    partial_function_html = get_subsection_function(src_path, file_path, start_line, end_line, highlight_indexes)
+    partial_function_html = get_subsection_function(file_path, start_line, end_line, highlight_indexes)
 
 
     num_injections_in_function = db.session.query(sites)\
@@ -167,9 +167,9 @@ def showFunction(function_name):
                            fileName=file_path)
 
 
-def get_entire_function(srcPath, file):
+def get_entire_function(file_path):
     # Read the entire function.
-    entire_function = read_lines_from_file(srcPath, file)
+    entire_function = read_lines_from_file(file_path)
     entire_function_html = ""
     for i in range(len(entire_function)):
         entire_function_html += str2html(entire_function[i])
@@ -185,9 +185,9 @@ def get_highlighted_indexes(values):
             highlight_indexes.append(i)
     return highlight_indexes
 
-def get_subsection_function(src_path, file, start_line, end_line, highlight_indexes):
+def get_subsection_function(file_path, start_line, end_line, highlight_indexes):
     # Getting 'relevant' lines of code
-    relevant_lines_function = read_lines_from_file(src_path, file, start_line, end_line)
+    relevant_lines_function = read_lines_from_file(file_path, start_line, end_line)
     partial_function = ""
 
     # Go through each of the relevent lines, and convert string to html
@@ -217,16 +217,33 @@ def get_function_file(possible_files):
 
     # sys.path.insert(0, '../')
 
-    srcPath = read_id_from_config("FaultSight", "srcPath")
+    src_path = read_id_from_config("FaultSight", "srcPath")
+
+    # Get filename
+    import os.path
+    file_name = os.path.basename(file)
+
+    # Get package name - i.e. if srcPath in config file is "/foo/bar/", returns "bar"
+    package_name = os.path.basename(src_path)
+
+    # Replace everything before the package name with the srcPath in config file
+    new_path = ""
+    try:
+        dir_name = os.path.dirname(src_path) + "/"
+        new_path = file.replace(file[:file.index(package_name)],dir_name )
+    except:
+        pass
 
     # Check if the path in the database is correct
     if os.path.isfile(file):
-        return "", file
-    elif os.path.isfile(srcPath+file):
-        return srcPath, file
+        return file
+    elif os.path.isfile(new_path):
+        return new_path
+    elif os.path.isfile(src_path+file_name):
+        return src_path + file
     else:
-        logging.warning("Warning (visInjectionsInCode): source file not found -- " +  str(srcPath) + str(file))
-        return "", ""
+        logging.warning("Warning: source file not found -- " +  str(file) + " -- nor " + new_path)
+        return ""
 
 def analyse_line_count(lines):
     # Finding min and max lines, so we can later select 'relevant' lines.

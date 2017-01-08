@@ -50,8 +50,8 @@ def is_valid_function(functionName):
 
 
 
-def read_lines_from_file(src_path, file, start_line = 0, end_line = 0):
-    FILE = open(src_path + file, "r")
+def read_lines_from_file(file_path, start_line = 0, end_line = 0):
+    FILE = open(file_path, "r")
     file_lines = FILE.readlines()
     FILE.close()
 
