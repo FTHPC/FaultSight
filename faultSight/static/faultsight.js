@@ -58,20 +58,7 @@ function initApplicationPage(){
 	createMainPageGraph();
 }
 
-function generateGraph(graph, locationId, inputId, svdIdName, chartType){
-	if (graph[1].type === "single" && chartType == CHART_BAR){
-        drawGraph(graph, locationId, svdIdName);
-    } else if (graph[1].type === "single" && chartType == CHART_PIE){
-        pieChartDonut(graph, locationId, svdIdName);
-    } else if (graph[1].type === "multiple" && chartType == CHART_BAR){
-        showStackedInput(inputId);
-        stackedBarGraph(graph, locationId, inputId, svdIdName);
-    } else if (graph[1].type === "multiple" && chartType == CHART_PIE){
-        pieChartDonutStacked(graph, locationId, svdIdName);
-    }
 
-
-}
 
 function drawMyGraphs(){
 	// Draw MyGraphs (Default graphs for user - Determined in settings)
@@ -443,6 +430,18 @@ function saveSettingsToFile(){
 //***************GRAPH CREATION***************//
 
 
+function generateGraph(graph, locationId, inputId, svdIdName, chartType){
+	if (graph[1].type === "single" && chartType == CHART_BAR){
+        drawGraph(graph, locationId, svdIdName);
+    } else if (graph[1].type === "single" && chartType == CHART_PIE){
+        pieChartDonut(graph, locationId, svdIdName);
+    } else if (graph[1].type === "multiple" && chartType == CHART_BAR){
+        showStackedInput(inputId);
+        stackedBarGraph(graph, locationId, inputId, svdIdName);
+    } else if (graph[1].type === "multiple" && chartType == CHART_PIE){
+        pieChartDonutStacked(graph, locationId, svdIdName);
+    }
+}
 
 function createGraph(queryObject, svdIdName){
 	$("#mplplot").empty();
