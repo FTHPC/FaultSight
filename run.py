@@ -7,17 +7,13 @@ from faultSight import app
 
 
 # Link to original program source. This is useful when your database was created
-# on another machine. Your database would contain the absolute path of each
-# file. If the actual source code is available on this machine, we can try to
-# search for each file at SRC_PATH.
+# on another machine. Your database would then contain the absolute path of each
+# file on the original machine. If the actual source code is also available on this
+# machine, FaultSight will try adjusting the file path to find the file on this
+# machine. Simply provide the absolute path of the package on this
+# machine (in the form "/foo/bar") in SRC_PATH below.
 
-# We are currently searching for files in the following order:
-# 1.) DATABASE_FILENAME
-# 2.) SRC_PATH/DATABASE_FILENAME_TRUNCATED
-# TODO:
-# OR we can switch to using relative paths in our databse, and always refer to
-# it using SRC_PATH?
-SRC_PATH = "../SRC-GOES-HERE" 
+SRC_PATH = "/foo/bar"
 
 RECREATE_CONFIG_FILE = False
 
