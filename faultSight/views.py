@@ -80,6 +80,11 @@ def showFunction(function_name):
     # Parse the list of possible paths, get the correct one
     file_path = get_function_file(possible_file_paths)
 
+    # Get data for statistical analysis
+    confidence_value = float(read_id_from_config("FaultSight", "confidenceValue"))
+    proportion_testing_results = proportion_test(function_name, confidence_value)
+
+
     # If we were unable to find a valid file
     if file_path == "":
         # No file found. Perhaps the analysis was run on a different computer and the files have not been transferred over?
@@ -90,7 +95,10 @@ def showFunction(function_name):
                                injectedFunctionList = app.config['INJECTED_FUNCTIONS'], 
                                notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'], 
                                myGraphList=json.dumps(my_graph_list),
-                               myGraphListLength=len(my_graph_list))
+                               myGraphListLength=len(my_graph_list),
+                               proportionTesting=proportion_testing_results,
+                               confidenceValue=float(read_id_from_config("FaultSight", "confidenceValue"))
+                               )
  
 
     logging.info("\nRelating injections to source code in file: " +  str(file_path))
@@ -142,6 +150,7 @@ def showFunction(function_name):
     fraction_of_injections = float(num_injections_in_function) / app.config['NUM_INJECTIONS']
 
 
+    
 
     highlight_lines = highlight_indexes + start_line
     machine_instructions = get_machine_instructions(function_name,highlight_lines, app.config['NUM_INJECTIONS'], num_injections_in_function)
@@ -157,6 +166,7 @@ def showFunction(function_name):
                            partialHighlightIndexes=highlight_indexes,  
                            machineInstructions=machine_instructions, 
                            highlightMinimumValue=float(read_id_from_config("FaultSight", "highlightValue")),  
+                           confidenceValue=float(read_id_from_config("FaultSight", "confidenceValue")),  
                            partialStartLine=start_line, 
                            entireCode=entire_function_html, 
                            myGraphList=json.dumps(my_graph_list), 
@@ -164,9 +174,58 @@ def showFunction(function_name):
                            fractionOfApplciation=fraction_of_injections,  
                            databaseDetails=get_database_tables(),
                            numInjectionsInFunction=num_injections_in_function,
-                           fileName=file_path)
+                           fileName=file_path,
+                           proportionTesting=proportion_testing_results)
 
 
+def proportion_test(function_name, confidence_value):
+
+    # Array for storing results
+    return_data = []
+
+    # Type-independent data query
+    num_total_sites = db.session.query(sites)\
+                        .filter(sites.func == function_name)\
+                        .count()
+
+    num_total_injections = db.session.query(sites)\
+                    .join(injections, sites.siteId==injections.siteId)\
+                    .filter(sites.func == function_name)\
+                    .count()
+
+
+
+    # Type-dependent queries and calculations
+    for type_name in TYPES_LONG:
+
+        num_type_injections = db.session.query(sites)\
+                                .join(injections, sites.siteId==injections.siteId)\
+                                .filter(sites.func == function_name)\
+                                .filter(sites.type == type_name)\
+                                .count()
+
+        num_type_sites = db.session.query(sites)\
+                            .filter(sites.func == function_name)\
+                            .filter(sites.type == type_name)\
+                            .count()
+
+        # Test of proportions
+        p_val_type = test_of_proportions(num_total_injections, num_total_sites, num_type_injections, num_type_sites)
+
+        type_entry = {
+            'type': type_name,
+            'pVal': p_val_type,
+            'numTypeInjections': num_type_injections,
+            'numTypeSites': num_type_sites,
+            'numTotalInjections': num_total_injections,
+            'numTotalSites': num_total_sites,
+            'success': p_val_type < (1 - (confidence_value / 100.0 ))
+        }
+
+        return_data.append(type_entry)
+
+    return return_data
+    
 def get_entire_function(file_path):
     # Read the entire function.
     entire_function = read_lines_from_file(file_path)
@@ -345,6 +404,7 @@ def get_settings_from_file():
         'myGraphList': config.get("FaultSight", "myGraphList"), 
         'customConstraints':config._sections['CustomConstraint'],
         'highlightValue':config.get("FaultSight", "highlightValue"),
+        'confidenceValue':config.get("FaultSight", "confidenceValue"),
     }
     
     # Package the dict and return
@@ -360,6 +420,7 @@ def save_settings_to_file():
     # These are simple to set.
     config.set("FaultSight", "myGraphList", request.json['myGraphList'])
     config.set("FaultSight","highlightValue",request.json['highlightValue'])
+    config.set("FaultSight","confidenceValue",request.json['confidenceValue'])
 
     # Sets custom constraints - Slightly more complicated
     for key, value in request.json['customConstraints'].items():

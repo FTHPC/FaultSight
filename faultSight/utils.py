@@ -127,3 +127,32 @@ def generate_region_object(region = "", start = "", end = ""):
                      'End':end
                     }
     return region_object
+
+
+def test_of_proportions(num_total_injections, num_total_sites, num_type_injections, num_type_sites):
+
+    if num_type_sites == 0:
+        return "Unable to determine"
+
+    x_1 = num_type_injections * 1.0
+    n_1 = num_total_injections * 1.0
+
+    x_2 = num_type_sites * 1.0
+    n_2 = num_total_sites * 1.0
+
+    p_1 = x_1 / n_1
+    p_2 = x_2 / n_2
+
+    p_combined = (x_1 + x_2) / (n_1 + n_2)
+
+    numerator = p_1 - p_2
+
+    import numpy
+    denominator = numpy.sqrt(p_combined * (1 - p_combined) * ( (1.0 / n_1) + (1.0 / n_2) ))
+
+    z = numerator / denominator
+
+    import scipy.stats
+    p_val = scipy.stats.norm.sf(abs(z))*2 #two-sided
+
+    return p_val

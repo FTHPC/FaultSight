@@ -291,6 +291,7 @@ function setupSettingsObject(callback){
     currentSettings = {
 		"myGraphList": [],
         "highlightValue": 0,
+        "confidenceValue": 0,
         "customConstraints": {},
     };
     $.each(databaseDetails, function(index,value){
@@ -341,6 +342,7 @@ function clickBindInSettings(){
 
 	$("#settings-save").click(function(){
 	    currentSettings.highlightValue = $("#highlight-value-input").val();
+	    currentSettings.confidenceValue = $("#confidence-value-input").val();
 	    saveSettingsToFile();
 	});
 }
@@ -401,6 +403,11 @@ function getSettingsFromFile(){
                 var highlightValue = response.highlightValue;
                 currentSettings.highlightValue = highlightValue;
                 $("#highlight-value-input").val(highlightValue);
+
+                //Set up confidence value
+                var confidenceValue = response.confidenceValue;
+                currentSettings.confidenceValue = confidenceValue;
+                $("#confidence-value-input").val(confidenceValue);
 	        },
 	        error: function(error) {
 		        console.log(error);

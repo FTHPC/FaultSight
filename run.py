@@ -31,8 +31,9 @@ def checkConfig():
 def createConfig(path):
     config = ConfigParser.ConfigParser()
     config.add_section("FaultSight")
-    config.set("FaultSight", "myGraphList", [0,1,2,6])
+    config.set("FaultSight", "myGraphList", [1,2,6])
     config.set("FaultSight", "highlightValue", '10')
+    config.set("FaultSight", "confidenceValue", '95')
     config.set("FaultSight", "srcPath", SRC_PATH)
     config.add_section("CustomConstraint")
     config.set("CustomConstraint","trials",'["crashed","detection"]')

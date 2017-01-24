@@ -161,6 +161,7 @@ def injection_classification(region_data,constraint_data):
 
             if title_edited == False:
                 title += " - Error: Unknown injection type found. Check that the types in the database and constants.py match."
+                title_edited = True
 
     # Store data in appropriate dictionary
     data = []

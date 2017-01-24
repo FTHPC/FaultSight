@@ -127,6 +127,32 @@
                     </div>
 
                 </div>
+
+
+                <div class="row" style="margin-top:5px;">
+                    <hr />
+                    <h2 id="statistics-anchor">Statistical Analysis</h2>
+                    <h4><span>Statistical Significance (Test of proportions)</span></h4>
+                    <div id="test-of-proportions-container">
+                        {% for proportionTestType in proportionTesting -%}
+                            <h3>{{proportionTestType['type']}}</h3>
+                            <h5>Injections: {{proportionTestType['numTypeInjections']}}</h5>
+                            <h5>Sites: {{proportionTestType['numTypeSites']}}</h5>
+                            <h5>P-value ({{confidenceValue}}% confidence interval, {{ 1 - ( confidenceValue / 100.0 ) }} significance): {{proportionTestType['pVal']}}</h5>
+                            <h5>Success: 
+                            {% if proportionTestType['success'] %}
+                            <span style="color:green">True</span>
+                            {% else %}
+                            <span style="color:red">False</span>
+                            {% endif %}
+                            </h5>
+
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+
                 <div class="row" style="margin-top:5px;">
                     <div class="col-xs-12">
                     <hr />
@@ -348,6 +374,20 @@
                             </div>
                             <br />
                             <hr />
+                            <h3>Confidence Interval</h3>
+                            <p>Please enter a confidence interval to use for the test of proportions.</p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                <div style="width:100px;">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="confidence-value-input" placeholder="Value" aria-describedby="basic-addon">
+                                            <span class="input-group-addon" id="basic-addon">%</span>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
                             <h3>Default Graphs</h3>
                             <p>Select the graphs that you would like to be automatically generated when this page is loaded.</p>
                             <div class="row">
@@ -417,7 +457,7 @@
         var myGraphList = {{myGraphList|safe}};
         var databaseDetails = {{databaseDetails|tojson|safe}};
         var numInjectionsInFunction = {{numInjectionsInFunction}};
-        
+
     </script>
     <script type="text/javascript" charset="utf-8" src="../static/faultsight.js"></script>
     <script type="text/javascript">
