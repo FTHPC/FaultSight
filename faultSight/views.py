@@ -210,7 +210,7 @@ def proportion_test(function_name, confidence_value):
                             .count()
 
         # Test of proportions
-        p_val_type = test_of_proportions(num_total_injections, num_total_sites, num_type_injections, num_type_sites)
+        p_val_type, p1_val, p2_val = test_of_proportions(num_total_injections, num_total_sites, num_type_injections, num_type_sites)
 
         type_entry = {
             'type': type_name,
@@ -219,6 +219,8 @@ def proportion_test(function_name, confidence_value):
             'numTypeSites': num_type_sites,
             'numTotalInjections': num_total_injections,
             'numTotalSites': num_total_sites,
+            'p1': p1_val,
+            'p2': p2_val,
             'success': p_val_type < (1 - (confidence_value / 100.0 ))
         }
 
