@@ -132,7 +132,7 @@ def generate_region_object(region = "", start = "", end = ""):
 def test_of_proportions(num_total_injections, num_total_sites, num_type_injections, num_type_sites):
 
     if num_type_sites == 0:
-        return "Unable to determine", 0.0, 0.0
+        return "Unable to determine", 0.0, 0.0, 0.0
 
     x_1 = num_type_injections * 1.0
     n_1 = num_total_injections * 1.0
@@ -155,4 +155,4 @@ def test_of_proportions(num_total_injections, num_total_sites, num_type_injectio
     import scipy.stats
     p_val = scipy.stats.norm.sf(abs(z))*2 #two-sided
 
-    return p_val, p_1, p_2
+    return p_val, p_1, p_2, z

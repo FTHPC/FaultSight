@@ -1,6 +1,7 @@
 # TODO: Probably a lot of constants here we no longer need.
 
 TYPES = ["Arith-FP", "Pointer", "Arith-Fix", "Ctrl-Loop", "Ctrl-Branch","Unknown"]
+TYPES_WITHOUT_UNKNOWN = ["Arith-FP", "Pointer", "Arith-Fix", "Control-Loop", "Control-Branch"]
 TYPES_LONG = ["Floating-Point", "Pointer", "Fixed-Point", "Control-Loop", "Control-Branch"]
 BIT_64 = ["Bits 1-8", "Bits 9-16", "Bits 17-24", "Bits 25-32", "Bits 33-40", "Bits 41-48", "Bits 49-56", "Bits 57-64"]
 DETECTED_YES_NO = ["Detected","Not Detected"]

@@ -196,7 +196,7 @@ def proportion_test(function_name, confidence_value):
 
 
     # Type-dependent queries and calculations
-    for type_name in TYPES_LONG:
+    for type_name in TYPES_WITHOUT_UNKNOWN:
 
         num_type_injections = db.session.query(sites)\
                                 .join(injections, sites.siteId==injections.siteId)\
@@ -210,11 +210,12 @@ def proportion_test(function_name, confidence_value):
                             .count()
 
         # Test of proportions
-        p_val_type, p1_val, p2_val = test_of_proportions(num_total_injections, num_total_sites, num_type_injections, num_type_sites)
+        p_val_type, p1_val, p2_val, z_value = test_of_proportions(num_total_injections, num_total_sites, num_type_injections, num_type_sites)
 
         type_entry = {
             'type': type_name,
             'pVal': p_val_type,
+            'zValue': z_value,
             'numTypeInjections': num_type_injections,
             'numTypeSites': num_type_sites,
             'numTotalInjections': num_total_injections,

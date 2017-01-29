@@ -136,22 +136,24 @@
                     <div id="test-of-proportions-container">
                         {% for proportionTestType in proportionTesting -%}
                             <h3>{{proportionTestType['type']}}</h3>
-                            <h5>P<sub>1</sub> = Injections of this type / Sites of this type = {{proportionTestType['numTypeInjections']}} / {{proportionTestType['numTypeSites']}}</h5>
+                            <h5>P<sub>1</sub> = Injections of this type / Total Injections = {{proportionTestType['numTypeInjections']}} / {{proportionTestType['numTotalInjections']}}</h5>
                             <h5>P<sub>1</sub> = {{proportionTestType['p1']}}</h5>
 
                             <br />
-                            <h5>P<sub>2</sub> = Total injections / Total sites = {{proportionTestType['numTotalInjections']}} / {{proportionTestType['numTotalSites']}}</h5>
+                            <h5>P<sub>2</sub> = Sites of this type / Total sites = {{proportionTestType['numTypeSites']}} / {{proportionTestType['numTotalSites']}}</h5>
                             <h5>P<sub>2</sub> = {{proportionTestType['p2']}}</h5>
 
                             <br />
                             <h5>Null hypothesis: P<sub>1</sub> = P<sub>2</sub>, Alternate hypothesis: P<sub>1</sub> != P<sub>2</sub></h5>
+                            <h5>Z-value: {{proportionTestType['zValue']}}
                             <h5>P-value ({{confidenceValue}}% confidence interval, {{ 1 - ( confidenceValue / 100.0 ) }} significance): {{proportionTestType['pVal']}}</h5>
-                            <h5>Success: 
+                            <h5><b>Statistically Significant: 
                             {% if proportionTestType['success'] %}
                             <span style="color:green">True</span>
                             {% else %}
                             <span style="color:red">False</span>
                             {% endif %}
+                            </b>
                             </h5>
 
                         {% endfor %}
