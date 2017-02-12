@@ -23,13 +23,16 @@ def index():
     main_graph = [get_graph(INJECTED_FUNCTIONS,region_data)]
 
     # TODO: Need error on main page when no database/no injections(?)
-
+    # Get number of trials
+    num_trials = get_num_trials()
+    
     return render_template('main.html',
                            functionList = app.config['FUNCTIONS'],
                            injectedFunctionList = app.config['INJECTED_FUNCTIONS'],
                            notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'],
                            databaseDetails = get_database_tables(),
-                           mainGraphList = main_graph)
+                           mainGraphList = main_graph,
+                           numTrials = num_trials)
 
 """Request for `Specific Function` page"""
 @app.route('/function/<function_name>')
@@ -84,6 +87,8 @@ def showFunction(function_name):
     confidence_value = float(read_id_from_config("FaultSight", "confidenceValue"))
     proportion_testing_results = proportion_test(function_name, confidence_value)
 
+    # Get number of trials
+    num_trials = get_num_trials()
 
     # If we were unable to find a valid file
     if file_path == "":
@@ -97,8 +102,8 @@ def showFunction(function_name):
                                myGraphList=json.dumps(my_graph_list),
                                myGraphListLength=len(my_graph_list),
                                proportionTesting=proportion_testing_results,
-                               confidenceValue=float(read_id_from_config("FaultSight", "confidenceValue"))
-                               )
+                               confidenceValue=float(read_id_from_config("FaultSight", "confidenceValue")),
+                               numTrials = num_trials)
  
 
     logging.info("\nRelating injections to source code in file: " +  str(file_path))
@@ -122,7 +127,8 @@ def showFunction(function_name):
                                notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'], 
                                myGraphList=json.dumps(my_graph_list),
                                myGraphListLength=len(my_graph_list),
-                               fileName=file_path)
+                               fileName=file_path,
+                               numTrials = num_trials)
 
 
     # Assumptions we can make now for all functions that reach this point:
@@ -175,7 +181,11 @@ def showFunction(function_name):
                            databaseDetails=get_database_tables(),
                            numInjectionsInFunction=num_injections_in_function,
                            fileName=file_path,
-                           proportionTesting=proportion_testing_results)
+                           proportionTesting=proportion_testing_results,
+                           statisticalUseAllTrials=read_id_from_config("FaultSight", "statisticalUseAllTrials"),
+                           statisticalStartTrial=read_id_from_config("FaultSight", "statisticalStartTrial"),
+                           statisticalEndTrial=read_id_from_config("FaultSight", "statisticalEndTrial"),
+                           numTrials = num_trials)
 
 
 def proportion_test(function_name, confidence_value):
@@ -183,28 +193,72 @@ def proportion_test(function_name, confidence_value):
     # Array for storing results
     return_data = []
 
+    # Check if user is interested in subset of trials
+    use_all_trials = False
+    if read_id_from_config("FaultSight", "statisticalUseAllTrials") == "True":
+      use_all_trials = True
+
+    min_trial = int(read_id_from_config("FaultSight", "statisticalStartTrial"))
+    max_trial = int(read_id_from_config("FaultSight", "statisticalEndTrial"))
+
+
     # Type-independent data query
-    num_total_sites = db.session.query(sites)\
+    num_total_sites = 0
+
+
+    num_total_injections = 0
+
+    if use_all_trials:
+      num_total_sites = db.session.query(sites)\
                         .filter(sites.func == function_name)\
                         .count()
 
-    num_total_injections = db.session.query(sites)\
+      num_total_injections = db.session.query(sites)\
                     .join(injections, sites.siteId==injections.siteId)\
                     .filter(sites.func == function_name)\
                     .count()
+    else:
+      num_total_sites = db.session.query(sites)\
+                        .filter(sites.func == function_name)\
+                        .count()
+
+      num_total_injections = db.session.query(sites)\
+                    .join(injections, sites.siteId==injections.siteId)\
+                    .filter(sites.func == function_name)\
+                    .filter(injections.trial >= min_trial)\
+                    .filter(injections.trial <= max_trial)\
+                    .count()
 
 
-
+    
     # Type-dependent queries and calculations
     for type_name in TYPES_WITHOUT_UNKNOWN:
 
-        num_type_injections = db.session.query(sites)\
+        num_type_injections = 0
+        num_type_sites = 0
+
+        if use_all_trials:
+
+          num_type_injections = db.session.query(sites)\
                                 .join(injections, sites.siteId==injections.siteId)\
                                 .filter(sites.func == function_name)\
                                 .filter(sites.type == type_name)\
                                 .count()
 
-        num_type_sites = db.session.query(sites)\
+          num_type_sites = db.session.query(sites)\
+                            .filter(sites.func == function_name)\
+                            .filter(sites.type == type_name)\
+                            .count()
+        else:
+          num_type_injections = db.session.query(sites)\
+                                .join(injections, sites.siteId==injections.siteId)\
+                                .filter(sites.func == function_name)\
+                                .filter(sites.type == type_name)\
+                                .filter(injections.trial >= min_trial)\
+                                .filter(injections.trial <= max_trial)\
+                                .count()
+
+          num_type_sites = db.session.query(sites)\
                             .filter(sites.func == function_name)\
                             .filter(sites.type == type_name)\
                             .count()
@@ -408,7 +462,16 @@ def get_settings_from_file():
         'customConstraints':config._sections['CustomConstraint'],
         'highlightValue':config.get("FaultSight", "highlightValue"),
         'confidenceValue':config.get("FaultSight", "confidenceValue"),
+        'statisticalUseAllTrials':config.get("FaultSight", "statisticalUseAllTrials"),
+        'statisticalStartTrial':config.get("FaultSight", "statisticalStartTrial"),
+        'statisticalEndTrial':config.get("FaultSight", "statisticalEndTrial")
     }
+
+
+    if settings_dict['statisticalUseAllTrials'] == "True":
+      settings_dict['statisticalUseAllTrials'] = True
+    else:
+      settings_dict['statisticalUseAllTrials'] = False
     
     # Package the dict and return
     return jsonify(**settings_dict)
@@ -424,6 +487,14 @@ def save_settings_to_file():
     config.set("FaultSight", "myGraphList", request.json['myGraphList'])
     config.set("FaultSight","highlightValue",request.json['highlightValue'])
     config.set("FaultSight","confidenceValue",request.json['confidenceValue'])
+
+    config.set("FaultSight","statisticalUseAllTrials",request.json['statisticalUseAllTrials'])
+    if not request.json['statisticalUseAllTrials']:
+      config.set("FaultSight","statisticalStartTrial",request.json['statisticalStartTrial'])
+      config.set("FaultSight","statisticalEndTrial",request.json['statisticalEndTrial'])
+    else:
+      config.set("FaultSight","statisticalStartTrial","0")
+      config.set("FaultSight","statisticalEndTrial","0")
 
     # Sets custom constraints - Slightly more complicated
     for key, value in request.json['customConstraints'].items():

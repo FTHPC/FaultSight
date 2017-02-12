@@ -131,6 +131,24 @@
                             </div>
                             <br />
                             <hr />
+                            <h3>Statistical Significance of Function</h3>
+                            <p>You can use a subset of trials for the statistical significance calculation.</p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                <input id="statistical-use-all-trials" type="checkbox"> Use all trials
+                                <p>Select a range of trials to use in calculation (i.e. [Start, End]). <b>According to the database, there were {{ numTrials }} trials. </b>Trials are typically 1-based, depending on how the trials were injected into the database.</p>
+                                <div>
+                                    <div class="input-group" style="float:left;">
+                                        <input type="text" class="form-control" id="statistical-trial-start" placeholder="From">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="statistical-trial-end" placeholder="To">
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
                             <h3>Default Graphs</h3>
                             <p>Select the graphs that you would like to be automatically generated when this page is loaded.</p>
                             <div class="row">

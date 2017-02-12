@@ -293,6 +293,9 @@ function setupSettingsObject(callback){
         "highlightValue": 0,
         "confidenceValue": 0,
         "customConstraints": {},
+        "statisticalUseAllTrials": true,
+        "statisticalStartTrial": 0,
+        "statisticalEndTrial": 0
     };
     $.each(databaseDetails, function(index,value){
         currentSettings.customConstraints[index] = [];
@@ -343,6 +346,27 @@ function clickBindInSettings(){
 	$("#settings-save").click(function(){
 	    currentSettings.highlightValue = $("#highlight-value-input").val();
 	    currentSettings.confidenceValue = $("#confidence-value-input").val();
+
+	    // Statistical significance data
+	    currentSettings.statisticalUseAllTrials = $("#statistical-use-all-trials").is(':checked')
+
+	    if (currentSettings.statisticalUseAllTrials){
+	    	currentSettings.statisticalStartTrial = 0;
+    		currentSettings.statisticalEndTrial = 0;
+	    } else {
+	    	currentSettings.statisticalStartTrial = $("#statistical-trial-start").val().trim();
+    		currentSettings.statisticalEndTrial = $("#statistical-trial-end").val().trim();
+	    	if (parseInt(Number(currentSettings.statisticalStartTrial)) != currentSettings.statisticalStartTrial || 
+	    		parseInt(Number(currentSettings.statisticalEndTrial)) != currentSettings.statisticalEndTrial ||
+	    		currentSettings.statisticalStartTrial == "" || currentSettings.statisticalEndTrial == ""){
+				currentSettings.statisticalStartTrial = 0;
+    			currentSettings.statisticalEndTrial = 0;
+    			currentSettings.statisticalUseAllTrials = true;
+	    	}
+			
+	    }
+    	
+
 	    saveSettingsToFile();
 	});
 }
@@ -360,6 +384,35 @@ function clickBindInFunctionPage(){
 	$(".save-graph-button").click(function(e){
 		var dataLocation = $(this).attr("data-location");
 	    saveSvgAsPng(document.getElementById(dataLocation), "diagram.png", {backgroundColor:"#FFF"});
+	});
+
+	// Click to toggle the display of the test-of-proportions results
+	$("#test-of-proportions-header").click(function(e){
+
+		if ($("#test-of-proportions-container").css('display') != 'none'){
+			$("#test-of-proportions-up-icon").hide();
+			$("#test-of-proportions-down-icon").show();
+		} else {
+			$("#test-of-proportions-up-icon").show();
+			$("#test-of-proportions-down-icon").hide();
+		}
+
+		$("#test-of-proportions-container").slideToggle();
+
+	});
+
+	$("#statistical-use-all-trials").click(function() {
+        if ($(this).is(':checked')) {
+            $("#statistical-trial-start").prop('disabled', true);
+            $("#statistical-trial-end").prop('disabled', true);
+        } else {
+        	$("#statistical-trial-start").prop('disabled', false);
+        	$("#statistical-trial-end").prop('disabled', false);
+        }
+    });
+
+    $("#test-of-proportions-link").click(function(e) {
+	  e.preventDefault();
 	});
 }
 
@@ -408,6 +461,33 @@ function getSettingsFromFile(){
                 var confidenceValue = response.confidenceValue;
                 currentSettings.confidenceValue = confidenceValue;
                 $("#confidence-value-input").val(confidenceValue);
+
+                // Set up statistical significance data
+                currentSettings.statisticalUseAllTrials = response.statisticalUseAllTrials;
+                $("#statistical-use-all-trials").attr("checked", currentSettings.statisticalUseAllTrials);
+                if ($("#statistical-use-all-trials").is(':checked')) {
+		            $("#statistical-trial-start").prop('disabled', true);
+		            $("#statistical-trial-end").prop('disabled', true);
+		        } else {
+		        	$("#statistical-trial-start").prop('disabled', false);
+		        	$("#statistical-trial-end").prop('disabled', false);
+		        }
+
+				currentSettings.statisticalStartTrial = response.statisticalStartTrial;
+				if (!currentSettings.statisticalUseAllTrials){
+					$("#statistical-trial-start").val(currentSettings.statisticalStartTrial);
+				} else {
+					$("#statistical-trial-start").val("");
+				}
+                
+
+				currentSettings.statisticalEndTrial = response.statisticalEndTrial;
+				if (!currentSettings.statisticalUseAllTrials){
+					$("#statistical-trial-end").val(currentSettings.statisticalEndTrial);
+				} else {
+					$("#statistical-trial-end").val("");
+				}
+
 	        },
 	        error: function(error) {
 		        console.log(error);

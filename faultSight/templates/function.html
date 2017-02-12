@@ -132,8 +132,19 @@
                 <div class="row" style="margin-top:5px;">
                     <hr />
                     <h2 id="statistics-anchor">Statistical Analysis</h2>
-                    <h4><span>Statistical Significance (Two proportion z-test)</span></h4>
-                    <div id="test-of-proportions-container">
+                    <h4 id="test-of-proportions-header">
+                        <a id="test-of-proportions-link" href="">
+                            <span id="test-of-proportions-down-icon" class="glyphicon glyphicon-chevron-down" style="color: #333;" aria-hidden="true"></span>
+                            <span id="test-of-proportions-up-icon" class="glyphicon glyphicon-chevron-up" style="color: #333;display:none;" aria-hidden="true"></span>
+                            Statistical Significance of function(Two proportion z-test)
+                        </a>
+                    </h4>
+                    <div id="test-of-proportions-container" style="display:none;">
+                        {% if statisticalUseAllTrials == "True" %}
+                        <span><b>Using all trials</b></span>
+                        {% else %}
+                        <span><b>Using trials in range [{{ statisticalStartTrial }}, {{ statisticalEndTrial }}]</b></span>
+                        {% endif %}
                         {% for proportionTestType in proportionTesting -%}
                             <h3>{{proportionTestType['type']}}</h3>
                             <h5>P<sub>1</sub> = Injections of this type / Total Injections = {{proportionTestType['numTypeInjections']}} / {{proportionTestType['numTotalInjections']}}</h5>
@@ -392,6 +403,24 @@
                                             <input type="text" class="form-control" id="confidence-value-input" placeholder="Value" aria-describedby="basic-addon">
                                             <span class="input-group-addon" id="basic-addon">%</span>
                                         </div>
+                                </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <h3>Statistical Significance of Function</h3>
+                            <p>You can use a subset of trials for the statistical significance calculation.</p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                <input id="statistical-use-all-trials" type="checkbox"> Use all trials
+                                <p>Select a range of trials to use in calculation (i.e. [Start, End]). <b>According to the database, there were {{ numTrials }} trials. </b>Trials are typically 1-based, depending on how the trials were injected into the database.</p>
+                                <div>
+                                    <div class="input-group" style="float:left;">
+                                        <input type="text" class="form-control" id="statistical-trial-start" placeholder="From">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="statistical-trial-end" placeholder="To">
+                                    </div>
                                 </div>
                                 </div>
                             </div>

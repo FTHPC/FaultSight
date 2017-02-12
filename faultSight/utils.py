@@ -1,5 +1,5 @@
 from faultSight import app
-from faultSight.database import db, relevant_tables
+from faultSight.database import db, relevant_tables, trials
 from faultSight.constants import *
 
 from sqlalchemy.engine import reflection
@@ -69,7 +69,6 @@ def read_id_from_config(section, id):
 
 
 
-
 """Adjusts the 'relevant' code
 This is done to allow for special pop-up links when displayed on web page. Pop-up locations are marked using a custom tag.
 given `line`, output <FaultSightStart>line</FaultSightStart>
@@ -131,7 +130,7 @@ def generate_region_object(region = "", start = "", end = ""):
 
 def test_of_proportions(num_total_injections, num_total_sites, num_type_injections, num_type_sites):
 
-    if num_type_sites == 0:
+    if num_type_sites == 0 or num_total_injections == 0:
         return "Unable to determine", 0.0, 0.0, 0.0
 
     x_1 = num_type_injections * 1.0
@@ -156,3 +155,8 @@ def test_of_proportions(num_total_injections, num_total_sites, num_type_injectio
     p_val = scipy.stats.norm.sf(abs(z))*2 #two-sided
 
     return p_val, p_1, p_2, z
+
+
+# Gets the number of trials (equal to number of rows in the trials table)
+def get_num_trials():
+    return db.session.query(trials).count()
