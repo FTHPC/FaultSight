@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="../static/styles/prism.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" href="../static/styles/bootstrap.min.css" >
+        <!--https://github.com/jonmiles/bootstrap-treeview-->
+        <link href="../static/styles/bootstrap-treeview.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="../static/styles/tooltipster.css" />
+    </head>
+    <style>
+        #main-page-container {
+            width: 100%;
+        }
+        #main-left {
+            float: left;
+            width: 100px;
+        }
+        #main-right {
+            float: right;
+            width: 20%;
+        }
+        #main-center {
+            margin: 0 auto;
+            width: 60%;
+        }
+        .line-highlight::before {
+            display:none !important;
+        }
+
+        row.no-gutters {
+          margin-right: 0;
+          margin-left: 0;
+        }
+        .row.no-gutters > [class^="col-"],
+        .row.no-gutters > [class*=" col-"] {
+          padding-right: 0;
+          padding-left: 0;
+        }
+
+
+        .axis {
+          font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+
+        .x.axis path {
+          display: none;
+        }
+
+        .tooltip-d3 {                                                       
+            background: #eee;                                               
+            box-shadow: 0 0 5px #999999;                                    
+            color: #333;                                                 
+            display: none;                                                 
+            font-size: 18px;                                               
+            padding: 10px;                                               
+            position: absolute;                                         
+            text-align: center;                                          
+            width: 200px;                                                  
+            z-index: 100;                                                   
+        } 
+
+        .circle{
+            display:inline-flex;
+            width: 15px;
+            height: 15px;
+            text-indent: -9999px;
+            border-radius: 50%;
+            border: 2px solid;
+            border-color: rgb(113,135,133);
+            text-decoration: none;
+            border-radius: 50%;
+            background-color: rgb(207,219,218);
+        } 
+
+        .fail-indicator{
+            background-color: #f54337;     
+        }
+
+        .success-indicator{
+            background-color: #7fe54d;
+        }
+
+        .intermediate-indicator{
+            background-color: #e5e24d;
+        }
+
+    </style>
+    <body>
+        <script type="text/javascript" src="../static/prism.js"></script>
+        <script type="text/javascript" src="../static/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="../static/bootstrap.min.js"></script>
+        <script src="../static/d3.min.js" charset="utf-8"></script>
+        <script src="../static/d3-legend.min.js" charset="utf-8"></script>
+        <script src="../static/bootstrap-treeview.js"></script>
+        <script type="text/javascript" src="../static/jquery.tooltipster.min.js"></script>
+        <script type="text/javascript" src="../static/saveSvgAsPng.js"></script>
+        <script type="text/javascript" src="../static/jquery.bpopup.min.js"></script>
+        <div id="main-page-container">
+            <div id="main-left"></div>
+            <div id="main-right">
+                <div id="tree" style="width:80%;margin: 80px auto 0px;"></div>
+            </div>
+            <div id="main-center" class="container" >
+            <div class="">
+                <div class="row" style="overflow:auto;">
+                    <h1 style="    text-align: center;    display:block;font-family: 'Source Sans Pro', sans-serif;">Compare Functions</h1>
+                    <hr />
+                </div>
+                <div class="row" style="overflow:auto;">
+                    <h3 id="comparison-selection-anchor">Select functions to compare</h3>
+                </div>
+
+                <div class="row" style="margin-top: 5px;">
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <div class="dropdown" id="compare-functions-dropdown-function-a" style="margin-right: 5px;">
+                                    <button class="btn btn-primary dropdown-toggle" id="compare-functions-button-a" type="button" data-toggle="dropdown">
+                                    <span id="compare-functions-function-a">Function A</span>
+                                    <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" id="compare-function-a-selection-container" aria-labelledby="menu">
+{% for functionName in functionList -%}
+<li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{functionName}}</a></li>
+{% endfor %}
+       
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                            <div class="btn-group">
+                                <div class="dropdown" id="compare-functions-dropdown-function-b" style="margin-right: 5px;">
+                                        <button class="btn btn-primary dropdown-toggle" id="compare-functions-button-b" type="button" data-toggle="dropdown">
+                                        <span id="compare-functions-function-b">Function B</span>
+                                        <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu" id="compare-function-b-selection-container" aria-labelledby="menu">
+    {% for functionName in functionList -%}
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{functionName}}</a></li>
+    {% endfor %}
+           
+                                        </ul>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <div id="compare-function-submit-button" style="display:block;">
+                                    <button type="button" class="btn btn-success">Generate Comparison</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row" id="function-information-row" style="margin-top:5px;display:none;">
+                    <hr />
+                    <h2><a href="" id="function-information-anchor">
+                        <span id="function-information-anchor-down-icon" class="glyphicon glyphicon-chevron-down" style="color: #333;display:none;font-size:20px;" aria-hidden="true"></span>
+                        <span id="function-information-anchor-up-icon" class="glyphicon glyphicon-chevron-up" style="color: #333;font-size:20px;" aria-hidden="true"></span>
+                        Function Information
+                    </a></h2>
+                    <div id="function-information-container">
+                        <div style="margin-left:40px;">
+                            <h3>
+                            <a href="" id="function-information-a-anchor">
+                                <span id="function-information-a-anchor-down-icon" class="glyphicon glyphicon-chevron-down" style="color: #333;display:none;font-size:20px;" aria-hidden="true"></span>
+                                <span id="function-information-a-anchor-up-icon" class="glyphicon glyphicon-chevron-up" style="color: #333;font-size:20px;" aria-hidden="true"></span>
+                                Function: <span class="function-a-name"></span>
+                            </a>
+                            </h3>
+                            <div id="function-information-a-container" style="margin-left:40px;">
+                                <h5><span>Injections: </span><span id="function-a-injection-count"></span></h5>
+                                <h5><span>During trials: [</span><span id="function-a-trials"></span><span>]</span></h5>
+                                <h5><span>Detections: </span><span id="function-a-detection-count"></span></h5>
+                                <h5><span>Crashes: </span><span id="function-a-crash-count"></span></h5>
+                            </div>
+                        </div>
+
+                        <div style="margin-left:40px;">
+                            <h3>
+                            <a href="" id="function-information-b-anchor">
+                                <span id="function-information-b-anchor-down-icon" class="glyphicon glyphicon-chevron-down" style="color: #333;display:none;font-size:20px;" aria-hidden="true"></span>
+                                <span id="function-information-b-anchor-up-icon" class="glyphicon glyphicon-chevron-up" style="color: #333;font-size:20px;" aria-hidden="true"></span>
+                                Function: <span class="function-b-name"></span>
+                            </a>
+                            </h3>
+                            <div id="function-information-b-container" style="margin-left:40px;">
+                                <h5><span>Injections: </span><span id="function-b-injection-count"></span></h5>
+                                <h5><span>During trials: [</span><span id="function-b-trials"></span><span>]</span></h5>
+                                <h5><span>Detections: </span><span id="function-b-detection-count"></span></h5>
+                                <h5><span>Crashes: </span><span id="function-b-crash-count"></span></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="independent-statistics-row" style="margin-top:5px;display:none;">
+                    <hr />
+                    <h2 >
+                        <a href="" id="independent-statistics-anchor">
+                            <span id="independent-statistics-anchor-down-icon" class="glyphicon glyphicon-chevron-down" style="color: #333;display:none;font-size:20px;" aria-hidden="true"></span>
+                            <span id="independent-statistics-anchor-up-icon" class="glyphicon glyphicon-chevron-up" style="color: #333;font-size:20px;" aria-hidden="true"></span>Independent Statistical Analysis
+                        </a>
+                    </h2>
+                    <div id="independent-statistics-main-container">
+                        <div id="independent-statistics-function-a" style="margin-left:40px;">
+                            <h4>
+                                <a href="" id="independent-statistics-anchor-a">
+                                    <span id="independent-statistics-anchor-a-down-icon" class="glyphicon glyphicon-chevron-down" style="color: #333;font-size:15px;" aria-hidden="true"></span>
+                                    <span id="independent-statistics-anchor-a-up-icon" class="glyphicon glyphicon-chevron-up" style="color: #333;display:none;font-size:15px;" aria-hidden="true"></span>Statistical Significance of function: <span class="function-a-name"></span>
+
+                                </a>
+                                <span>(</span>
+                                <span class="circle" id="independent-statistics-anchor-a-circle"></span>
+                                <span id="independent-statistics-anchor-a-status"></span>
+                                <span>)</span>
+                            </h4>
+                            <div id="independent-test-of-proportions-container-function-a" style="margin-left:20px;display:none;"></div>
+                        </div>
+
+                        <div id="independent-statistics-function-b" style="margin-left:40px;">
+                            <h4>
+                                <a href="" id="independent-statistics-anchor-b">
+                                    <span id="independent-statistics-anchor-b-down-icon" class="glyphicon glyphicon-chevron-down" style="color: #333;font-size:15px;" aria-hidden="true"></span>
+                                    <span id="independent-statistics-anchor-b-up-icon" class="glyphicon glyphicon-chevron-up" style="color: #333;display:none;font-size:15px;" aria-hidden="true"></span>Statistical Significance of function: <span class="function-b-name"></span>
+                                </a>
+                                 <span>(</span>
+                                <span class="circle" id="independent-statistics-anchor-b-circle"></span>
+                                <span id="independent-statistics-anchor-b-status"></span>
+                                <span>)</span>
+                            </h4>
+                            <div id="independent-test-of-proportions-container-function-b" style="margin-left:20px;display:none;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="comparison-statistics-row" style="margin-top:5px;display:none;">
+                    <hr />
+                    <h2 >
+                        <a href="" id="comparison-statistics-anchor">
+                            <span id="comparison-statistics-anchor-down-icon" class="glyphicon glyphicon-chevron-down" style="color: #333;display:none;font-size:20px;" aria-hidden="true"></span>
+                            <span id="comparison-statistics-anchor-up-icon" class="glyphicon glyphicon-chevron-up" style="color: #333;font-size:20px;" aria-hidden="true"></span>Statistical Comparison
+                        </a>
+                    </h2>
+                    <div id="comparison-statistics-main-container" style="margin-left:40px;">
+                        
+             
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal fade" id="web-settings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h2 class="modal-title" style="text-align:center;">Settings</h2>
+                    </div>
+                    <div class="modal-body">
+                            <h3>Highlighting Value</h3>
+                            <p>Please enter a percentage at which to highlight lines (0-100).</p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                <div style="width:100px;">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="highlight-value-input" placeholder="Value" aria-describedby="basic-addon">
+                                            <span class="input-group-addon" id="basic-addon">%</span>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <br />
+                            <hr />
+                            <h3>Static vs dynamic instruction usage</h3>
+                            <p>Select whether to use static or dynamic instructions for the statistical calculations.</p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <form class="form-inline">
+                                            <input value="1" name="instruction-type" id="use-dynamic-instructions-input" type="radio"><span>Dynamic Instructions</span>
+                                        <br />
+                                            <input value="2" name="instruction-type" id="not-use-dynamic-instructions-input" type="radio">Static Instructions
+                                    </form>      
+                                    
+                                </div>
+                            </div>
+                            <h3>Confidence Interval</h3>
+                            <p>Please enter a confidence interval to use for the test of proportions.</p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                <div style="width:100px;">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="confidence-value-input" placeholder="Value" aria-describedby="basic-addon">
+                                            <span class="input-group-addon" id="basic-addon">%</span>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <h3>Statistical Significance of Function</h3>
+                            <p>You can use a subset of trials for the statistical significance calculation.</p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                <input id="statistical-use-all-trials" type="checkbox"> Use all trials
+                                <p>Select a range of trials to use in calculation (i.e. [Start, End]). <b>According to the database, there were {{ numTrials }} trials. </b>Trials are typically 1-based, depending on how the trials were injected into the database.</p>
+                                <div>
+                                    <div class="input-group" style="float:left;">
+                                        <input type="text" class="form-control" id="statistical-trial-start" placeholder="From">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="statistical-trial-end" placeholder="To">
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <h3>Default Graphs</h3>
+                            <p>Select the graphs that you would like to be automatically generated when this page is loaded.</p>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                <h5><strong>Injections</strong></h5>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-1"> Types of injected functions<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-2"> Bit Locations<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-3"> Injected functions<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-4"> Injection type per function<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-5"> Injections mapped to line numbers<br>
+                                </div>
+                                <div class="col-sm-4">     
+                                <h5><strong>Signals</strong></h5>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-6"> Unexpected Termination<br>
+                                </div>
+                                 <div class="col-sm-4">
+                                <h5><strong>Detections</strong></h5>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-7"> Number of trials with detection<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-8"> Detected injection bit location<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-9"> Detection latency<br>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <h3>Custom Constraints</h3>
+                            <p>Select the columns in the database that you would like to use in implementing constraints</p>
+{% for table,columns in databaseDetails.items() -%}
+{% if loop.index % 3 == 1 %}
+<div class="row">
+{% endif %}
+<div class="col-sm-4">
+<h5><strong>{{table}}</strong></h5>
+{% for column in columns -%}
+<input class="settings-constraint-checkbox" data-table-name="{{table}}" data-column-name="{{column}}" type="checkbox" name="settings-table-{{table}}-checkbox-{{loop.index - 1}}"> {{column}} - {{columns[column]}}<br>
+{% endfor %}
+</div>
+{% if loop.index % 3 == 0 %}
+</div>
+{% elif loop.last %}
+</div>
+{% endif %}
+{% endfor %}
+
+                    <div style="margin-top:10px;">
+                    <hr />
+                    <a>Restore config file to default (Not yet implemented)</a>
+                    <h5><strong>After saving, please refresh the page to see changes.</strong></h5>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="settings-save">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </body>
+    <script type="text/javascript">
+        var functionList = {{functionList|tojson}};
+        var injectedFunctionList = {{injectedFunctionList|tojson}};
+        var notInjectedFunctionList = {{notInjectedFunctionList|tojson}};
+        var databaseDetails = {{databaseDetails|tojson|safe}};
+        var confidenceValue = {{confidenceValue}}
+
+    </script>
+    <script type="text/javascript" charset="utf-8" src="../static/faultsight.js"></script>
+    <script type="text/javascript">
+        initCompareFunctionPage();
+    </script>
+</html>
