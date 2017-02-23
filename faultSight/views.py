@@ -1,5 +1,5 @@
 from faultSight import app
-from faultSight.database import db, relevant_tables, sites, trials, injections
+from faultSight.database import db, relevant_tables, sites, trials, injections, detections
 from faultSight.graphs import get_graph, get_my_graphs
 from faultSight.constants import *
 from faultSight.utils import *
@@ -33,6 +33,28 @@ def index():
                            databaseDetails = get_database_tables(),
                            mainGraphList = main_graph,
                            numTrials = num_trials)
+
+"""Request for `Compare Functions` page"""
+@app.route('/compareFunctions/')
+def compareFunctions():
+    # Gets the default graph (Functions injected into) displayed on the home page
+    region_data = generate_region_object()
+    main_graph = [get_graph(INJECTED_FUNCTIONS,region_data)]
+
+    num_trials = get_num_trials()
+
+    confidence_value = float(read_id_from_config("FaultSight", "confidenceValue"))
+    
+    return render_template('compareFunctions.html',
+                           functionList = app.config['FUNCTIONS'],
+                           injectedFunctionList = app.config['INJECTED_FUNCTIONS'],
+                           notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'],
+                           databaseDetails = get_database_tables(),
+                           mainGraphList = main_graph,
+                           numTrials = num_trials,
+                           confidenceValue = confidence_value)
+
+
 
 """Request for `Specific Function` page"""
 @app.route('/function/<function_name>')
@@ -80,6 +102,8 @@ def showFunction(function_name):
     # For example, some file paths used to be stored as '__NF', if the file was not found during database generation.
     possible_file_paths = [site['file'] for site in all_function_sites]
 
+    possible_file_paths = list(set(possible_file_paths))
+
     # Parse the list of possible paths, get the correct one
     file_path = get_function_file(possible_file_paths)
 
@@ -103,7 +127,8 @@ def showFunction(function_name):
                                myGraphListLength=len(my_graph_list),
                                proportionTesting=proportion_testing_results,
                                confidenceValue=float(read_id_from_config("FaultSight", "confidenceValue")),
-                               numTrials = num_trials)
+                               numTrials = num_trials,
+                               possibleFilePaths = possible_file_paths)
  
 
     logging.info("\nRelating injections to source code in file: " +  str(file_path))
@@ -188,6 +213,137 @@ def showFunction(function_name):
                            numTrials = num_trials)
 
 
+
+def generate_function_information(function_name):
+    function_trials = db.session.query(sites)\
+                      .join(injections, sites.siteId==injections.siteId)\
+                      .join(trials, injections.trial==trials.trial)\
+                      .filter(sites.func == function_name)\
+                      .values(trials.trial)
+
+    function_trial_list = [item.trial for item in function_trials]
+
+    num_injections = db.session.query(sites)\
+                    .join(injections, sites.siteId==injections.siteId)\
+                    .filter(sites.func == function_name)\
+                    .count()
+
+    num_detections = db.session.query(detections)\
+                    .filter(detections.trial.in_(function_trials))\
+                    .count()
+           
+    num_crashes = db.session.query(trials)\
+                    .filter(trials.trial.in_(function_trials))\
+                    .filter(trials.crashed == 1)\
+                    .count()
+
+    returnDict = {
+        'trial_list': function_trial_list,
+        'injection_count': num_injections,
+        'detection_count': num_detections,
+        'crash_count': num_crashes
+    }
+
+    return returnDict
+
+
+def one_tailed_proportion_test_detections(function_a_name, function_b_name, confidence_value):
+
+    function_a_information = generate_function_information(function_a_name)
+    function_b_information = generate_function_information(function_b_name)
+
+
+    # Test of proportions
+    p_val_type, p1_val, p2_val, z_value = inequality_test_of_proportions(\
+                                            function_a_information['detection_count'], \
+                                            function_a_information['injection_count'], \
+                                            function_b_information['detection_count'], \
+                                            function_b_information['injection_count'])
+
+    return_data = {
+        'type': "Detections",
+        'p_value': p_val_type,
+        'z_value': z_value,
+        'p1': {
+          'numerator': {
+            'title': "Number of detections in function a",
+            'value': function_a_information['detection_count']
+          },
+          'denominator': {
+            'title': "Number of injections in function a",
+            'value': function_a_information['injection_count']
+          },
+          'value': p1_val
+        },
+        'p2': {
+          'numerator': {
+            'title': "Number of detections in function b",
+            'value': function_b_information['detection_count']
+          },
+          'denominator': {
+            'title': "Number of injections in function b",
+            'value': function_b_information['injection_count']
+          },
+          'value': p2_val
+        },
+        'success': str(p_val_type < (1 - (confidence_value / 100.0 )))
+    }
+
+
+
+
+    return return_data
+
+
+def one_tailed_proportion_test_crashes(function_a_name, function_b_name, confidence_value):
+
+    function_a_information = generate_function_information(function_a_name)
+    function_b_information = generate_function_information(function_b_name)
+
+
+
+    # Test of proportions
+    p_val_type, p1_val, p2_val, z_value = inequality_test_of_proportions(\
+                                            function_a_information['crash_count'], \
+                                            function_a_information['injection_count'], \
+                                            function_b_information['crash_count'], \
+                                            function_b_information['injection_count'])
+
+
+    return_data = {
+        'type': "Crashes",
+        'p_value': p_val_type,
+        'z_value': z_value,
+        'p1': {
+          'numerator': {
+            'title': "Number of crashes in function a",
+            'value': function_a_information['crash_count']
+          },
+          'denominator': {
+            'title': "Number of injections in function a",
+            'value': function_a_information['injection_count']
+          },
+          'value': p1_val
+        },
+        'p2': {
+          'numerator': {
+            'title': "Number of crashes in function b",
+            'value': function_b_information['crash_count']
+          },
+          'denominator': {
+            'title': "Number of injections in function b",
+            'value': function_b_information['injection_count']
+          },
+          'value': p2_val
+        },
+        'success': str(p_val_type < (1 - (confidence_value / 100.0 )))
+    }
+
+
+    return return_data
+
+
+
 def proportion_test(function_name, confidence_value):
 
     # Array for storing results
@@ -268,16 +424,17 @@ def proportion_test(function_name, confidence_value):
 
         type_entry = {
             'type': type_name,
-            'pVal': p_val_type,
-            'zValue': z_value,
+            'p_value': p_val_type,
+            'z_value': z_value,
             'numTypeInjections': num_type_injections,
             'numTypeSites': num_type_sites,
             'numTotalInjections': num_total_injections,
             'numTotalSites': num_total_sites,
             'p1': p1_val,
             'p2': p2_val,
-            'success': p_val_type < (1 - (confidence_value / 100.0 ))
+            'success': str(p_val_type < (1 - (confidence_value / 100.0 ))),
         }
+
 
         return_data.append(type_entry)
 
@@ -426,6 +583,74 @@ def get_machine_instructions(func, highlight_lines, num_injections_in_applicatio
     return machine_instruction_numbers
 
 
+@app.route('/updateFileLocationInDatabase', methods=['POST'])
+def update_file_location_in_database():
+    file_location = request.json['fileLocation']
+    function_name = request.json['functionName']
+
+    db.session.query(sites)\
+        .filter(sites.func == function_name)\
+        .update({"file": file_location})
+    db.session.commit()
+
+    return 'OK'
+
+
+"""Comparison of functions"""
+@app.route('/generateFunctionComparison', methods=['POST'])
+def generate_function_comparison():
+    function_a =  request.json['functionA']
+    function_b =  request.json['functionB']
+
+
+    comparison_data = generate_function_comparison_data(function_a, function_b)
+
+    return json.dumps(comparison_data)
+
+def generate_function_comparison_data(function_a, function_b):
+
+    confidence_value = float(read_id_from_config("FaultSight", "confidenceValue"))
+
+
+    # Proportion testing info for function a
+    proportion_testing_results_a = proportion_test(function_a, confidence_value)
+
+    # Proportion info for function b
+    proportion_testing_results_b = proportion_test(function_b, confidence_value)
+
+
+    detection_results = one_tailed_proportion_test_detections(function_a, function_b, confidence_value)
+    crash_results = one_tailed_proportion_test_crashes(function_a, function_b, confidence_value)
+
+    function_comparison_results = [detection_results, crash_results]
+
+    # General function info for both functions
+
+    general_info_a = generate_function_information(function_a)
+    general_info_b = generate_function_information(function_b)
+
+    general_function_results = [general_info_a, general_info_b]
+
+    trial_usage_information = get_trial_usage_information()
+
+    return [proportion_testing_results_a, \
+            proportion_testing_results_b, \
+            function_comparison_results, \
+            general_function_results, \
+            trial_usage_information]
+
+def get_trial_usage_information():
+
+    # ConfigParser
+    config = generate_config_parser()
+
+    returnDict = {
+        'statisticalUseAllTrials':config.get("FaultSight", "statisticalUseAllTrials"),
+        'statisticalStartTrial':config.get("FaultSight", "statisticalStartTrial"),
+        'statisticalEndTrial':config.get("FaultSight", "statisticalEndTrial")
+    }
+
+    return returnDict
 
 # Visualizations section of page - creating a graph
 

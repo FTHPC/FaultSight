@@ -128,6 +128,39 @@ def generate_region_object(region = "", start = "", end = ""):
     return region_object
 
 
+def inequality_test_of_proportions(p1_num, p1_denom, p2_num, p2_denom):
+
+    if p1_denom == 0 or p2_denom == 0:
+        return "Unable to determine", 0.0, 0.0, 0.0
+
+    n_1 = p1_num * 1.0
+    d_1 = p1_denom * 1.0
+
+    n_2 = p2_num * 1.0
+    d_2 = p2_denom * 1.0
+
+    p_1 = n_1 / d_2
+    p_2 = n_2 / d_2
+
+    p_combined = (n_1 + n_2) / (d_1 + d_2)
+
+    numerator = p_1 - p_2
+
+    import numpy
+    denominator = numpy.sqrt(p_combined * (1 - p_combined) * ( (1.0 / d_1) + (1.0 / d_2) ))
+
+    if denominator == 0:
+        return "Unable to determine", 0.0, 0.0, 0.0
+
+    z = numerator / denominator
+
+    import scipy.stats
+    p_val = scipy.stats.norm.sf(abs(z))*1 #one-sided
+
+    return p_val, p_1, p_2, z
+
+
+
 def test_of_proportions(num_total_injections, num_total_sites, num_type_injections, num_type_sites):
 
     if num_type_sites == 0 or num_total_injections == 0:
@@ -160,3 +193,5 @@ def test_of_proportions(num_total_injections, num_total_sites, num_type_injectio
 # Gets the number of trials (equal to number of rows in the trials table)
 def get_num_trials():
     return db.session.query(trials).count()
+
+

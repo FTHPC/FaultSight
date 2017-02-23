@@ -91,10 +91,21 @@
                     <h2 id="code-anchor">Code - {{numInjectionsInFunction}} Injections</h2>
                 </div>
                 <div class="row" style="overflow:auto;">
-                    <h5>The file containing the requested function ({{functionName}}) was not found! There are usually two causes for this: </h5>
+                    <h5>The file containing the requested function ({{functionName}}) was not found! The following file path(s) was used from the database:
+                    <ul>
+                    {% for filePath in possibleFilePaths -%}
+                    <li>{{filePath}}</li>
+                    {% endfor %}
+                    </ul>
+                    <h5>There are usually two causes for missing functions: </h5>
                     <h5>- The analysis was run on another computer</h5>
                     <h5>- FlipIt was unable to map an injection to a source line number, and given the file name "__NF"</h5>
                     <h5>You can still (most likely) query the database for details about the function for visualizations (if it has injections!), but you will not be able to view the actual function code.</h5>
+                    <h5>If the file exists on this local computer, please enter the full path below. This will update the database, and you will be able to view the code here. </h5>
+                    <div>
+                    <input type="text" id="missing-file-location">
+                    <button id="missing-file-location-submit">Submit</button>
+                    </div>
                 </div>
       
                 <div class="row" style="margin-top:5px;">

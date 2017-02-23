@@ -42,6 +42,21 @@ function initFunctionPage(){
 	setupGraphCreation(true);
 }
 
+function initCompareFunctionPage(){
+
+	//Set up navigation tree
+	var navigationTree = getCompareFunctionPageNavigationTree();
+	bindNavTreeToPage(navigationTree);
+
+	//Set up settings
+	setupSettingsObject();
+	getSettingsFromFile();
+	clickBindInSettings();
+
+	//Set up page itself
+	clickBindInCompareFunctionPage();
+}
+
 function initApplicationPage(){
 	//Set up navigation tree
 	var navigationTree = getApplicationPageNavigationTree();
@@ -106,6 +121,10 @@ function getApplicationPageNavigationTree(){
 	        ],
 	    },  
 	    {
+	    	text: 'Compare Functions',
+	    	href: "./compareFunctions"
+	    },
+	    {
 	    text: "Settings",
 	    },
 	];
@@ -152,6 +171,79 @@ function getApplicationPageNavigationTree(){
 	return emptyTree;
 }
 
+
+function getCompareFunctionPageNavigationTree(){
+	var emptyTree = [
+    {
+        text: "Entire Application",
+        state: { selected: false },
+        href: "../",
+        nodes: [
+            {
+                text:'Injected Functions',
+                nodes: [
+
+                ],
+            },
+            {
+                text:'Non-injected Functions',
+                nodes: [
+
+                ],
+            },
+        ],
+    },  
+    {
+            	text:'Compare Functions',
+            	href: "../compareFunctions"
+    },
+    {
+    	text: "Settings",
+    },
+	];
+
+	for (var i = 0; i < injectedFunctionList.length; i++){
+	    emptyTree[0].nodes[0].nodes.push(
+	        {
+	            text: injectedFunctionList[i],
+	            state: { expanded: false },
+	            href: "../function/" + injectedFunctionList[i],
+	            nodes: [
+	                {
+	                    text:"Code",
+		                href:"#",
+	                },
+	                {
+	                    text:"Visualization",
+		                href:"#",
+	                }
+	            ]
+	        }
+	    );
+	}
+
+	for (var i = 0; i < notInjectedFunctionList.length; i++){
+	    emptyTree[0].nodes[1].nodes.push(
+	        {
+	            text: notInjectedFunctionList[i],
+	            state: { expanded: false },
+	            href: "../function/" + notInjectedFunctionList[i],
+	            nodes: [
+	                {
+	                    text:"Code",
+		                href:"#",
+	                },
+	                {
+	                    text:"Visualization",
+		                href:"#",
+	                }
+	            ]
+	        }
+	    );
+	}
+	return emptyTree;
+}
+
 function getFunctionPageNavigationTree(){
 	var emptyTree = [
     {
@@ -170,9 +262,13 @@ function getFunctionPageNavigationTree(){
                 nodes: [
 
                 ],
-            }
+            },
         ],
     },  
+    {
+            	text:'Compare Functions',
+            	href: "../../compareFunctions"
+    },
     {
     	text: "Settings",
     },
@@ -414,6 +510,33 @@ function clickBindInFunctionPage(){
     $("#test-of-proportions-link").click(function(e) {
 	  e.preventDefault();
 	});
+
+	$("#missing-file-location-submit").click(function(e){
+		e.preventDefault();
+
+		missingFileObject = {
+			'fileLocation': $("#missing-file-location").val().trim(),
+			'functionName': functionName,
+		};
+
+		if (missingFileObject["fileLocation"] != ""){
+			// Update file location in database
+			$.ajax({
+		        url: '/updateFileLocationInDatabase',
+		        contentType: 'application/json;charset=UTF-8',
+		        data: JSON.stringify(missingFileObject),
+		        type: 'POST',
+		        success: function(response) {
+		        	// Refresh the page
+		        	location.reload();
+		        },
+		        error: function(error) {
+			        console.log(error);
+		        }
+	    	});
+		}
+		
+	})
 }
 
 function clickBindInMainPage(){
@@ -1392,6 +1515,430 @@ function stackedPieChart(allData, svdIdName){
 }
 
 
+
+//***************COMPARE FUNCTIONS PAGE LOGIC***************//
+function clickBindInCompareFunctionPage(){
+
+
+	// Click binds
+	$("#independent-statistics-anchor").click(function(e){
+		e.preventDefault();
+		
+		if ($("#independent-statistics-main-container").css('display') != 'none'){
+			$("#independent-statistics-anchor-up-icon").hide();
+			$("#independent-statistics-anchor-down-icon").show();
+		} else {
+			$("#independent-statistics-anchor-up-icon").show();
+			$("#independent-statistics-anchor-down-icon").hide();
+		}
+
+		$("#independent-statistics-main-container").slideToggle();
+
+	});
+
+	$("#independent-statistics-anchor-a").click(function(e){
+		e.preventDefault();
+		
+		if ($("#independent-test-of-proportions-container-function-a").css('display') != 'none'){
+			$("#independent-statistics-anchor-a-up-icon").hide();
+			$("#independent-statistics-anchor-a-down-icon").show();
+		} else {
+			$("#independent-statistics-anchor-a-up-icon").show();
+			$("#independent-statistics-anchor-a-down-icon").hide();
+		}
+
+		$("#independent-test-of-proportions-container-function-a").slideToggle();
+
+	});
+
+	$("#independent-statistics-anchor-b").click(function(e){
+		e.preventDefault();
+		
+		if ($("#independent-test-of-proportions-container-function-b").css('display') != 'none'){
+			$("#independent-statistics-anchor-b-up-icon").hide();
+			$("#independent-statistics-anchor-b-down-icon").show();
+		} else {
+			$("#independent-statistics-anchor-b-up-icon").show();
+			$("#independent-statistics-anchor-b-down-icon").hide();
+		}
+
+		$("#independent-test-of-proportions-container-function-b").slideToggle();
+
+	});
+
+	$("#comparison-statistics-anchor").click(function(e){
+		e.preventDefault();
+		
+		if ($("#comparison-statistics-main-container").css('display') != 'none'){
+			$("#comparison-statistics-anchor-up-icon").hide();
+			$("#comparison-statistics-anchor-down-icon").show();
+		} else {
+			$("#comparison-statistics-anchor-up-icon").show();
+			$("#comparison-statistics-anchor-down-icon").hide();
+		}
+
+		$("#comparison-statistics-main-container").slideToggle();
+
+	});
+
+
+	$("#function-information-anchor").click(function(e){
+		e.preventDefault();
+		
+		if ($("#function-information-container").css('display') != 'none'){
+			$("#function-information-anchor-up-icon").hide();
+			$("#function-information-anchor-down-icon").show();
+		} else {
+			$("#function-information-anchor-up-icon").show();
+			$("#function-information-anchor-down-icon").hide();
+		}
+
+		$("#function-information-container").slideToggle();
+
+	});
+
+	$("#function-information-a-anchor").click(function(e){
+		e.preventDefault();
+		
+		if ($("#function-information-a-container").css('display') != 'none'){
+			$("#function-information-a-anchor-down-icon").show();
+			$("#function-information-a-anchor-up-icon").hide();
+		} else {
+			$("#function-information-a-anchor-down-icon").hide();
+			$("#function-information-a-anchor-up-icon").show();
+		}
+
+		$("#function-information-a-container").slideToggle();
+
+	});
+
+	$("#function-information-b-anchor").click(function(e){
+		e.preventDefault();
+		
+		if ($("#function-information-b-container").css('display') != 'none'){
+			$("#function-information-b-anchor-down-icon").show();
+			$("#function-information-b-anchor-up-icon").hide();
+		} else {
+			$("#function-information-b-anchor-down-icon").hide();
+			$("#function-information-b-anchor-up-icon").show();
+		}
+
+		$("#function-information-b-container").slideToggle();
+
+	});
+
+	var selectedFunctions = {
+			"functionA": 0,
+			"functionB": 0,	    
+	};
+
+	$('#compare-function-a-selection-container > li > a').click(function(e) {
+
+		// Add fades here
+		//
+		$("#compare-functions-function-a").text(this.text);
+		// TODO: Use function id's not function names
+		selectedFunctions["functionA"] = this.text;
+	    e.preventDefault();
+	});
+
+	$('#compare-function-b-selection-container > li > a').click(function(e) {
+
+		// Add fades here
+		//
+		
+		$("#compare-functions-function-b").text(this.text);
+		selectedFunctions["functionB"] = this.text;
+	    e.preventDefault();
+	});
+
+	$('#compare-function-submit-button').click(function(e) {
+
+		// Generate object and send
+		if (selectedFunctions["functionA"] != 0 && selectedFunctions["functionB"] != 0){
+			compareFunctions(selectedFunctions);
+		}
+		
+	    e.preventDefault();
+	});
+
+}
+
+
+function compareFunctions(comparisonObject){
+
+	// Empty previous data
+	//$("#mplplot").empty();
+
+	$.ajax({
+	    url: '/generateFunctionComparison',
+	    data: JSON.stringify(comparisonObject),
+	    contentType: 'application/json;charset=UTF-8',
+	    type: 'POST',
+	    success: function(response) {
+	    	console.log(JSON.parse(response));
+	    	var parsedResponse = JSON.parse(response);
+	    	updateComparisonPage(comparisonObject, parsedResponse)
+            
+	    },
+	    error: function(error) {
+		    console.log(error);
+	    }
+	});
+}
+
+function updateComparisonPage(comparisonObject, response){
+
+
+
+	// If we want to empty the page
+	if (response == null){
+		$("#independent-statistics-row").slideUp();
+	}
+
+	var functionAName = comparisonObject["functionA"]
+	var functionBName = comparisonObject["functionB"]
+
+	$("#function-information-row").slideDown();
+	$("#independent-statistics-row").slideDown();
+	$("#comparison-statistics-row").slideDown();
+
+	$(".function-a-name").text(functionAName);
+	$(".function-b-name").text(functionBName)
+
+	updateFunctionInformationSection(response);
+
+	$("#independent-statistics-anchor-down-icon").hide();
+	$("#independent-statistics-anchor-up-icon").show();
+
+	updateComparisonPageIndependentSection(response, 0, 'a')
+	updateComparisonPageIndependentSection(response, 1, 'b')
+
+	updateComparisonPageComparisonSection(response);
+
+}
+
+
+function updateFunctionInformationSection(response){
+	var functionInformation = response[3];
+
+	$("#function-a-injection-count").text(functionInformation[0]["injection_count"]);
+	$("#function-b-injection-count").text(functionInformation[1]["injection_count"]);
+
+	$("#function-a-trials").text(functionInformation[0]["trial_list"]);
+	$("#function-b-trials").text(functionInformation[1]["trial_list"]);
+	
+	$("#function-a-detection-count").text(functionInformation[0]["detection_count"]);
+	$("#function-b-detection-count").text(functionInformation[1]["detection_count"]);
+
+	$("#function-a-crash-count").text(functionInformation[0]["crash_count"]);
+	$("#function-b-crash-count").text(functionInformation[1]["crash_count"]);
+	
+
+
+}
+
+function updateComparisonPageIndependentSection(response, functionId, functionLetter){
+
+	$("#independent-test-of-proportions-container-function-" + functionLetter)
+		.empty()
+		.hide()
+		.append("<span id=\"function-" + functionLetter + "-trial-status\"></span>");
+
+	$("#independent-statistics-anchor-" + functionLetter + "-down-icon").show();
+	$("#independent-statistics-anchor-" + functionLetter + "-up-icon").hide();
+
+	$("#independent-statistics-anchor-" + functionLetter + "-circle").removeClass();
+	$("#independent-statistics-anchor-" + functionLetter + "-circle").addClass("circle");
+
+
+	if (response[4]["statisticalUseAllTrials"]){
+		$("#function-" + functionLetter + "-trial-status").html("<b>Using all trials</b>");
+	} else {
+		var inputString = "<b>Using trials in range [{0}, {1}]</b>"
+		inputString = inputString.replace("{0}", response[4]["statisticalStartTrial"]);
+		inputString = inputString.replace("{1}", response[4]["statisticalEndTrial"]);
+		$("#function-" + functionLetter + "-trial-status").html(inputString);
+	}
+
+	var injectionTypeHTMLCodeBase = "<h3>{0}</h3>\
+                            <h5>P<sub>1</sub> = Injections of this type / Total Injections = {1} / {2}</h5>\
+                            <h5>P<sub>1</sub> = {3}</h5>\
+                            <br />\
+                            <h5>P<sub>2</sub> = Sites of this type / Total sites = {4} / {5}</h5>\
+                            <h5>P<sub>2</sub> = {6}</h5>\
+                            <br />\
+                            <h5>Null hypothesis: P<sub>1</sub> = P<sub>2</sub>, Alternate hypothesis: P<sub>1</sub> != P<sub>2</sub></h5>\
+                            <h5>Z-value: {7}\
+                            <h5>P-value ({8}% Confidence Interval, {9} Significance): {10}</h5>\
+                            <h5><b>Statistically Significant: \
+                            {11}\
+                            </b>\
+                            </h5>"
+
+
+    var successfulCount = 0;
+
+    for (var i = 0; i < response[functionId].length; i++){
+    	var item = response[functionId][i];
+    	var injectionTypeHTMLCode = injectionTypeHTMLCodeBase;
+    	injectionTypeHTMLCode = injectionTypeHTMLCode.replace("{0}", item['type']);
+    	injectionTypeHTMLCode = injectionTypeHTMLCode.replace("{1}", item['numTypeInjections']);
+    	injectionTypeHTMLCode = injectionTypeHTMLCode.replace("{2}", item['numTotalInjections']);
+    	injectionTypeHTMLCode = injectionTypeHTMLCode.replace("{3}", item['p1']);
+    	injectionTypeHTMLCode = injectionTypeHTMLCode.replace("{4}", item['numTypeSites']);
+    	injectionTypeHTMLCode = injectionTypeHTMLCode.replace("{5}", item['numTotalSites']);
+    	injectionTypeHTMLCode = injectionTypeHTMLCode.replace("{6}", item['p2']);
+    	injectionTypeHTMLCode = injectionTypeHTMLCode.replace("{7}", item['z_value']);
+    	injectionTypeHTMLCode = injectionTypeHTMLCode.replace("{8}", confidenceValue);
+    	injectionTypeHTMLCode = injectionTypeHTMLCode.replace("{9}", (1 - ( confidenceValue / 100.0 )).toFixed(2)  );
+    	injectionTypeHTMLCode = injectionTypeHTMLCode.replace("{10}", item['p_value']);
+    	if (item['success'] == "True"){
+    		injectionTypeHTMLCode = injectionTypeHTMLCode.replace("{11}", '<span style=\"color:green\">True</span>');
+    		successfulCount++;
+    	} else {
+    		injectionTypeHTMLCode = injectionTypeHTMLCode.replace("{11}", '<span style=\"color:red\">False</span>');
+    	}
+    	
+
+
+    	$("#independent-test-of-proportions-container-function-" + functionLetter).append(injectionTypeHTMLCode);
+
+    	
+    }
+
+    // Status indicator
+    var statusText = "{0}/{1} injection types significant";
+    statusText = statusText.replace("{0}", successfulCount);
+    statusText = statusText.replace("{1}", response[functionId].length);
+
+    $("#independent-statistics-anchor-" + functionLetter + "-status").text(statusText);
+
+    if (successfulCount == 0){
+    	$("#independent-statistics-anchor-" + functionLetter + "-circle").addClass("fail-indicator");
+    } else if (successfulCount == response[functionId].length){
+    	$("#independent-statistics-anchor-" + functionLetter + "-circle").addClass("success-indicator");
+    } else {
+    	$("#independent-statistics-anchor-" + functionLetter + "-circle").addClass("intermediate-indicator");
+    }
+}
+
+function updateComparisonPageComparisonSection(response){
+
+	// Clear previous data
+	$("#comparison-statistics-anchor-down-icon").hide();
+	$("#comparison-statistics-anchor-up-icon").show();
+	$("#comparison-statistics-main-container").empty();
+
+
+	// Place html in comparison div
+	var comparisonData = response[2];
+
+	var comparisonHTMLBase = "<div>\
+                            <h4><a href=\"\" id=\"comparison-statistics-anchor-{16}\">\
+									<span id=\"comparison-statistics-anchor-{17}-down-icon\" class=\"glyphicon glyphicon-chevron-down\" style=\"color: #333;font-size:15px;\" aria-hidden=\"true\"></span>\
+                                    <span id=\"comparison-statistics-anchor-{18}-up-icon\" class=\"glyphicon glyphicon-chevron-up\" style=\"color: #333;display:none;font-size:15px;\" aria-hidden=\"true\"></span>\
+                                    {0}</a>\
+                                    <span>(</span>\
+	                                <span class=\"circle\" id=\"independent-statistics-anchor-{20}-circle\"></span>\
+	                                <span id=\"independent-statistics-anchor-{21}-status\"></span>\
+	                                <span>)</span>\
+                            </h4>\
+                            <div style=\"display:none;margin-left:40px;\" class=\"comparison-container\" id=\"comparison-container-function-{19}\">\
+                                <h5>P<sub>1</sub> = {1} / {2} = {3} / {4}</h5>\
+                                <h5>P<sub>1</sub> = {5}</h5>\
+\
+                                <br />\
+\
+                                <h5>P<sub>2</sub> = {6} / {7} = {8} / {9}</h5>\
+                                <h5>P<sub>2</sub> = {10}</h5>\
+\
+                                <br />\
+                                <h5>Null hypothesis: P<sub>1</sub> >= P<sub>2</sub>, Alternate hypothesis: P<sub>1</sub> < P<sub>2</sub></h5>\
+                                <h5>Z-value: {11}\
+                                <h5>P-value ({12} Confidence Interval, {13} Significance): {14}</h5>\
+                                <h5><b>Statistically Significant: {15}\
+\
+                            </div>\
+                        </div>";
+
+    for (var i = 0; i < comparisonData.length; i++){
+    	var comparisonItem = comparisonData[i];
+
+    	if ($("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").length){
+
+			$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").removeClass();
+			$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").addClass("circle");
+
+    	}
+    	
+
+    	var htmlString = comparisonHTMLBase;
+    	htmlString = htmlString.replace("{0}", comparisonItem["type"]);
+		htmlString = htmlString.replace("{1}", comparisonItem["p1"]["numerator"]["title"]);
+		htmlString = htmlString.replace("{2}", comparisonItem["p1"]["denominator"]["title"]);
+		htmlString = htmlString.replace("{3}", comparisonItem["p1"]["numerator"]["value"]);
+		htmlString = htmlString.replace("{4}", comparisonItem["p1"]["denominator"]["value"]);
+		htmlString = htmlString.replace("{5}", comparisonItem["p1"]["value"]);
+
+		htmlString = htmlString.replace("{6}", comparisonItem["p2"]["numerator"]["title"]);
+		htmlString = htmlString.replace("{7}", comparisonItem["p2"]["denominator"]["title"]);
+		htmlString = htmlString.replace("{8}", comparisonItem["p2"]["numerator"]["value"]);
+		htmlString = htmlString.replace("{9}", comparisonItem["p2"]["denominator"]["value"]);
+		htmlString = htmlString.replace("{10}", comparisonItem["p2"]["value"]);
+
+		htmlString = htmlString.replace("{11}", comparisonItem["z_value"]);
+		htmlString = htmlString.replace("{12}", confidenceValue);
+		htmlString = htmlString.replace("{13}", (1 - ( confidenceValue / 100.0 )).toFixed(2) );
+		htmlString = htmlString.replace("{14}", comparisonItem["p_value"]);
+
+
+		htmlString = htmlString.replace("{15}", comparisonItem["success"]);
+
+		htmlString = htmlString.replace("{16}", comparisonItem['type']);
+    	htmlString = htmlString.replace("{17}", comparisonItem['type']);
+    	htmlString = htmlString.replace("{18}", comparisonItem['type']);
+    	htmlString = htmlString.replace("{19}", comparisonItem['type']);
+    	htmlString = htmlString.replace("{20}", comparisonItem['type']);
+    	htmlString = htmlString.replace("{21}", comparisonItem['type']);
+
+		$("#comparison-statistics-main-container").append(htmlString);
+
+
+		if (comparisonItem["success"] == "True"){
+			$("#independent-statistics-anchor-" + comparisonItem["type"] + "-status").text("Statistically significant");
+	    	$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").addClass("success-indicator");
+		} else {
+			$("#independent-statistics-anchor-" + comparisonItem["type"] + "-status").text("Unable to determine significance");
+	    	$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").addClass("fail-indicator");
+
+		}
+		
+    }
+
+    for (var i = 0; i < comparisonData.length; i++){
+    	var comparisonItem = comparisonData[i];
+    	$("#comparison-statistics-anchor-" + comparisonItem['type']).click(function(e) {
+	    		//$("#comparison-container-function-" + comparisonItem['type']).slideToggle();
+
+	    		var targetContainer = $(this).parent().parent().find(".comparison-container");
+
+	    		if (targetContainer.css('display') != 'none'){
+	    			$(this).find(".glyphicon-chevron-up").hide();
+					$(this).find(".glyphicon-chevron-down").show();
+				} else {
+					$(this).find(".glyphicon-chevron-up").show();
+					$(this).find(".glyphicon-chevron-down").hide();
+				}
+
+
+	    		targetContainer.slideToggle();
+			    e.preventDefault();
+		});
+    }
+	    
+
+}
 
 //***************GRAPH CREATION SETUP***************//
 function setupGraphCreation(isFunctionPage){
