@@ -1,8 +1,9 @@
 from faultSight import app
-from faultSight.database import db, relevant_tables, trials
+from faultSight.database import db, relevant_tables, trials, sites
 from faultSight.constants import *
 
 from sqlalchemy.engine import reflection
+from sqlalchemy import func as sqlFunc
 
 import ConfigParser
 
@@ -195,3 +196,22 @@ def get_num_trials():
     return db.session.query(trials).count()
 
 
+
+
+def calculate_num_sites_for_function(function_name, site_type=""):
+    query = db.session.query(sites)\
+                        .filter(sites.func == function_name)
+
+    if site_type != "":
+        query = query.filter(sites.type == site_type)
+
+    use_dynamic = read_id_from_config("FaultSight", "useDynamic")
+    if use_dynamic == "True":
+        use_dynamic = True
+    else:
+        use_dynamic = False
+
+    if use_dynamic:
+        return query.with_entities(sqlFunc.sum(sites.numExecutions)).scalar()
+    else:
+        return query.count()

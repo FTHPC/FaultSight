@@ -37,6 +37,7 @@ def createConfig(path):
     config.set("FaultSight", "statisticalUseAllTrials", True)
     config.set("FaultSight", "statisticalStartTrial", '0')
     config.set("FaultSight", "statisticalEndTrial", '0')
+    config.set("FaultSight", "useDynamic", False)
     config.set("FaultSight", "srcPath", SRC_PATH)
     config.add_section("CustomConstraint")
     config.set("CustomConstraint","trials",'["crashed","detection"]')

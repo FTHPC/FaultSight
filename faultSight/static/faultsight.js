@@ -391,7 +391,8 @@ function setupSettingsObject(callback){
         "customConstraints": {},
         "statisticalUseAllTrials": true,
         "statisticalStartTrial": 0,
-        "statisticalEndTrial": 0
+        "statisticalEndTrial": 0,
+        "useDynamic": true,
     };
     $.each(databaseDetails, function(index,value){
         currentSettings.customConstraints[index] = [];
@@ -461,6 +462,8 @@ function clickBindInSettings(){
 	    	}
 			
 	    }
+
+	    currentSettings.useDynamic = $("#use-dynamic-instructions-input").is(':checked');
     	
 
 	    saveSettingsToFile();
@@ -611,6 +614,12 @@ function getSettingsFromFile(){
 					$("#statistical-trial-end").val("");
 				}
 
+				currentSettings.useDynamic = response.useDynamic;
+				if (currentSettings.useDynamic){
+					$("#use-dynamic-instructions-input").attr("checked", true);
+				} else {
+					$("#not-use-dynamic-instructions-input").attr("checked", true);
+				}
 	        },
 	        error: function(error) {
 		        console.log(error);

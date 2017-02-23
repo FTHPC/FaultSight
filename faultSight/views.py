@@ -210,6 +210,7 @@ def showFunction(function_name):
                            statisticalUseAllTrials=read_id_from_config("FaultSight", "statisticalUseAllTrials"),
                            statisticalStartTrial=read_id_from_config("FaultSight", "statisticalStartTrial"),
                            statisticalEndTrial=read_id_from_config("FaultSight", "statisticalEndTrial"),
+                           useDynamic=read_id_from_config("FaultSight", "useDynamic"),
                            numTrials = num_trials)
 
 
@@ -343,7 +344,6 @@ def one_tailed_proportion_test_crashes(function_a_name, function_b_name, confide
     return return_data
 
 
-
 def proportion_test(function_name, confidence_value):
 
     # Array for storing results
@@ -359,26 +359,20 @@ def proportion_test(function_name, confidence_value):
 
 
     # Type-independent data query
-    num_total_sites = 0
+    num_total_sites = calculate_num_sites_for_function(function_name)
 
 
     num_total_injections = 0
 
     if use_all_trials:
-      num_total_sites = db.session.query(sites)\
-                        .filter(sites.func == function_name)\
-                        .count()
 
-      num_total_injections = db.session.query(sites)\
+        num_total_injections = db.session.query(sites)\
                     .join(injections, sites.siteId==injections.siteId)\
                     .filter(sites.func == function_name)\
                     .count()
     else:
-      num_total_sites = db.session.query(sites)\
-                        .filter(sites.func == function_name)\
-                        .count()
 
-      num_total_injections = db.session.query(sites)\
+        num_total_injections = db.session.query(sites)\
                     .join(injections, sites.siteId==injections.siteId)\
                     .filter(sites.func == function_name)\
                     .filter(injections.trial >= min_trial)\
@@ -391,7 +385,7 @@ def proportion_test(function_name, confidence_value):
     for type_name in TYPES_WITHOUT_UNKNOWN:
 
         num_type_injections = 0
-        num_type_sites = 0
+        num_type_sites = calculate_num_sites_for_function(function_name, type_name)
 
         if use_all_trials:
 
@@ -401,11 +395,8 @@ def proportion_test(function_name, confidence_value):
                                 .filter(sites.type == type_name)\
                                 .count()
 
-          num_type_sites = db.session.query(sites)\
-                            .filter(sites.func == function_name)\
-                            .filter(sites.type == type_name)\
-                            .count()
         else:
+            
           num_type_injections = db.session.query(sites)\
                                 .join(injections, sites.siteId==injections.siteId)\
                                 .filter(sites.func == function_name)\
@@ -414,10 +405,6 @@ def proportion_test(function_name, confidence_value):
                                 .filter(injections.trial <= max_trial)\
                                 .count()
 
-          num_type_sites = db.session.query(sites)\
-                            .filter(sites.func == function_name)\
-                            .filter(sites.type == type_name)\
-                            .count()
 
         # Test of proportions
         p_val_type, p1_val, p2_val, z_value = test_of_proportions(num_total_injections, num_total_sites, num_type_injections, num_type_sites)
@@ -689,7 +676,8 @@ def get_settings_from_file():
         'confidenceValue':config.get("FaultSight", "confidenceValue"),
         'statisticalUseAllTrials':config.get("FaultSight", "statisticalUseAllTrials"),
         'statisticalStartTrial':config.get("FaultSight", "statisticalStartTrial"),
-        'statisticalEndTrial':config.get("FaultSight", "statisticalEndTrial")
+        'statisticalEndTrial':config.get("FaultSight", "statisticalEndTrial"),
+        'useDynamic':config.get("FaultSight", "useDynamic")
     }
 
 
@@ -697,6 +685,11 @@ def get_settings_from_file():
       settings_dict['statisticalUseAllTrials'] = True
     else:
       settings_dict['statisticalUseAllTrials'] = False
+
+    if settings_dict['useDynamic'] == "True":
+      settings_dict['useDynamic'] = True
+    else:
+      settings_dict['useDynamic'] = False
     
     # Package the dict and return
     return jsonify(**settings_dict)
@@ -720,6 +713,8 @@ def save_settings_to_file():
     else:
       config.set("FaultSight","statisticalStartTrial","0")
       config.set("FaultSight","statisticalEndTrial","0")
+
+    config.set("FaultSight","useDynamic",request.json['useDynamic'])
 
     # Sets custom constraints - Slightly more complicated
     for key, value in request.json['customConstraints'].items():

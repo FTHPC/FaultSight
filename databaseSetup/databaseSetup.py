@@ -27,6 +27,7 @@ import sqlite3, os, sys
 #   update_site_comment(db_connection, site, comment):
 #   update_site_location(db_connection, site, file = "", func = "", line = ""):
 #   update_site_opcode(db_connection, site, opcode):
+#   update_site_num_executions(db_connection, site, num_executions):
 #
 #
 #
@@ -166,6 +167,7 @@ def create_and_connect_database(database_directory):
         Column('func', String, nullable=True),
         Column('line', Integer, nullable=True),
         Column('opcode', Integer, nullable=True),
+        Column('numExecutions', Integer, nullable=False, default=1)
     )
 
     trials = Table('trials', metadata,
@@ -409,10 +411,13 @@ def insert_site(db_connection, row_arguments):
                 'file': String (Optional),
                 'func': String (Optional),
                 'line': Integer (Optional),
-                'opcode': Integer (Optional)
+                'opcode': Integer (Optional),
+                'numExecutions': Integer (Optional)
             }
 
-            Site: If you have a customized identifier for your site. E.g. memory address. Please ensure that this identifier is unique!
+            Site: If you have a customized identifier for your site. E.g. memory address. Please ensure that this identifier is unique! If this is a
+                duplicate site identifier, this will be interpreted as meaning that the same site has been executed again, and therefore only the
+                numExecutions field will be incremented.
 
             Type: Please use the following:
                 "Arith-FP",
@@ -424,7 +429,14 @@ def insert_site(db_connection, row_arguments):
 
             File: Please use absolute paths
 
-            Opcode: Please use the opcodes for your architecture. You can then set the architecture in a configuration file within FaultSight (./config/config.py)
+            Opcode: Please use the opcodes for your architecture. 
+                /*You can then set the architecture in a configuration file within FaultSight (./config/config.py)*/
+                At the moment, please edit the `opcode2Str` function in the `utils.py` file.
+
+            NumExecutions: The number of times this site has been executed (e.g., within a for/while loop). This allows us to use dynamic instructions in
+                statistical calculations. If this value is not provided, statistical calulations will use static instructions instead.
+
+
 
             For optional attributes, please exclude that key from the dictionary if not used.
             Therefore if none of the attributes will be set, please pass an empty dictionary ({})
@@ -434,7 +446,13 @@ def insert_site(db_connection, row_arguments):
 
     table = get_reflected_table(db_connection, 'sites')
 
-    # row_arguents is a dict {"colname1":value, "colname2":value}
+    # Query the table to see if a site with this identifier already exists
+    if 'site' in row_arguments:
+        site_entry = check_site_exists(db_connection, row_arguments['site'])
+        if site_entry != False:
+            update_site_num_executions(db_connection, row_arguments['site'], site_entry.numExecutions + 1)
+            return
+    
     insert = table(**row_arguments)
 
     session.add(insert)
@@ -458,7 +476,8 @@ def check_site_exists(db_connection, site):
                 'file': String
                 'func': String
                 'line': Integer
-                'opcode': Integer
+                'opcode': Integer,
+                'numExecutions': Integer,
             }
            
     """
@@ -615,6 +634,17 @@ def update_site_opcode(db_connection, site, opcode):
     #
     #conn = db_connection['engine'].connect()
     #conn.execute(query)
+
+
+def update_site_num_executions(db_connection, site, num_executions):
+    table = get_reflected_table(db_connection, 'sites')
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
+    session.query(table)\
+        .filter(table.site == site)\
+        .update({"numExecutions": num_executions})
+    session.commit()
+
 
 
 
@@ -812,7 +842,6 @@ def insert_injection(db_connection, row_arguments, site_arguments = {}):
             this function will also generate an entry in the sites table, linking this injection to the newly created site. This new site can be
             customized via the optional site_arguments parameter
 
-            Opcode: Please use the opcodes for your architecture. You can then set the architecture in a configuration file within FaultSight (./config/config.py)
 
             Bit: In case of multiple injections in the same word, please use a python list of bit locations. This will be automatically converted to a bit mask
                  In case of a single injection, please provide a scalar bit-location
@@ -830,7 +859,8 @@ def insert_injection(db_connection, row_arguments, site_arguments = {}):
                 'file': String (Optional),
                 'func': String (Optional),
                 'line': String (Optional),
-                'opcode': Integer (Optional)
+                'opcode': Integer (Optional),
+                'numExecutions': Integer (Optional)
             }
 
             Site: If you have a customized identifier for your site. E.g. memory address
@@ -846,6 +876,9 @@ def insert_injection(db_connection, row_arguments, site_arguments = {}):
             File: Please use absolute paths
 
             Opcode: Please use the opcodes for your architecture. You can then set the architecture in a configuration file within FaultSight (./config/config.py)
+
+            NumExecutions: The number of times this site has been executed (e.g., within a for/while loop). This allows us to use dynamic instructions in
+                statistical calculations. If this value is not provided, statistical calulations will use static instructions instead.
 
             For optional attributes, please exclude that key from the dictionary if not used.
             Therefore if none of the attributes will be set, please pass an empty dictionary ({})
@@ -871,7 +904,7 @@ def insert_injection(db_connection, row_arguments, site_arguments = {}):
     # Insert a new site into the sites table, if no site was provided by the user
     if 'site' not in row_arguments:
         sites = get_reflected_table(db_connection, 'sites')
-        insert = sites(site_arguments)
+        insert = sites(**site_arguments)
         session.add(insert)
         row_arguments['site'] = insert.siteId
 
