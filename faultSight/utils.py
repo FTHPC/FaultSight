@@ -199,6 +199,7 @@ def get_num_trials():
 
 
 def calculate_num_sites_for_function(function_name, site_type=""):
+
     query = db.session.query(sites)\
                         .filter(sites.func == function_name)
 
@@ -211,7 +212,7 @@ def calculate_num_sites_for_function(function_name, site_type=""):
     else:
         use_dynamic = False
 
-    if use_dynamic:
+    if use_dynamic and query.count() != 0:
         return query.with_entities(sqlFunc.sum(sites.numExecutions)).scalar()
     else:
         return query.count()

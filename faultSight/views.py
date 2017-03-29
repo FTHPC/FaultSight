@@ -101,8 +101,8 @@ def showFunction(function_name):
     # List of possible file paths - Depending on the database, these may include filepaths that are invalid, so we need to check them
     # For example, some file paths used to be stored as '__NF', if the file was not found during database generation.
     possible_file_paths = [site['file'] for site in all_function_sites]
-
-    possible_file_paths = list(set(possible_file_paths))
+    f=lambda n:sorted(set(n),cmp,n.count,1)
+    possible_file_paths = f(possible_file_paths)
 
     # Parse the list of possible paths, get the correct one
     file_path = get_function_file(possible_file_paths)
@@ -471,39 +471,38 @@ def get_function_file(possible_files):
     for possible_file in possible_files:
         if ".LLVM.txt" not in possible_file and "__NF" not in possible_file:
             file = possible_file
-            pass
 
-    # Check the file exists, adjust paths if necessary
+            # Check the file exists, adjust paths if necessary
 
-    # sys.path.insert(0, '../')
+            # sys.path.insert(0, '../')
 
-    src_path = read_id_from_config("FaultSight", "srcPath")
+            src_path = read_id_from_config("FaultSight", "srcPath")
 
-    # Get filename
-    import os.path
-    file_name = os.path.basename(file)
+            # Get filename
+            import os.path
+            file_name = os.path.basename(file)
 
-    # Get package name - i.e. if srcPath in config file is "/foo/bar/", returns "bar"
-    package_name = os.path.basename(src_path)
+            # Get package name - i.e. if srcPath in config file is "/foo/bar/", returns "bar"
+            package_name = os.path.basename(src_path)
 
-    # Replace everything before the package name with the srcPath in config file
-    new_path = ""
-    try:
-        dir_name = os.path.dirname(src_path) + "/"
-        new_path = file.replace(file[:file.index(package_name)],dir_name )
-    except:
-        pass
+            # Replace everything before the package name with the srcPath in config file
+            new_path = ""
+            try:
+                dir_name = os.path.dirname(src_path) + "/"
+                new_path = file.replace(file[:file.index(package_name)],dir_name )
+            except:
+                pass
 
-    # Check if the path in the database is correct
-    if os.path.isfile(file):
-        return file
-    elif os.path.isfile(new_path):
-        return new_path
-    elif os.path.isfile(src_path+file_name):
-        return src_path + file
-    else:
-        logging.warning("Warning: source file not found -- " +  str(file) + " -- nor " + new_path)
-        return ""
+            # Check if the path in the database is correct
+            if os.path.isfile(file):
+                return file
+            elif os.path.isfile(new_path):
+                return new_path
+            elif os.path.isfile(src_path+file_name):
+                return src_path + file
+                
+    logging.warning("Warning: source file not found -- " +  str(file) + " -- nor " + new_path)
+    return ""
 
 def analyse_line_count(lines):
     # Finding min and max lines, so we can later select 'relevant' lines.
