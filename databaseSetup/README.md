@@ -1,4 +1,4 @@
-For setting up a database for FaultSight, use the api calls provided in `databaseSetup.py` to generate a sqlite3 database file. 
+For setting up a database for FaultSight, use the API calls provided in `databaseSetup.py` to generate a sqlite3 database file. 
 
 The database contains five tables: `Sites`, `Trials`, `Injections`, `Signals`, and `Detections`. Setting up the database involves the following general steps:
 
