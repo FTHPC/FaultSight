@@ -15,10 +15,7 @@ Generated graphs include:
 
 This program depends on:
 
-- flask
-```
-pip install flask
-```
+
 - flask_sqlalchemy
 ```
 pip install flask_sqlalchemy
@@ -32,11 +29,6 @@ pip install numpy
 pip install scipy
 ```
 
-Generating a FaultSight database
------
-This tool requires the user to generate the FaultSight database, which follows a generalized schema that should be applicable to most fault injectors. For this purpose, a python script is included, `databaseSetup/databaseSetup.py`, which provides the user with useful API calls (essentially wrappers to SQL queries). Therefore, the user will be required to write a custom python script that parses the output data from their fault injection, and make the appropriate calls to the methods provided in `databaseSetup.py`. This custom script is provided for users of FlipIt (`databaseSetup/examples/FlipIt/database.py`), and should be used as example code when writing such a script for other fault injectors. If anyone does write such scripts for other fault injectors, I would really appreciate it if you contributed your code to this repository!
-
-For further information on generating the database file, look at the README in the `databaseSetup` folder.
 
 
 Usage
@@ -46,9 +38,9 @@ To use this tool:
 
 1.) Run an injection campaign via the fault injector of your choosing. We recommend FlipIt, as it is natively supported by this tool.
 
-2.) Generate a FaultSight database (.db) file, which follows a generalized schema that should be applicable to most fault injectors. Follow the information provided in the `Generating a FaultSight database` section above. Place this database file in the `database` folder of FaultSight.
+2.) Generate a FaultSight database (.db) file, which follows a generalized schema that should be applicable to most fault injectors. Follow the information provided in the `Generating a FaultSight database` section below. Place this database file in `/faultSight/database/`, and make sure the database file is called `campaign.db`
 
-3.) Start FaultSight by running the following command:
+3.) `cd` to the `/faultSight/` directory, and run the following command:
 
 ```
 python run.py
@@ -57,9 +49,20 @@ python run.py
 4.) FaultSight is now running at the following url:
 
 ```
-http://127.0.0.1:5000/ (Mainly tested on Google chrome)
+http://127.0.0.1:5000/ (Developed on Google chrome, but there should not be any major issues for other web browsers)
 ```
+
+
+
+Generating a FaultSight database
+-----
+This tool requires the user to generate the FaultSight database, which follows a generalized schema that should be applicable to most fault injectors. For this purpose, a python script is included, `databaseSetup/databaseSetup.py`, which provides the user with useful API calls (essentially wrappers to SQL queries). Therefore, the user will be required to write a custom python script that parses the output data from their fault injection, and make the appropriate calls to the methods provided in `databaseSetup.py`. This custom script is already provided for users of FlipIt (`databaseSetup/examples/FlipIt/database.py`), and should be used as example code when writing such a script for other fault injectors. If anyone does write such scripts for other fault injectors, I would really appreciate it if you contributed your code to this repository!
+
+For detailed information on generating the database file, look at the README located at `/databaseSetup/README.md`. If you are using FlipIt, there are specific instructions located at `databaseSetup/examples/FlipIt/README.md`
+
 
 Need more help?
 -----
-Please use the [wiki](https://github.com/einarhorn/FaultSight/wiki) for now. More detailed documentation will be uploaded shortly.
+Feel free to email me at eahorn2@illinois.edu with questions anytime!
+
+The [wiki](https://github.com/einarhorn/FaultSight/wiki) will be updated shortly.

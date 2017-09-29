@@ -1,4 +1,7 @@
-For setting up a database for FaultSight, use the API calls provided in `databaseSetup.py` to generate a sqlite3 database file. 
+NOTE: If using FaultSight with FlipIt, please refer to the instructions provided in databaseSetup/examples/FlipIt/README.md
+
+
+For setting up a database for FaultSight, use the API calls provided in `databaseSetup.py` to generate a sqlite3 database file.
 
 The database contains five tables: `Sites`, `Trials`, `Injections`, `Signals`, and `Detections`. Setting up the database involves the following general steps:
 
