@@ -21,17 +21,17 @@ def init(db, LLVMPath, trialPath, customFuncs = None):
         should a seperate fault injection run of the application.
     customFuncs : tuple of function pointers
         Tuple of customs parsing functions (initcustomparsing(), customparser())
-    
+
     Return
     ---------
     sqlite3 database connection handle that is open
-    
+
     Notes
     ----------
     Searched recursively in LLVMPath for log files.
     customFuncs can be None. In that case, no user parseing is done.
     """
-    
+
     if rebuild_database:
         os.system("rm -rf " + db)
     exists = os.path.isfile(db)
@@ -47,7 +47,7 @@ def init(db, LLVMPath, trialPath, customFuncs = None):
             readTrials(c, trialPath, customFuncs[1])
         else:
             readTrials(c, trialPath)
-    
+
         #c.execute("SELECT name FROM sqlite_master WHERE type='table';")
     #conn.commit()
     return c
@@ -56,7 +56,7 @@ def init(db, LLVMPath, trialPath, customFuncs = None):
 def readLLVM(c, LLVMPath):
     """Searches through the directory structure and collect
     fault injection site information and add it to the database
-    
+
     Parameters
     ----------
     c : object
@@ -76,7 +76,7 @@ def readLLVM(c, LLVMPath):
                     parseBinaryLogFile(c, os.path.join(path, name))
                 else:
                     parseInjLog(c, path, name)
-    
+
 
 def parseInjLog(c, path,  file):
     """Reads FLipIt LLVM log file and adds fault injection site
@@ -93,21 +93,21 @@ def parseInjLog(c, path,  file):
 
     fullPath = os.path.join(path, file)
     rawlog = open(fullPath).readlines()
-    funcName = ""   
+    funcName = ""
 
     for i in range(0, len(rawlog)):
         if "Function Name: " in rawlog[i]:
             funcName = rawlog[i].split(" ")[-1].strip()
-        
+
         if rawlog[i][0] == "#":
-            # break line: "#NUM TYPE TXT TXT" to grab NUM  
+            # break line: "#NUM TYPE TXT TXT" to grab NUM
             split = rawlog[i].split("\t")
             site = int( split[0][1:] )
             type = split[1]
             comment = split[-2]
             line = split[-1]
             srcLine = 0
-        
+
             # compiled with -g and we know the src line number
             if ":" in line:
                 split = line.split(":")
@@ -129,8 +129,8 @@ def parseInjLog(c, path,  file):
 
 def readTrials(c, filePrefix, customParser = None):
     """Parses an output file of a fault injection trial for injections,
-    detections, and system level events such as raised signals. 
-    
+    detections, and system level events such as raised signals.
+
     Parameters
     ----------
     c : object
@@ -144,20 +144,19 @@ def readTrials(c, filePrefix, customParser = None):
     """
     print "\n\nReading trials with file prefix:  ", filePrefix
     for trial in range(0, int(numTrials)):
-
         # determine if trial exists
-        path = filePrefix + "_" + str(trial)#".txt"
+        path = filePrefix + "_" + str(trial) + "/" + trial_prefix + "_" + str(trial)#".txt"
 
         if not os.path.exists(path):
             path += ".txt"
             if not os.path.exists(path):
                 continue
         print "\t", path
-        
+
         # grab information about the injection(s)
         t = open(path).readlines()
         llvmInj = injCount = crashed = detected = signal = arithFP = 0
-       
+
         #c.execute("INSERT INTO trials(trial,path) VALUES (?,?)", (trial, path))
 
         row_arguments = {
@@ -182,18 +181,54 @@ def readTrials(c, filePrefix, customParser = None):
                         inj.append(l.split(" "))
                     i += 1
                     l = t[i]
- 
+
                 # grab info stored in  'inj'
                 arithFP = 0
                 if "IEEE" in " ".join(inj[0]):
                     arithFP = 1
-                rank = int(inj[1][-1])
-                bit = int(inj[3][-1])
-                site = int(inj[4][-1])
-                prob = float(inj[5][-1])
+                # print(inj)
+                rank = None
+                for j in range(0, len(inj)):
+                    if inj[j][0] == 'Rank:':
+                        rank = int(inj[j][-1])
+                # rank = int(inj[1][-1])
+
+                bit = None
+                for j in range(0, len(inj)):
+                    if inj[j][0] == 'Bit':
+                        bit = int(inj[j][-1])
+                #bit = int(inj[3][-1])
+
+                site = None
+                for j in range(0, len(inj)):
+                    if inj[j][0] == 'Index' and inj[j][4] == 'site:':
+                        site = int(inj[j][-1])
+                #site = int(inj[4][-1])
+
+                prob = None
+                for j in range(0, len(inj)):
+                    if inj[j][0] == 'Chosen' and inj[j][1] == 'random':
+                        prob = float(inj[j][-1])
+                #prob = float(inj[5][-1])
+
+
+                if rank == None:
+                    print('Error in finding rank')
+                    sys.exit(1)
+
+                if bit == None:
+                    print('Error in finding bit')
+                    sys.exit(1)
+                if site == None:
+                    print('Error in finding site')
+                    sys.exit(1)
+                if prob == None:
+                    print('Error in finding prob')
+                    sys.exit(1)
+
                 #c.execute("SELECT * FROM sites WHERE site=?", (site,))
                 #result = c.fetchone()
-                result = check_site_exists(c, site) 
+                result = check_site_exists(c, site)
                 if result == False:
                     print "Unable to locate site #", site, " in database"
                     sys.exit(1)
@@ -204,7 +239,13 @@ def readTrials(c, filePrefix, customParser = None):
                     else:
                         ty = "Arith-Fix"
                     update_site_type(c, site, ty)
-                llvmInj = int(inj[7][-1])
+                llvmInj = None
+                for j in range(0, len(inj)):
+                    if inj[j][0] == 'Rank' and inj[j][-3] == 'Iteration':
+                        llvmInj = float(inj[j][-1])
+                if llvmInj == None:
+                    print('Error in finding llvmInj')
+                    sys.exit(1)
                 dynCycle = llvmInj
                 #c.execute("INSERT INTO injections VALUES (?,?,?,?,?,?,?)", (trial, site, rank, prob, bit, dynCycle, 'NULL'))
                 # TODO: Include rank in other arguments
@@ -218,9 +259,9 @@ def readTrials(c, filePrefix, customParser = None):
                 }
 
                 insert_injection(c, row_arguments, site_arguments = {})
-               
+
                 if customParser != None:
-	                for j in range(8, len(inj)): 
+	                for j in range(8, len(inj)):
 	                    customParser(c, " ".join(inj[j]), trial)
 
 
@@ -236,7 +277,7 @@ def readTrials(c, filePrefix, customParser = None):
                     }
                     if rank != None:
                         row_arguments['rank'] = rank
-                    
+
                     insert_detection(c, row_arguments)
 
             if assertMessage in l:
@@ -251,7 +292,7 @@ def readTrials(c, filePrefix, customParser = None):
 
                 insert_signal(c, row_arguments)
                 #c.execute("INSERT INTO signals VALUES (?,?)", (trial, 6))
-            
+
             if busError in l:
                 signal = True
                 crashed = True
@@ -277,7 +318,7 @@ def readTrials(c, filePrefix, customParser = None):
 
                 insert_signal(c, row_arguments)
                 #c.execute("INSERT INTO signals VALUES (?,?)", (trial, 11))
-             
+
             if customParser != None:
                 customParser(c, l, trial)
 
