@@ -91,8 +91,7 @@ def query_filter(query, region_data, constraint_data):
     # Region filter
     query = filter_query_on_region(region_data, query)
 
-    for constraint in constraint_data:e
-
+    for constraint in constraint_data:
         # First we access the column object
         table = table_mapping[constraint['table']].__table__
         col = table.c[constraint['column']]
