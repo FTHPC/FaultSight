@@ -7,9 +7,9 @@ from sqlalchemy.ext.automap import automap_base
 # Please ensure each table has a primary key, otherwise SQLAlchemy will be
 # unable to automatically determine the database schema
 
-relevant_tables = ['sites', 
-				   'injections', 
-				   'trials', 
+relevant_tables = ['sites',
+				   'injections',
+				   'trials',
 				   'detections',
 				   'signals']
 
@@ -25,3 +25,11 @@ injections = Base.classes.injections
 trials = Base.classes.trials
 detections = Base.classes.detections
 signals = Base.classes.signals
+
+table_mapping = {
+	'sites': sites,
+	'injections': injections,
+	'trials': trials,
+	'detections': detections,
+	'signals': signals
+}

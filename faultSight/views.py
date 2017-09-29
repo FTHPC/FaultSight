@@ -1,5 +1,5 @@
 from faultSight import app
-from faultSight.database import db, relevant_tables, sites, trials, injections, detections
+from faultSight.database import db, relevant_tables, sites, trials, injections, detections, table_mapping
 from faultSight.graphs import get_graph, get_my_graphs
 from faultSight.constants import *
 from faultSight.utils import *
@@ -25,7 +25,7 @@ def index():
     # TODO: Need error on main page when no database/no injections(?)
     # Get number of trials
     num_trials = get_num_trials()
-    
+
     return render_template('main.html',
                            functionList = app.config['FUNCTIONS'],
                            injectedFunctionList = app.config['INJECTED_FUNCTIONS'],
@@ -44,7 +44,7 @@ def compareFunctions():
     num_trials = get_num_trials()
 
     confidence_value = float(read_id_from_config("FaultSight", "confidenceValue"))
-    
+
     return render_template('compareFunctions.html',
                            functionList = app.config['FUNCTIONS'],
                            injectedFunctionList = app.config['INJECTED_FUNCTIONS'],
@@ -117,19 +117,19 @@ def showFunction(function_name):
     # If we were unable to find a valid file
     if file_path == "":
         # No file found. Perhaps the analysis was run on a different computer and the files have not been transferred over?
-        return render_template('missingFunction.html', 
-                               functionName=function_name, 
-                               functionList = app.config['FUNCTIONS'],  
+        return render_template('missingFunction.html',
+                               functionName=function_name,
+                               functionList = app.config['FUNCTIONS'],
                                databaseDetails=get_database_tables(),
-                               injectedFunctionList = app.config['INJECTED_FUNCTIONS'], 
-                               notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'], 
+                               injectedFunctionList = app.config['INJECTED_FUNCTIONS'],
+                               notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'],
                                myGraphList=json.dumps(my_graph_list),
                                myGraphListLength=len(my_graph_list),
                                proportionTesting=proportion_testing_results,
                                confidenceValue=float(read_id_from_config("FaultSight", "confidenceValue")),
                                numTrials = num_trials,
                                possibleFilePaths = possible_file_paths)
- 
+
 
     logging.info("\nRelating injections to source code in file: " +  str(file_path))
 
@@ -143,13 +143,13 @@ def showFunction(function_name):
     # If we have no injections, we cannot proceed further - return what we have so far
     # Why does this page not let you generate graphs?
     if not function_has_injections:
-        return render_template('emptyFunction.html', 
-                               functionName=function_name, 
-                               functionList = app.config['FUNCTIONS'], 
-                               entireCode = entire_function_html,  
+        return render_template('emptyFunction.html',
+                               functionName=function_name,
+                               functionList = app.config['FUNCTIONS'],
+                               entireCode = entire_function_html,
                                databaseDetails=get_database_tables(),
-                               injectedFunctionList = app.config['INJECTED_FUNCTIONS'], 
-                               notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'], 
+                               injectedFunctionList = app.config['INJECTED_FUNCTIONS'],
+                               notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'],
                                myGraphList=json.dumps(my_graph_list),
                                myGraphListLength=len(my_graph_list),
                                fileName=file_path,
@@ -162,7 +162,7 @@ def showFunction(function_name):
 
 
 
-    injected_lines = [site['line'] for site in injected_function_sites] 
+    injected_lines = [site['line'] for site in injected_function_sites]
     start_line, end_line, line_injection_count, failed_injection = analyse_line_count(injected_lines)
 
     # Get a list of lines (indexed from 0) that need to be highlighted
@@ -181,28 +181,28 @@ def showFunction(function_name):
     fraction_of_injections = float(num_injections_in_function) / app.config['NUM_INJECTIONS']
 
 
-    
+
 
     highlight_lines = highlight_indexes + start_line
     machine_instructions = get_machine_instructions(function_name,highlight_lines, app.config['NUM_INJECTIONS'], num_injections_in_function)
-    
-    return render_template('function.html', 
-                           functionName=function_name, 
-                           functionList = app.config['FUNCTIONS'], 
-                           injectedFunctionList = app.config['INJECTED_FUNCTIONS'], 
-                           notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'], 
+
+    return render_template('function.html',
+                           functionName=function_name,
+                           functionList = app.config['FUNCTIONS'],
+                           injectedFunctionList = app.config['INJECTED_FUNCTIONS'],
+                           notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'],
                            failedInjectionPercentage=failed_injection,
-                           partialCode=partial_function_html, 
-                           partialCodeValues=line_injection_count, 
-                           partialHighlightIndexes=highlight_indexes,  
-                           machineInstructions=machine_instructions, 
-                           highlightMinimumValue=float(read_id_from_config("FaultSight", "highlightValue")),  
-                           confidenceValue=float(read_id_from_config("FaultSight", "confidenceValue")),  
-                           partialStartLine=start_line, 
-                           entireCode=entire_function_html, 
-                           myGraphList=json.dumps(my_graph_list), 
-                           myGraphListLength=len(my_graph_list), 
-                           fractionOfApplciation=fraction_of_injections,  
+                           partialCode=partial_function_html,
+                           partialCodeValues=line_injection_count,
+                           partialHighlightIndexes=highlight_indexes,
+                           machineInstructions=machine_instructions,
+                           highlightMinimumValue=float(read_id_from_config("FaultSight", "highlightValue")),
+                           confidenceValue=float(read_id_from_config("FaultSight", "confidenceValue")),
+                           partialStartLine=start_line,
+                           entireCode=entire_function_html,
+                           myGraphList=json.dumps(my_graph_list),
+                           myGraphListLength=len(my_graph_list),
+                           fractionOfApplciation=fraction_of_injections,
                            databaseDetails=get_database_tables(),
                            numInjectionsInFunction=num_injections_in_function,
                            fileName=file_path,
@@ -232,7 +232,7 @@ def generate_function_information(function_name):
     num_detections = db.session.query(detections)\
                     .filter(detections.trial.in_(function_trials))\
                     .count()
-           
+
     num_crashes = db.session.query(trials)\
                     .filter(trials.trial.in_(function_trials))\
                     .filter(trials.crashed == 1)\
@@ -380,7 +380,7 @@ def proportion_test(function_name, confidence_value):
                     .count()
 
 
-    
+
     # Type-dependent queries and calculations
     for type_name in TYPES_WITHOUT_UNKNOWN:
 
@@ -396,7 +396,7 @@ def proportion_test(function_name, confidence_value):
                                 .count()
 
         else:
-            
+
           num_type_injections = db.session.query(sites)\
                                 .join(injections, sites.siteId==injections.siteId)\
                                 .filter(sites.func == function_name)\
@@ -426,7 +426,7 @@ def proportion_test(function_name, confidence_value):
         return_data.append(type_entry)
 
     return return_data
-    
+
 def get_entire_function(file_path):
     # Read the entire function.
     entire_function = read_lines_from_file(file_path)
@@ -473,9 +473,6 @@ def get_function_file(possible_files):
             file = possible_file
 
             # Check the file exists, adjust paths if necessary
-
-            # sys.path.insert(0, '../')
-
             src_path = read_id_from_config("FaultSight", "srcPath")
 
             # Get filename
@@ -485,30 +482,22 @@ def get_function_file(possible_files):
             # Get package name - i.e. if srcPath in config file is "/foo/bar/", returns "bar"
             package_name = os.path.basename(src_path)
 
-            # Replace everything before the package name with the srcPath in config file
-            new_path = ""
-            try:
-                dir_name = os.path.dirname(src_path) + "/"
-                new_path = file.replace(file[:file.index(package_name)],dir_name )
-            except:
-                pass
-
             # Check if the path in the database is correct
+
             if os.path.isfile(file):
                 return file
-            elif os.path.isfile(new_path):
-                return new_path
+
             elif os.path.isfile(src_path+file_name):
-                return src_path + file
-                
-    logging.warning("Warning: source file not found -- " +  str(file) + " -- nor " + new_path)
+                return src_path + file_name
+
+    logging.warning("Warning: source file not found -- " +  str(file))
     return ""
 
 def analyse_line_count(lines):
     # Finding min and max lines, so we can later select 'relevant' lines.
     minimum = np.min(lines)
     minimum = minimum if minimum >= 0 else 0
-    maximum = np.max(lines)+1    
+    maximum = np.max(lines)+1
     bins = np.arange(minimum, maximum+1)
     values, bins = np.histogram(lines, bins, density=False) # <------------ check here
     bins = np.arange(minimum, maximum)
@@ -517,15 +506,16 @@ def analyse_line_count(lines):
     # Finds the number of injections that were not mapped to lines.
     failed_injection = 0
 
+    # This means that there were injections that couldn't be mapped to line nums
     if minimum == 0:
         failed_injection = str(values[0])
-        mask = np.all(np.equal(lines, 0), axis=1)
-        minimum = np.min(lines[~mask]) - 1
+        values[0] = 0
+        minimum = np.argmax(values > 0)
         values = values[minimum:]
-
+    print("Minimum: ", minimum, "Maximum: ", maximum)
     return minimum, maximum, values, failed_injection
 
-    
+
 
 """Gets data about the specified function
 Parameter - RelevantIndexes contains the index of the highlighted lines, relative to startLine"""
@@ -554,7 +544,7 @@ def get_machine_instructions(func, highlight_lines, num_injections_in_applicatio
                                                .count()
 
             site_dict = {
-                          'Opcode': opcode2Str(site.opcode), 
+                          'Opcode': opcode2Str(site.opcode),
                           'Comment': site.comment,
                           'Type': site.type,
                           'InjectionCount': num_injections_at_site,
@@ -647,8 +637,8 @@ def create_graph():
     detail = request.json['detail']
     graph_type = request.json['type']
 
-    region_data = generate_region_object(region = request.json['region'], 
-                                         start = request.json['regionStart'], 
+    region_data = generate_region_object(region = request.json['region'],
+                                         start = request.json['regionStart'],
                                          end = request.json['regionEnd'])
 
     constraint_data = request.json['constraintArray']
@@ -661,7 +651,7 @@ def create_graph():
 # Settings control
 
 """Read in config file settings"""
-@app.route('/getSettingsFromFile', methods=['GET'])    
+@app.route('/getSettingsFromFile', methods=['GET'])
 def get_settings_from_file():
 
     # ConfigParser
@@ -669,7 +659,7 @@ def get_settings_from_file():
 
     # Fill dict with values from config file
     settings_dict = {
-        'myGraphList': config.get("FaultSight", "myGraphList"), 
+        'myGraphList': config.get("FaultSight", "myGraphList"),
         'customConstraints':config._sections['CustomConstraint'],
         'highlightValue':config.get("FaultSight", "highlightValue"),
         'confidenceValue':config.get("FaultSight", "confidenceValue"),
@@ -689,11 +679,11 @@ def get_settings_from_file():
       settings_dict['useDynamic'] = True
     else:
       settings_dict['useDynamic'] = False
-    
+
     # Package the dict and return
     return jsonify(**settings_dict)
-   
-"""Save config file changes""" 
+
+"""Save config file changes"""
 @app.route('/saveSettingsToFile', methods=['POST'])
 def save_settings_to_file():
 
@@ -724,7 +714,7 @@ def save_settings_to_file():
         constraint_key = key.encode("utf-8")
         constraint_value = "[" + ",".join(new_list).encode("utf-8") + "]" if isinstance(new_list, list) else new_list.encode("utf-8")
         config.set("CustomConstraint", constraint_key, constraint_value)
-    
+
     # Write to config file
     with open(app.config['CONFIG_PATH'], "wb") as config_file:
         config.write(config_file)

@@ -1,4 +1,4 @@
-from faultSight.database import db, relevant_tables, sites, trials, injections, detections
+from faultSight.database import db, relevant_tables, sites, trials, injections, detections, table_mapping
 from faultSight.constants import *
 from faultSight.utils import *
 
@@ -79,28 +79,36 @@ def query_filter(query, region_data, constraint_data):
 
     # Join each of the custom tables on 'trial' column
     for constraint in constraint_data:
-        query = query.join(constraint['table'], constraint['table'].trial == injections.trial)
+        if constraint['table'] == 'trials':
+            query = query.join(trials, trials.trial == injections.trial)
+        elif constraint['table']  == 'signals':
+            query = query.join(trials, trials.trial == injections.trial)
+            query = query.join(signals, signals.trial == trial.trial)
+        elif constraint['table']  == 'detections':
+            query = query.join(trials, trials.trial == injections.trial)
+            query = query.join(detections, detections.trial == trial.trial)
 
     # Region filter
     query = filter_query_on_region(region_data, query)
 
-    for constraint in constraint_data:
+    for constraint in constraint_data:e
 
-        #queryString += "AND "
-        #currConstraint = constraintData[i]
-        #currConstraint = {k.encode('utf8'): v.encode('utf8') for k, v in currConstraint.items()}
+        # First we access the column object
+        table = table_mapping[constraint['table']].__table__
+        col = table.c[constraint['column']]
+
         if constraint['type'] == '1':
-            query = query.filter(constraint['column'] == constraint['value'])
+            query = query.filter(col == constraint['value'])
         if constraint['type'] == '2':
-            query = query.filter(constraint['column'] != constraint['value'])
+            query = query.filter(col != constraint['value'])
         if constraint['type'] == '3':
-            query = query.filter(constraint['column'] > constraint['value'])
+            query = query.filter(col > constraint['value'])
         if constraint['type'] == '4':
-            query = query.filter(constraint['column'] >= constraint['value'])
+            query = query.filter(col >= constraint['value'])
         if constraint['type'] == '5':
-            query = query.filter(constraint['column'] < constraint['value'])
+            query = query.filter(col < constraint['value'])
         if constraint['type'] == '6':
-            query = query.filter(constraint['column'] <= constraint['value'])
+            query = query.filter(col <= constraint['value'])
 
     return query
 
@@ -138,9 +146,12 @@ def injection_classification(region_data,constraint_data):
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
 
+    # Print query for testing purposes
+    print(query.statement.compile(dialect=db.session.bind.dialect))
+
     # Request the specifc values we are interested in
     query = query.values(sites.type)
-    
+
     # Create a list of injected types
     injected_types = []
     for item in query:
@@ -154,7 +165,7 @@ def injection_classification(region_data,constraint_data):
                 logging.warning("Warning: mapping type (" + str(injected_type) + ") to type ( Control-Branch )")
                 idx = 4
             type_buckets[idx] += 1
-            
+
         else:
             logging.warning("Unknown injection type. Incrementing injection type for last item in type_buckets instead.")
             type_buckets[nClassifications - 1] += 1
@@ -170,9 +181,9 @@ def injection_classification(region_data,constraint_data):
 
     # Graph information dictionary
     graph_info = {
-        'x':'Injection Type', 
-        'y': 'Frequency', 
-        'type':'single', 
+        'x':'Injection Type',
+        'y': 'Frequency',
+        'type':'single',
         'isEmpty':len(injected_types) == 0,
         'title':title
         }
@@ -188,7 +199,7 @@ def injection_bit_location(region_data, constraint_data):
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
-    
+
     # Request the values we want
     query = query.values(sites.type,injections.bit)
 
@@ -229,19 +240,19 @@ def injection_bit_location(region_data, constraint_data):
 
     # Graph information dictionary
     graph_info = {
-        'x':'Bit Location', 
-        'y': 'Frequency', 
-        'type':'multiple', 
+        'x':'Bit Location',
+        'y': 'Frequency',
+        'type':'multiple',
         'layers':nClassifications,
-        'samples':64, 
-        'barLabels':range(0,64), 
-        'layerLabels':TYPES, 
-        'isEmpty':False, 
+        'samples':64,
+        'barLabels':range(0,64),
+        'layerLabels':TYPES,
+        'isEmpty':False,
         'title':'Classification of injections by bit'
     }
 
     return [data, graph_info]
-    
+
 
 """GRAPH - Percentages of what functions faults were injected into
 
@@ -258,7 +269,7 @@ def injection_which_function(region_data, constraint_data):
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
-    
+
     # Execute the query, store the results
     injected_functions = []
     for item in query:
@@ -284,9 +295,9 @@ def injection_which_function(region_data, constraint_data):
         data.append(dataItem)
 
     graph_info = {
-        'x':'Function', 
-        'y': 'Injections', 
-        'type':'single', 
+        'x':'Function',
+        'y': 'Injections',
+        'type':'single',
         'isEmpty':(len(data) == 0),
         'title':'Injected functions'
     }
@@ -305,7 +316,7 @@ def injections_in_each_function(region_data,constraint_data):
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
-    
+
     # Execute the query, store the results
     injected_functions = []
     for item in query:
@@ -329,7 +340,7 @@ def injections_in_each_function(region_data,constraint_data):
 
         # Filter the query on region and constraint
         query = query_filter(query, region_data, constraint_data)
-        
+
         # Request the specifc values we are interested in
         query = query.values(sites.type)
 
@@ -362,12 +373,12 @@ def injections_in_each_function(region_data,constraint_data):
         data.append(curr_variable_type_injections)
 
     graph_info = {
-        'x':'Function', 
-        'y': 'Frequency of injections', 
-        'type':'multiple', 
+        'x':'Function',
+        'y': 'Frequency of injections',
+        'type':'multiple',
         'layers':nClassifications,
-        'samples':len(injected_functions), 
-        'barLabels':injected_functions, 
+        'samples':len(injected_functions),
+        'barLabels':injected_functions,
         'isEmpty':False,
         'title':'Injection type per function'
     }
@@ -387,7 +398,7 @@ def injection_mapped_to_line(region_data,constraint_data):
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
-    
+
     # Execute the query, store the results
     injected_functions = []
     for item in query:
@@ -403,7 +414,9 @@ def injection_mapped_to_line(region_data,constraint_data):
 
         # Filter the query on region and constraint
         query = query_filter(query, region_data, constraint_data)
-        
+
+        print("QUERY")
+        print(query)
         # Request the specifc values we are interested in
         query = query.values(sites.line)
 
@@ -423,19 +436,18 @@ def injection_mapped_to_line(region_data,constraint_data):
         minimum = np.min(injected_lines)-1
         minimum = minimum if minimum >= 0 else 0
         maximum = np.max(injected_lines)+1
-        bins = np.arange(minimum, maximum+1)    
+        bins = np.arange(minimum, maximum+1)
         values, bins = np.histogram(injected_lines, bins, density=False) # <------------ check here
         bins = np.arange(minimum, maximum)
-        #values = 1.*values/np.sum(values)*100 # percents
         data = []
         for i in range(len(bins)):
             data.append({'x':(i + minimum),'y':values[i]})
 
         graph_info = {
-            'x':'Line Number', 
-            'y': 'Frequency', 
-            'type':'single', 
-            'isEmpty':False, 
+            'x':'Line Number',
+            'y': 'Frequency',
+            'type':'single',
+            'isEmpty':False,
             'title':'Injections mapped to line numbers - Function: {0}'.format(func)
         }
         return [data, graph_info]
@@ -457,7 +469,7 @@ def signal_unexpected_termination(region_data,constraint_data):
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
-    
+
     # Request the specifc values we are interested in
     query = query.values(sites.type, injections.bit)
 
@@ -465,10 +477,10 @@ def signal_unexpected_termination(region_data,constraint_data):
     crash_info = []
     for item in query:
         crash_item = {
-            'type': item.type, 
-            'bit': injections.bit
+            'type': item.type,
+            'bit': item.bit
         }
-        crash_info.append(crash_info)
+        crash_info.append(crash_item)
 
     # Parse the data
     for crash_item in crash_info:
@@ -482,26 +494,25 @@ def signal_unexpected_termination(region_data,constraint_data):
 
     # Prepare for stacked d3 chart
     data = []
-    for bit_idx in range(bits.shape[1]):
-        curr_bit_frequency = []
-        for injection_type in range(bits.shape[0]):
-            curr_bit_frequency.append({'x':TYPES[injection_type],'y':bits[injection_type][bit_idx]})
-        #data.append({'x':bit_idx,'y':curr_bit_frequency})
-        data.append(curr_bit_frequency)
+    for i in range(nClassifications):
+        curr_variable_type_termination = []
+        for j in range(64):
+            curr_variable_type_termination.append({'x':j,'y':bits[i][j]})
+        data.append(curr_variable_type_termination)
 
 
 
     graph_info = {
-        'x':'Bit', 
-        'y': 'Frequency', 
-        'type':'multiple', 
-        'layers':bits.shape[0], 
-        'samples':bits.shape[1], 
-        'barLabels':range(bits.shape[1]), 
+        'x':'Bit',
+        'y': 'Frequency',
+        'type':'multiple',
+        'layers':bits.shape[0],
+        'samples':bits.shape[1],
+        'barLabels':range(bits.shape[1]),
         'isEmpty':(len(crash_info) == 0),
         'title':'Unexpected Termination'
     }
-    
+
     return [data, graph_info]
 
 
@@ -533,9 +544,9 @@ def detections_num_trials_with_detection(region_data,constraint_data):
     data.append({'x':'Not Detected', 'y':(num_inj - detected)})
 
     graph_info = {
-        'x':'Detection Status', 
-        'y': 'Number of Injections', 
-        'type':'single', 
+        'x':'Detection Status',
+        'y': 'Number of Injections',
+        'type':'single',
         'isEmpty':num_inj == 0,
         'title':'Number of trials with detection'
     }
@@ -545,7 +556,7 @@ def detections_num_trials_with_detection(region_data,constraint_data):
 
 def detections_bit_location(region_data,constraint_data):
     """Graphs bit locations and type of what injections were detected
-    
+
     Parameters
     ----------
     c : object
@@ -564,7 +575,7 @@ def detections_bit_location(region_data,constraint_data):
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
-    
+
     # Get the columns we are interested in
     query = query.values(sites.type, injections.bit)
 
@@ -598,12 +609,12 @@ def detections_bit_location(region_data,constraint_data):
         data.append(currInjectionType)
 
     graph_info = {
-        'x':'Line Number', 
-        'y': 'Frequency', 
-        'type':'multiple', 
-        'layers':bits.shape[0], 
-        'samples':bits.shape[1], 
-        'barLabels':range(bits.shape[1]), 
+        'x':'Line Number',
+        'y': 'Frequency',
+        'type':'multiple',
+        'layers':bits.shape[0],
+        'samples':bits.shape[1],
+        'barLabels':range(bits.shape[1]),
         'isEmpty':(len(detection_info) == 0),
         'title':'Detected Injection bit location'
     }
@@ -616,12 +627,12 @@ def detections_latency(region_data,constraint_data):
     """Visualizes the detection latency of an injection in the form of
     a bar chart with the x-axis as number of instruction executed after
     injection.
-    
+
     Parameters
     ----------
     c : object
         sqlite3 database handle that is open to a valid filled database
-    
+
     Notes
     ----------
     Assumes the user modifed the latency value in the detections table. It can
@@ -639,7 +650,7 @@ def detections_latency(region_data,constraint_data):
 
     # Filter the query on region and constraint
     query = query_filter(query, region_data, constraint_data)
-    
+
     # Execute the query, store the results
     latency_info = []
     for item in query:
@@ -660,12 +671,11 @@ def detections_latency(region_data,constraint_data):
             isEmpty=False
 
     graph_info = {
-        'x':'# of instrumented LLVM instructions till detection', 
-        'y': 'Frequency', 
-        'type':'single', 
+        'x':'# of instrumented LLVM instructions till detection',
+        'y': 'Frequency',
+        'type':'single',
         'isEmpty':isEmpty,
         'title':'Detection latency'
     }
 
     return [data, graph_info]
-
