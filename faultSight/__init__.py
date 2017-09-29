@@ -31,12 +31,7 @@ app.config['INJECTED_FUNCTIONS'] = injected_functions
 
 
 # List of functions not injected into
-not_injected_functions = []
-for site in db.session.query(sites)\
-							  .join(injections, sites.siteId!=injections.siteId)\
-							  .distinct(sites.func)\
-                              .group_by(sites.func):
-	not_injected_functions.append(site.func)
+not_injected_functions = list(set(distinct_functions) - set(injected_functions))
 app.config['NOT_INJECTED_FUNCTIONS'] = not_injected_functions
 
 
@@ -44,7 +39,7 @@ app.config['NOT_INJECTED_FUNCTIONS'] = not_injected_functions
 num_injections = db.session.query(trials).filter(trials.numInj > 0).count()
 if num_injections == 0:
     logging.error("No injections found to visualize...")
-    sys.exit(1)	
+    sys.exit(1)
 app.config['NUM_INJECTIONS'] = num_injections
 
 
