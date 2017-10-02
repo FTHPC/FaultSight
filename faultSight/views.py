@@ -233,9 +233,11 @@ def generate_function_information(function_name):
                     .filter(detections.trial.in_(function_trials))\
                     .count()
 
-    num_crashes = db.session.query(trials)\
-                    .filter(trials.trial.in_(function_trials))\
-                    .filter(trials.crashed == 1)\
+    num_crashes = db.session.query(injections)\
+                    .join(trials, trials.trial==injections.trial)\
+                    .join(sites, sites.siteId==injections.siteId)\
+                    .filter(trials.crashed==1)\
+                    .filter(sites.func == function_name)\
                     .count()
 
     returnDict = {
