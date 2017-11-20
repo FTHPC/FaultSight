@@ -20,7 +20,7 @@ import sqlite3, os, sys
 #   insert_site(db_connection, row_arguments)
 #
 # Check site has been inserted previously and return site dictionary
-#   check_site_exists(db_connection, site) 
+#   check_site_exists(db_connection, site)
 #
 # Manually update site information (If sites inserted using insert_site())
 #   update_site_type(db_connection, site, type)
@@ -47,6 +47,7 @@ import sqlite3, os, sys
 #   update_trial_crashed(db_connection, is_crashed)
 #   update_trial_detected(db_connection, is_detected)
 #   update_trial_signal(db_connection, is_signal)
+#   update_trial_num_iterations(db_connection, num_iterations)
 #
 # Finish inserting injection campaign information
 #   end_trial(db_connection)
@@ -64,7 +65,7 @@ def connect_to_existing(database_directory):
     dictionary (required for operations on the database)
 
     Args:
-        database_directory (string): The string used by sqlalchemy to connect to the database. 
+        database_directory (string): The string used by sqlalchemy to connect to the database.
 
         String of the form: 'sqlite://<nohostname>/<path>'
 
@@ -74,10 +75,10 @@ def connect_to_existing(database_directory):
         If the path is absolute:
             Unix/Mac - 4 initial slashes in total
             'sqlite:////absolute/path/to/foo.db'
-            
+
             Windows
             'sqlite:///C:\\path\\to\\foo.db'
-            
+
             Windows alternative using raw string
             r'sqlite:///C:\path\to\foo.db'
 
@@ -86,7 +87,7 @@ def connect_to_existing(database_directory):
         used in later stages for interacting with the database
 
         Of the form:
-        db_connection = 
+        db_connection =
         {
           'engine': -,
           'metadata': -,
@@ -124,10 +125,10 @@ def create_and_connect_database(database_directory):
         If the path is absolute:
             Unix/Mac - 4 initial slashes in total
             'sqlite:////absolute/path/to/foo.db'
-            
+
             Windows
             'sqlite:///C:\\path\\to\\foo.db'
-            
+
             Windows alternative using raw string
             r'sqlite:///C:\path\to\foo.db'
 
@@ -136,7 +137,7 @@ def create_and_connect_database(database_directory):
         used in later stages for interacting with the database
 
         Of the form:
-        db_connection = 
+        db_connection =
         {
           'engine': -,
           'metadata': -,
@@ -150,7 +151,7 @@ def create_and_connect_database(database_directory):
     from sqlalchemy.ext.declarative import declarative_base
 
     engine = create_engine(database_directory)
-    
+
     Base = declarative_base()
 
     from sqlalchemy import Table, Column, Integer, String, Float, MetaData
@@ -177,6 +178,7 @@ def create_and_connect_database(database_directory):
         Column('detected', Integer, nullable=False, default=0), # Boolean
         Column('path', String, nullable=True),
         Column('signal', Integer, nullable=False, default=0), # Boolean
+        Column('numIterations', Integer, nullable=True)
     )
 
     injections = Table('injections', metadata,
@@ -210,13 +212,13 @@ def create_and_connect_database(database_directory):
 
     metadata.create_all(engine)
 
-    
+
 
     db_connection = generate_db_connection(engine = engine, metadata = metadata, Base = Base)
 
     # Update database reflection
     reflect_database(db_connection)
-    
+
     return db_connection
 
 
@@ -314,7 +316,7 @@ def extend_injections_table(db_connection, column_name, column_type, default_val
     """
 
     from sqlalchemy.sql import text
-    
+
     t = ""
     if default_value == None:
         t = text("ALTER TABLE injections ADD COLUMN {0} {1} NULL;".format(column_name, column_type))
@@ -346,10 +348,10 @@ def extend_signals_table(db_connection, column_name, column_type, default_value 
         default_value (optional) (string/integer): default value to insert - will be set to null if parameter not passed
 
     """
-    
+
     from sqlalchemy.sql import text
 
-    
+
     t = ""
     if default_value == None:
         t = text("ALTER TABLE signals ADD COLUMN {0} {1} NULL;".format(column_name, column_type))
@@ -380,9 +382,9 @@ def extend_detections_table(db_connection, column_name, column_type, default_val
         default_value (optional) (string/integer): default value to insert - will be set to null if parameter not passed
 
     """
-    
+
     from sqlalchemy.sql import text
-    
+
     t = ""
     if default_value == None:
         t = text("ALTER TABLE detections ADD COLUMN {0} {1} NULL;".format(column_name, column_type))
@@ -402,7 +404,7 @@ def insert_site(db_connection, row_arguments):
 
     Args:
         db_connection (dictionary): Custom dictionary containing database connection information
-        row_arguments (dictionary): dictionary containing the row to insert. 
+        row_arguments (dictionary): dictionary containing the row to insert.
 
             row_arguments = {
                 'site': Integer (Optional),
@@ -429,7 +431,7 @@ def insert_site(db_connection, row_arguments):
 
             File: Please use absolute paths
 
-            Opcode: Please use the opcodes for your architecture. 
+            Opcode: Please use the opcodes for your architecture.
                 /*You can then set the architecture in a configuration file within FaultSight (./config/config.py)*/
                 At the moment, please edit the `opcode2Str` function in the `utils.py` file.
 
@@ -441,8 +443,7 @@ def insert_site(db_connection, row_arguments):
             For optional attributes, please exclude that key from the dictionary if not used.
             Therefore if none of the attributes will be set, please pass an empty dictionary ({})
     """
-    from sqlalchemy.orm import sessionmaker
-    session = sessionmaker(bind=db_connection['engine'])()
+
 
     table = get_reflected_table(db_connection, 'sites')
 
@@ -452,9 +453,11 @@ def insert_site(db_connection, row_arguments):
         if site_entry != False:
             update_site_num_executions(db_connection, row_arguments['site'], site_entry.numExecutions + 1)
             return
-    
+
     insert = table(**row_arguments)
 
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
     session.add(insert)
     session.commit()
 
@@ -479,7 +482,7 @@ def check_site_exists(db_connection, site):
                 'opcode': Integer,
                 'numExecutions': Integer,
             }
-           
+
     """
 
     from sqlalchemy.orm import sessionmaker
@@ -499,7 +502,7 @@ def check_detection_exists(db_connection):
 
     Args:
         db_connection (dictionary): Custom dictionary containing database connection information
-        
+
 
     Returns:
         site table entry: (dictionary) or None if entry does not exist
@@ -512,7 +515,7 @@ def check_detection_exists(db_connection):
                 'threadId': Integer
             }
 
-           
+
     """
 
     from sqlalchemy.orm import sessionmaker
@@ -536,7 +539,7 @@ def start_trial(db_connection, row_arguments):
 
     Args:
         db_connection (dictionary): Custom dictionary containing database connection information
-        row_arguments (dictionary): dictionary containing the information to insert. 
+        row_arguments (dictionary): dictionary containing the information to insert.
 
             row_arguments = {
                 'path': String (Optional),
@@ -698,7 +701,7 @@ def update_trial_increment_num_inj(db_connection):
 
     from sqlalchemy.orm import sessionmaker
     session = sessionmaker(bind=db_connection['engine'])()
-    
+
     current_trial = session.query(table)\
                             .filter(table.trial == db_connection['trial_number'])\
                             .first()
@@ -734,7 +737,7 @@ def update_trial_crashed(db_connection, is_crashed):
         sys.exit(0)
 
     is_crashed = int(is_crashed == True)
-    
+
     table = get_reflected_table(db_connection, 'trials')
 
     from sqlalchemy.orm import sessionmaker
@@ -808,13 +811,28 @@ def update_trial_signal(db_connection, is_signal):
         .update({"signal": is_signal})
     session.commit()
 
-    #query = table.update().\
-    #    where(table.trial == db_connection['trial_number']).\
-    #    values(signal=is_signal)
-    #
-    #conn = db_connection['engine'].connect()
-    #conn.execute(query)
+def update_trial_num_iterations(db_connection, num_iterations)
+    """
+    Update whether a iterations have been calculated for the current trial
 
+    Requires start_trial(db_connection, row_arguments) to have been called first
+
+    Args:
+        db_connection (dictionary): Custom dictionary containing database connection information
+        num_iterations (integer): number of iterations for the current trial
+    """
+
+    if (db_connection['trial_number'] == None):
+        print('Trial has not been started')
+        sys.exit(0)
+
+    table = get_reflected_table(db_connection, 'trials')
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
+    session.query(table)\
+        .filter(table.trial == db_connection['trial_number'])\
+        .update({"numIterations": num_iterations})
+    session.commit()
 
 # Insert rows into database
 def insert_injection(db_connection, row_arguments, site_arguments = {}):
@@ -825,7 +843,7 @@ def insert_injection(db_connection, row_arguments, site_arguments = {}):
     Args:
         db_connection (dictionary): Custom dictionary containing database connection information
 
-        row_arguments (dictionary): dictionary containing the row to insert. 
+        row_arguments (dictionary): dictionary containing the row to insert.
 
             row_arguments = {
                 'site': Integer (Optional),
@@ -938,7 +956,7 @@ def insert_signal(db_connection, row_arguments):
     Args:
         db_connection (dictionary): Custom dictionary containing database connection information
 
-        row_arguments (dictionary): dictionary containing the row to insert. 
+        row_arguments (dictionary): dictionary containing the row to insert.
 
             row_arguments = {
                 'signal': Integer,
@@ -957,7 +975,7 @@ def insert_signal(db_connection, row_arguments):
     has_crashed = row_arguments['crashed']
     # Remove crashed from dict, as this is not a column in the signals table
     row_arguments.pop('crashed', None)
-    
+
     from sqlalchemy.orm import sessionmaker
     session = sessionmaker(bind=db_connection['engine'])()
 
@@ -985,7 +1003,7 @@ def insert_detection(db_connection, row_arguments):
     Args:
         db_connection (dictionary): Custom dictionary containing database connection information
 
-        row_arguments (dictionary): dictionary containing the row to insert. 
+        row_arguments (dictionary): dictionary containing the row to insert.
 
             row_arguments = {
                 'detector': String,
@@ -1032,9 +1050,9 @@ def reflect_database(db_connection):
     """Automatically update the database schema stored in db_connection"""
     from sqlalchemy.ext.automap import automap_base
 
-    relevant_tables = ['sites', 
-                   'injections', 
-                   'trials', 
+    relevant_tables = ['sites',
+                   'injections',
+                   'trials',
                    'detections',
                    'signals']
 
