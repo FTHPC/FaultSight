@@ -57,6 +57,75 @@ function initCompareFunctionPage(){
 	clickBindInCompareFunctionPage();
 }
 
+function initCompareTrialsPage() {
+	// Set up navigation tree
+	var navigationTree = getCompareTrialsPageNavigationTree();
+	bindNavTreeToPage(navigationTree);
+
+	// Set up settings
+	setupSettingsObject();
+	getSettingsFromFile();
+	clickBindInSettings();
+
+	// Set up page itself
+	clickBindInCompareTrialsPage();
+}
+
+function clickBindInCompareTrialsPage() {
+	// Object to send to backend containing trial constraint
+	var trialSelection = {
+		'column': -1,
+		'constraintType': -1,
+		'constraint': -1
+	};
+
+	$('#trials-constraint-column-selection > li > a').on("click",function(e) {
+		var selectedColumn = this.text;
+		trialSelection['column'] = selectedColumn;
+		$(this).parents(".trials-constraint-container").find("#selected-constaint-text").text(this.text);
+		e.preventDefault();
+	});
+
+	$('#trials-constraint-type-selection > li > a').on("click",function(e) {
+		var selectedType = $(this).attr("data-constraint-type");
+		trialSelection['constraintType'] = selectedType;
+		$(this).parents(".trials-constraint-type-container").find("#selected-constraint-type-text").text(this.text);
+		e.preventDefault();
+	});
+
+	$('#compare-trials-submit-button').click(function(e) {
+		var constraintValue = $("#trial-constraint-value").val();
+		trialSelection['constraint'] = constraintValue;
+
+		// Verify that all fields have been set correctly
+		if (
+			trialSelection['column'] != -1 &&
+			trialSelection['constraintType'] != -1
+		) {
+			compareTrials(trialSelection);
+		}
+
+		e.preventDefault();
+	});
+}
+
+function compareTrials(comparisonObject){
+	$.ajax({
+	    url: '/generateTrialComparison',
+	    data: JSON.stringify(comparisonObject),
+	    contentType: 'application/json;charset=UTF-8',
+	    type: 'POST',
+	    success: function(response) {
+	    	console.log(JSON.parse(response));
+	    	var parsedResponse = JSON.parse(response);
+	    	updateTrialComparisonPage(comparisonObject, parsedResponse)
+	    },
+	    error: function(error) {
+		    console.log(error);
+	    }
+	});
+}
+
 function initApplicationPage(){
 	//Set up navigation tree
 	var navigationTree = getApplicationPageNavigationTree();
@@ -123,6 +192,10 @@ function getApplicationPageNavigationTree(){
 	    {
 	    	text: 'Compare Functions',
 	    	href: "./compareFunctions"
+	    },
+			{
+      	text:'Compare Trials',
+      	href: "./compareTrials"
 	    },
 	    {
 	    text: "Settings",
@@ -197,6 +270,86 @@ function getCompareFunctionPageNavigationTree(){
             	text:'Compare Functions',
             	href: "../compareFunctions"
     },
+		{
+            	text:'Compare Trials',
+            	href: "../compareTrials"
+    },
+    {
+    	text: "Settings",
+    },
+	];
+
+	for (var i = 0; i < injectedFunctionList.length; i++){
+	    emptyTree[0].nodes[0].nodes.push(
+	        {
+	            text: injectedFunctionList[i],
+	            state: { expanded: false },
+	            href: "../function/" + injectedFunctionList[i],
+	            nodes: [
+	                {
+	                    text:"Code",
+		                href:"#",
+	                },
+	                {
+	                    text:"Visualization",
+		                href:"#",
+	                }
+	            ]
+	        }
+	    );
+	}
+
+	for (var i = 0; i < notInjectedFunctionList.length; i++){
+	    emptyTree[0].nodes[1].nodes.push(
+	        {
+	            text: notInjectedFunctionList[i],
+	            state: { expanded: false },
+	            href: "../function/" + notInjectedFunctionList[i],
+	            nodes: [
+	                {
+	                    text:"Code",
+		                href:"#",
+	                },
+	                {
+	                    text:"Visualization",
+		                href:"#",
+	                }
+	            ]
+	        }
+	    );
+	}
+	return emptyTree;
+}
+
+function getCompareTrialsPageNavigationTree(){
+	var emptyTree = [
+    {
+        text: "Entire Application",
+        state: { selected: false },
+        href: "../",
+        nodes: [
+            {
+                text:'Injected Functions',
+                nodes: [
+
+                ],
+            },
+            {
+                text:'Non-injected Functions',
+                nodes: [
+
+                ],
+            },
+        ],
+    },
+    {
+            	text:'Compare Functions',
+            	href: "../compareFunctions"
+    },
+		{
+            	text:'Compare Trials',
+            	href: "../compareTrials"
+    },
     {
     	text: "Settings",
     },
@@ -268,6 +421,10 @@ function getFunctionPageNavigationTree(){
     {
             	text:'Compare Functions',
             	href: "../../compareFunctions"
+    },
+		{
+            	text:'Compare Trials',
+            	href: "../../compareTrials"
     },
     {
     	text: "Settings",

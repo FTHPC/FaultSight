@@ -54,7 +54,26 @@ def compareFunctions():
                            numTrials = num_trials,
                            confidenceValue = confidence_value)
 
+"""Request for `Compare Trials` page"""
+@app.route('/compareTrials')
+def compareTrials():
+    # Gets the default graph (Functions injected into) displayed on the home page
+    region_data = generate_region_object()
+    main_graph = [get_graph(INJECTED_FUNCTIONS,region_data)]
 
+    num_trials = get_num_trials()
+
+    confidence_value = float(read_id_from_config("FaultSight", "confidenceValue"))
+
+
+    return render_template('compareTrials.html',
+                           functionList = app.config['FUNCTIONS'],
+                           injectedFunctionList = app.config['INJECTED_FUNCTIONS'],
+                           notInjectedFunctionList = app.config['NOT_INJECTED_FUNCTIONS'],
+                           databaseDetails = get_database_tables(),
+                           mainGraphList = main_graph,
+                           numTrials = num_trials,
+                           confidenceValue = confidence_value)
 
 """Request for `Specific Function` page"""
 @app.route('/function/<function_name>')
@@ -575,6 +594,65 @@ def update_file_location_in_database():
     db.session.commit()
 
     return 'OK'
+
+"""Comparison of trials"""
+@app.route('/generateTrialComparison', methods=['POST'])
+def generate_trial_comparison():
+    column =  request.json['column']
+    constraint_type =  request.json['constraintType']
+    constraint =  request.json['constraint']
+
+    comparison_data = generate_trial_comparison_data(column, constraint_type, constraint)
+
+    return json.dumps(comparison_data)
+
+def generate_trial_comparison_data(column, constraint_type, constraint):
+
+    # Split trials into two sets based on constraint
+    matching_trials = db.session.query(trials)\
+                             .filter(getattr(trials, column) >= constraint)
+
+    list_matching_trials = []
+    for trial in matching_trials:
+        list_matching_trials.append(trial.trial)
+    print(list_matching_trials)
+
+    # Get a list of all trial ids
+    distinct_trials = []
+    for trial in db.session.query(trials):
+        distinct_trials.append(trial.trial)
+
+    # Derrive a list of ids not matching constraint
+    list_non_matching_trials = list(set(distinct_trials) - set(list_matching_trials))
+
+    # Iteration count comparison
+    matching_iteration_counts = get_iteration_counts(list_matching_trials)
+    nonmatching_iteration_counts = get_iteration_counts(list_non_matching_trials)
+
+
+
+
+    # <-- TODO -->
+
+    # Detection latency comparison
+
+    # Crash comparison
+
+    # Signals comparison
+
+    # Injection types comparison
+
+
+
+def get_iteration_counts(list_trials):
+    # Getting a list of trials that match the given list of ids
+    matching_iterations = db.session.query(trials)\
+                            .filter(trials.trial.in_(list_trials))
+    matching_iteration_counts = []
+    for iteration in matching_iterations:
+        matching_iteration_counts.append(iteration.iterations)
+    return matching_iteration_counts
+
 
 
 """Comparison of functions"""
