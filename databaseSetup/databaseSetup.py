@@ -811,7 +811,7 @@ def update_trial_signal(db_connection, is_signal):
         .update({"signal": is_signal})
     session.commit()
 
-def update_trial_num_iterations(db_connection, num_iterations)
+def update_trial_num_iterations(db_connection, num_iterations):
     """
     Update whether a iterations have been calculated for the current trial
 

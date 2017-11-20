@@ -85,6 +85,105 @@ def customInit(c):
         c.execute("ALTER TABLE trials ADD COLUMN converged int")
     """
 
+def hpccg_custom_parse(c, line, trial):
+    # update iteration count for the current trial, if relevant
+    split_line = line.split(' ')
+    if iteration_check(split_line):
+        print("Updating iteration count")
+        iterations = get_iterations(split_line)
+        update_trial_num_iterations(c, iterations)
+
+    if detection_check(split_line):
+        print("Inserting Detection")
+        row_arguments = {
+            'detector': "Residual Check",
+        }
+        insert_detection(c, row_arguments)
+
+def detection_check(split):
+    if split[0] == '[RESIDUAL' and split[1] == 'CHECK]':
+        return True
+    return False
+
+def get_iterations(split):
+    return split[2]
+
+def iteration_check(split):
+    if split[0] == 'Iteration' and split[5] == 'Residual':
+        return True
+    return False
+
+
+
+def comd_custom_parse(c, line, trial):
+    # #  Loop   Time(fs)       Total Energy   Potential Energy     Kinetic Energy  Temperature   (us/atom)     # Atoms
+    #  0       0.00    -3.460523233088    -3.538079224688     0.077555991600     600.0000     0.0000       128000
+    # print("Line")
+    # print(line)
+    # if line.count(' ') != 44:
+    #     print("Not 44")
+    #     return
+
+
+
+    space_split_line = line.split(' ')
+    split_line = [x for x in space_split_line if len(x.strip()) != 0]
+    if len(split_line) != 8:
+        return
+
+    try:
+        loop = float(split_line[0])
+        # time = float(split_line[1])
+        total_energy = float(split_line[2])
+        potential_energy = float(split_line[3])
+        kinetic_energy = float(split_line[4])
+        # temperature = float(split_line[5])
+        # us_per_atom = float(split_line[6])
+        # atoms = float(split_line[7])
+    except:
+        print("Likely invalid line")
+        return
+
+    # # We raise a detected flat if pot., kin., or total energy is outside of [ avg - 3*std, avg + 3*std]
+
+    # eamForce
+    if trial <= 1500:
+        if total_energy < min_allowed_tot_eam or max_allowed_tot_eam < total_energy:
+            row_arguments = {
+                'detector': "Total energy",
+            }
+            print("Trial: ", trial)
+            print("Energy: ", total_energy)
+            print("Min allowed: ", min_allowed_tot_eam)
+            print("Max allowed: ", max_allowed_tot_eam)
+            insert_detection(c, row_arguments)
+    else:   # ljForce
+        if total_energy < min_allowed_tot_lj or max_allowed_tot_lj < total_energy:
+            row_arguments = {
+                'detector': "Total energy",
+            }
+            insert_detection(c, row_arguments)
+
+    # # eamForce
+    # if trial <= 1500:
+    #     if kinetic_energy < min_allowed_kin_eam or max_allowed_kin_eam < kinetic_energy:
+    #         row_arguments = {
+    #             'detector': "Kinetic energy",
+    #         }
+    #         print("Trial: ", trial)
+    #         print("Iteration: ", loop)
+    #         print("Energy: ", kinetic_energy)
+    #         print("Min allowed: ", min_allowed_kin_eam)
+    #         print("Max allowed: ", max_allowed_kin_eam)
+    #         insert_detection(c, row_arguments)
+    # else:   # ljForce
+    #     if total_energy < min_allowed_tot_lj or max_allowed_tot_lj < total_energy:
+    #         row_arguments = {
+    #             'detector': "Total energy",
+    #         }
+    #         insert_detection(c, row_arguments)
+
+
 def customParser(c, line, trial):
     """Parses the output of a fault injection trial for items interested to the user
     Parameters
@@ -111,99 +210,3 @@ def customParser(c, line, trial):
         c.execute("UPDATE trials SET converged = ? WHERE trials.trial = ?", (0,trial))
     """
     hpccg_custom_parse(c, line, trial)
-
-    def hpccg_custom_parse(c, line, trial):
-        # update iteration count for the current trial, if relevant
-        split_line = line.split(' ')
-        if iteration_check(split_line):
-            iterations = get_iterations(split_line)
-            update_trial_num_iterations(c, iterations)
-
-        if detection_check(split_line):
-            row_arguments = {
-                'detector': "Residual Check",
-            }
-            insert_detection(c, row_arguments)
-
-    def detection_check(split):
-        if split[0] == '[RESIDUAL' and split[1] == 'CHECK]':
-            return True
-        return False
-
-    def get_iterations(split):
-        return split[2]
-
-    def iteration_check(split)
-        if split[0] == 'Iteration' and split[5] == 'Residual':
-            return True
-        return False
-
-
-
-    def comd_custom_parse(c, line, trial):
-        # #  Loop   Time(fs)       Total Energy   Potential Energy     Kinetic Energy  Temperature   (us/atom)     # Atoms
-        #  0       0.00    -3.460523233088    -3.538079224688     0.077555991600     600.0000     0.0000       128000
-        # print("Line")
-        # print(line)
-        # if line.count(' ') != 44:
-        #     print("Not 44")
-        #     return
-
-
-
-        space_split_line = line.split(' ')
-        split_line = [x for x in space_split_line if len(x.strip()) != 0]
-        if len(split_line) != 8:
-            return
-
-        try:
-            loop = float(split_line[0])
-            # time = float(split_line[1])
-            total_energy = float(split_line[2])
-            potential_energy = float(split_line[3])
-            kinetic_energy = float(split_line[4])
-            # temperature = float(split_line[5])
-            # us_per_atom = float(split_line[6])
-            # atoms = float(split_line[7])
-        except:
-            print("Likely invalid line")
-            return
-
-        # # We raise a detected flat if pot., kin., or total energy is outside of [ avg - 3*std, avg + 3*std]
-
-        # eamForce
-        if trial <= 1500:
-            if total_energy < min_allowed_tot_eam or max_allowed_tot_eam < total_energy:
-                row_arguments = {
-                    'detector': "Total energy",
-                }
-                print("Trial: ", trial)
-                print("Energy: ", total_energy)
-                print("Min allowed: ", min_allowed_tot_eam)
-                print("Max allowed: ", max_allowed_tot_eam)
-                insert_detection(c, row_arguments)
-        else:   # ljForce
-            if total_energy < min_allowed_tot_lj or max_allowed_tot_lj < total_energy:
-                row_arguments = {
-                    'detector': "Total energy",
-                }
-                insert_detection(c, row_arguments)
-
-        # # eamForce
-        # if trial <= 1500:
-        #     if kinetic_energy < min_allowed_kin_eam or max_allowed_kin_eam < kinetic_energy:
-        #         row_arguments = {
-        #             'detector': "Kinetic energy",
-        #         }
-        #         print("Trial: ", trial)
-        #         print("Iteration: ", loop)
-        #         print("Energy: ", kinetic_energy)
-        #         print("Min allowed: ", min_allowed_kin_eam)
-        #         print("Max allowed: ", max_allowed_kin_eam)
-        #         insert_detection(c, row_arguments)
-        # else:   # ljForce
-        #     if total_energy < min_allowed_tot_lj or max_allowed_tot_lj < total_energy:
-        #         row_arguments = {
-        #             'detector': "Total energy",
-        #         }
-        #         insert_detection(c, row_arguments)

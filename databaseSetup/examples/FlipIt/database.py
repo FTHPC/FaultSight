@@ -239,23 +239,32 @@ def readTrials(c, filePrefix, customParser = None):
                     else:
                         ty = "Arith-Fix"
                     update_site_type(c, site, ty)
-                llvmInj = None
-                for j in range(0, len(inj)):
-                    if inj[j][0] == 'Rank' and inj[j][-3] == 'Iteration':
-                        llvmInj = float(inj[j][-1])
-                if llvmInj == None:
-                    print('Error in finding llvmInj')
-                    sys.exit(1)
-                dynCycle = llvmInj
-                #c.execute("INSERT INTO injections VALUES (?,?,?,?,?,?,?)", (trial, site, rank, prob, bit, dynCycle, 'NULL'))
-                # TODO: Include rank in other arguments
 
+                # Commented out for HPCCG database creation:
+                #
+                # llvmInj = None
+                # for j in range(0, len(inj)):
+                #     if inj[j][0] == 'Rank' and inj[j][-3] == 'Iteration':
+                #         llvmInj = float(inj[j][-1])
+                # if llvmInj == None:
+                #     print('Error in finding llvmInj')
+                #     sys.exit(1)
+                # dynCycle = llvmInj
+                # #c.execute("INSERT INTO injections VALUES (?,?,?,?,?,?,?)", (trial, site, rank, prob, bit, dynCycle, 'NULL'))
+                # # TODO: Include rank in other arguments
+                #
+                # row_arguments = {
+                #     'site': site,
+                #     'rank': rank,
+                #     'prob': prob,
+                #     'bit': bit,
+                #     'cycle': dynCycle,
+                # }
                 row_arguments = {
                     'site': site,
                     'rank': rank,
                     'prob': prob,
-                    'bit': bit,
-                    'cycle': dynCycle,
+                    'bit': bit
                 }
 
                 insert_injection(c, row_arguments, site_arguments = {})
