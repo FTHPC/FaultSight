@@ -229,10 +229,6 @@ def generate_function_information(function_name):
                     .filter(sites.func == function_name)\
                     .count()
 
-    # num_detections = db.session.query(detections)\
-    #                 .filter(detections.trial.in_(function_trials))\
-    #                 .count()
-
     num_detections = db.session.query(injections)\
                     .join(trials, trials.trial==injections.trial)\
                     .join(sites, sites.siteId==injections.siteId)\
