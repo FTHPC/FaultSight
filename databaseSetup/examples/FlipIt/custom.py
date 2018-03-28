@@ -101,7 +101,7 @@ def hpccg_custom_parse(c, line, trial):
         insert_detection(c, row_arguments)
 
 def detection_check(split):
-    if split[0] == '[RESIDUAL' and split[1] == 'CHECK]':
+    if split[0] == '[RESIDUAL' and split[1] == 'CHECK]:':
         return True
     return False
 

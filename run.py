@@ -39,11 +39,13 @@ def createConfig(path):
     config.set("FaultSight", "statisticalEndTrial", '0')
     config.set("FaultSight", "useDynamic", False)
     config.set("FaultSight", "srcPath", SRC_PATH)
+    config.set("FaultSight", "useDeltaFormulaForTost", True)
+    config.set("FaultSight", "deltaValueForTost", '0')
     config.add_section("CustomConstraint")
     config.set("CustomConstraint","trials",'["crashed","detection"]')
     config.set("CustomConstraint","sites",'["type"]')
     config.set("CustomConstraint","injections",'["bit","rank"]')
-    config.set("CustomConstraint","detections",'["detector","latency"]') 
+    config.set("CustomConstraint","detections",'["detector","latency"]')
     with open(path, "wb") as config_file:
         config.write(config_file)
 

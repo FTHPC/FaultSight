@@ -32,7 +32,7 @@ def get_database_tables():
             table_dict[column_name] = str(column_type)
 
         database_dict[table] = table_dict
-        
+
     return database_dict
 
 
@@ -66,9 +66,12 @@ def read_lines_from_file(file_path, start_line = 0, end_line = 0):
 def read_id_from_config(section, id):
     config = ConfigParser.ConfigParser()
     config.read(app.config['CONFIG_PATH'])
-    return config.get(section, id)
-
-
+    raw_value = config.get(section, id)
+    if raw_value == "True":
+        raw_value = True
+    elif raw_value == "False":
+        raw_value = False
+    return raw_value
 
 """Adjusts the 'relevant' code
 This is done to allow for special pop-up links when displayed on web page. Pop-up locations are marked using a custom tag.
@@ -81,7 +84,7 @@ def add_custom_link_to_line(line):
             + ' ' + FAULTSIGHT_CUSTOM_LINK_END + ' ' + line[insertion_index:]
     else:
         return FAULTSIGHT_CUSTOM_LINK_START + ' ' + line + ' ' + FAULTSIGHT_CUSTOM_LINK_END
-    
+
 # Stolen from Jon
 def str2html(s):
     """Replaces '<', '>', and '&' with html equlivants
@@ -92,7 +95,7 @@ def str2html(s):
         string to convert to a vaild html string to display properly
     """
     return s.replace("&", "&amp;").replace(">", "&gt;").replace("<", "&lt;")
-       
+
 
 """ Stolen from Jon's FlipIt source code - binaryParser.py"""
 def opcode2Str(opcode):
@@ -115,14 +118,14 @@ def opcode2Str(opcode):
 
     if opcode < len(INST_STR):
         return INST_STR[opcode]
-    else: 
+    else:
         return INST_STR[0]
-    
+
 
 
 def generate_region_object(region = "", start = "", end = ""):
     region_object = {
-                     'Region':region, 
+                     'Region':region,
                      'Start':start,
                      'End':end
                     }
@@ -140,7 +143,7 @@ def inequality_test_of_proportions(p1_num, p1_denom, p2_num, p2_denom):
     n_2 = p2_num * 1.0
     d_2 = p2_denom * 1.0
 
-    p_1 = n_1 / d_2
+    p_1 = n_1 / d_1
     p_2 = n_2 / d_2
 
     p_combined = (n_1 + n_2) / (d_1 + d_2)
@@ -151,7 +154,7 @@ def inequality_test_of_proportions(p1_num, p1_denom, p2_num, p2_denom):
     denominator = numpy.sqrt(p_combined * (1 - p_combined) * ( (1.0 / d_1) + (1.0 / d_2) ))
 
     if denominator == 0:
-        return "Unable to determine", 0.0, 0.0, 0.0
+        return "Unable to determine", p_1, p_2, 0.0
 
     z = numerator / denominator
 
@@ -160,7 +163,146 @@ def inequality_test_of_proportions(p1_num, p1_denom, p2_num, p2_denom):
 
     return p_val, p_1, p_2, z
 
+"""
+Run a two independent sample t-test
+https://libguides.library.kent.edu/SPSS/IndependentTTest
+Takes in two lists of data and runs test
+Currently using Welch's t-test, not Student's t-test, is this correct?
+https://en.wikipedia.org/wiki/Welch%27s_t-test
+NOTE: Not currently used, see equivalence test below
+"""
+def two_independent_sample_t_test(data_a, data_b):
 
+    # Check if input data is valid
+    if len(data_a) > 0 and len(data_b) > 0:
+
+        mean_a, std_a = find_mean_and_std(data_a)
+        mean_b, std_b = find_mean_and_std(data_b)
+
+        print("Mean a: ", mean_a)
+        print("Std a: ", std_a)
+        print("Mean b: ", mean_b)
+        print("Std b: ", std_b)
+
+        import scipy.stats
+        statistic, p_value = scipy.stats.ttest_ind(data_a, data_b, equal_var=False)
+
+        tost_data = {
+            'mean_a': mean_a,
+            'std_a': std_a,
+            'mean_b': mean_b,
+            'std_b': std_b,
+            'delta': 0,
+            'p_val': p_value,
+            'error': False
+        }
+    else:
+        tost_data = {
+            'mean_a': 0,
+            'std_a': 0,
+            'mean_b': 0,
+            'std_b': 0,
+            'delta': 0,
+            'p_val': 0,
+            'error': True
+        }
+
+    # Return data
+    return tost_data
+
+
+"""
+Known as the TOST test
+Equivalence testing:
+code:
+http://jpktd.blogspot.com/2012/10/tost-statistically-significant.html
+calculating deltas:
+http://tsjuzek.com/blog/the_tost.html
+
+"""
+def two_sample_equivalence_test(data_a, data_b):
+
+    # Check if input data is valid
+    if len(data_a) > 0 and len(data_b) > 0:
+
+        # Query config to check delta calculation methods
+        use_formula = read_id_from_config("FaultSight", "useDeltaFormulaForTost")
+
+        if use_formula:
+            delta = calculate_delta_by_formula(data_a, data_b)
+        else:
+            delta = calculate_delta_by_value(data_a, data_b)
+
+        # usevar : string, 'pooled' or 'unequal'
+        # If 'pooled', then the standard deviation of the samples is assumed to be the same.
+        # If 'unequal', then Welsh ttest with Satterthwait degrees of freedom is used
+        usevar = 'unequal'
+
+        # Run TOST test
+        import statsmodels.stats.weightstats as ssws
+        p_value = ssws.ttost_ind(data_a, data_b, -1 * delta, delta, usevar=usevar)[0]
+
+        mean_a, std_a = find_mean_and_std(data_a)
+        mean_b, std_b = find_mean_and_std(data_b)
+        print("Mean a: ", mean_a)
+        print("Std a: ", std_a)
+        print("Mean b: ", mean_b)
+        print("Std b: ", std_b)
+        print("Delta: ", delta)
+        print("TOST P-val: ", p_value)
+
+        tost_data = {
+            'mean_a': mean_a,
+            'std_a': std_a,
+            'mean_b': mean_b,
+            'std_b': std_b,
+            'delta': delta,
+            'p_val': p_value,
+            'error': False
+        }
+    else:
+        tost_data = {
+            'mean_a': 0,
+            'std_a': 0,
+            'mean_b': 0,
+            'std_b': 0,
+            'delta': 0,
+            'p_val': 0,
+            'error': True
+        }
+
+    # Return data
+    return tost_data
+
+"""
+Uses the following formula for calculating deltas:
+http://tsjuzek.com/blog/the_tost.html
+"""
+def calculate_delta_by_formula(data_a, data_b):
+    mean_a, std_a = find_mean_and_std(data_a)
+    mean_b, std_b = find_mean_and_std(data_b)
+
+    # Calculate delta
+    # delta = 4.58 * (avg_std / sqrt_avg_num_entries)
+    avg_std = (std_a + std_b) / 2
+    avg_num_entries = ( len(data_a) + len(data_b) ) / 2
+    import math
+    sqrt_avg_num_entries = math.sqrt(avg_num_entries)
+    delta = 4.58 * (avg_std / sqrt_avg_num_entries)
+    return delta
+
+"""
+Uses the user-provided delta value
+"""
+def calculate_delta_by_value(data_a, data_b):
+    # Query config file for value
+    delta = read_id_from_config("FaultSight", "deltaValueForTost")
+    return float(delta)
+
+def find_mean_and_std(data):
+    import scipy.stats
+    import numpy
+    return numpy.mean(data), numpy.std(data)
 
 def test_of_proportions(num_total_injections, num_total_sites, num_type_injections, num_type_sites):
 

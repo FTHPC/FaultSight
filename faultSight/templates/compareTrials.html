@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="../static/styles/prism.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" href="../static/styles/bootstrap.min.css" >
+        <!--https://github.com/jonmiles/bootstrap-treeview-->
+        <link href="../static/styles/bootstrap-treeview.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="../static/styles/tooltipster.css" />
+    </head>
+    <style>
+        #main-page-container {
+            width: 100%;
+        }
+        #main-left {
+            float: left;
+            width: 100px;
+        }
+        #main-right {
+            float: right;
+            width: 20%;
+        }
+        #main-center {
+            margin: 0 auto;
+            width: 60%;
+        }
+        .line-highlight::before {
+            display:none !important;
+        }
+
+        row.no-gutters {
+          margin-right: 0;
+          margin-left: 0;
+        }
+        .row.no-gutters > [class^="col-"],
+        .row.no-gutters > [class*=" col-"] {
+          padding-right: 0;
+          padding-left: 0;
+        }
+
+
+        .axis {
+          font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+
+        .x.axis path {
+          display: none;
+        }
+
+        .tooltip-d3 {
+            background: #eee;
+            box-shadow: 0 0 5px #999999;
+            color: #333;
+            display: none;
+            font-size: 18px;
+            padding: 10px;
+            position: absolute;
+            text-align: center;
+            width: 200px;
+            z-index: 100;
+        }
+
+        .circle{
+            display:inline-flex;
+            width: 15px;
+            height: 15px;
+            text-indent: -9999px;
+            border-radius: 50%;
+            border: 2px solid;
+            border-color: rgb(113,135,133);
+            text-decoration: none;
+            border-radius: 50%;
+            background-color: rgb(207,219,218);
+        }
+
+        .fail-indicator{
+            background-color: #f54337;
+        }
+
+        .success-indicator{
+            background-color: #7fe54d;
+        }
+
+        .intermediate-indicator{
+            background-color: #e5e24d;
+        }
+
+    </style>
+    <body>
+        <script type="text/javascript" src="../static/prism.js"></script>
+        <script type="text/javascript" src="../static/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="../static/bootstrap.min.js"></script>
+        <script src="../static/d3.min.js" charset="utf-8"></script>
+        <script src="../static/d3-legend.min.js" charset="utf-8"></script>
+        <script src="../static/bootstrap-treeview.js"></script>
+        <script type="text/javascript" src="../static/jquery.tooltipster.min.js"></script>
+        <script type="text/javascript" src="../static/saveSvgAsPng.js"></script>
+        <script type="text/javascript" src="../static/jquery.bpopup.min.js"></script>
+        <div id="main-page-container">
+            <div id="main-left"></div>
+            <div id="main-right">
+                <div id="tree" style="width:80%;margin: 80px auto 0px;"></div>
+            </div>
+            <div id="main-center" class="container">
+            <div class="">
+                <div class="row" style="overflow:auto;">
+                    <h1 style="    text-align: center;    display:block;font-family: 'Source Sans Pro', sans-serif;">Compare Trials</h1>
+                    <hr />
+                </div>
+
+                <div class="row" style="overflow:auto;">
+                    <h3 id="filter-selection-anchor">(Optional) Include only relevant trials</h3>
+                </div>
+
+                <div class="row" style="margin-top: 5px;height:100px;">
+                        <div class="btn-toolbar">
+
+                          <div class="btn-group trials-filter-container">
+                              <div class="dropdown" id="" style="">
+                                  <button class="btn btn-primary dropdown-toggle" id="" type="button" data-toggle="dropdown">
+                                  <span id="selected-filter-text">Select a column to filter on</span>
+                                  <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu" role="menu" id="trials-filter-column-selection" aria-labelledby="menu1">
+                                      {% for column, column_type in databaseDetails['trials'].items() -%}
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{ column }}</a></li>
+                                      {% endfor %}
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="btn-group trials-filter-type-container">
+                              <div class="dropdown graph-filter-type-selection-dropdown" style="">
+                                  <button class="btn btn-primary dropdown-toggle filter-type-selection-button" type="button" data-toggle="dropdown">
+                                  <span id="selected-filter-type-text">Filter method</span>
+                                  <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu filter-type-selection" id="trials-filter-type-selection" role="menu" aria-labelledby="menu1">
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" data-constraint-type=0 href="#">Equals</a></li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" data-constraint-type=1 href="#">Not Equal To</a></li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" data-constraint-type=2 href="#">Greater Than</a></li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" data-constraint-type=3 href="#">Greater Than Or Equal To</a></li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" data-constraint-type=4 href="#">Less Than</a></li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" data-constraint-type=5 href="#">Less Than Or Equal To</a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="filter-selection-container">
+                              <div class="input-group">
+                                  <input type="text" id="trial-filter-value" class="form-control filter-selection-input" placeholder="Filter">
+                              </div>
+                          </div>
+
+                        </div>
+                </div>
+
+                <!-- </div> -->
+
+                <div class="row" style="overflow:auto;">
+                    <h3 id="comparison-selection-anchor">Partition trials into two sets to compare them</h3>
+                </div>
+
+                <div class="row" style="margin-top: 5px;">
+                        <div class="btn-toolbar">
+
+                          <div class="btn-group trials-constraint-container">
+                              <div class="dropdown" id="" style="">
+                                  <button class="btn btn-primary dropdown-toggle" id="" type="button" data-toggle="dropdown">
+                                  <span id="selected-constaint-text">Select a column to partition on</span>
+                                  <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu" role="menu" id="trials-constraint-column-selection" aria-labelledby="menu1">
+                                      {% for column, column_type in databaseDetails['trials'].items() -%}
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{ column }}</a></li>
+                                      {% endfor %}
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="btn-group trials-constraint-type-container">
+                              <div class="dropdown graph-constraint-type-selection-dropdown" style="">
+                                  <button class="btn btn-primary dropdown-toggle constraint-type-selection-button" type="button" data-toggle="dropdown">
+                                  <span id="selected-constraint-type-text">Constraint method</span>
+                                  <span class="caret"></span>
+                                  </button>
+                                  <ul class="dropdown-menu constraint-type-selection" id="trials-constraint-type-selection" role="menu" aria-labelledby="menu1">
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" data-constraint-type=0 href="#">Equals</a></li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" data-constraint-type=1 href="#">Not Equal To</a></li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" data-constraint-type=2 href="#">Greater Than</a></li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" data-constraint-type=3 href="#">Greater Than Or Equal To</a></li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" data-constraint-type=4 href="#">Less Than</a></li>
+                                      <li role="presentation"><a role="menuitem" tabindex="-1" data-constraint-type=5 href="#">Less Than Or Equal To</a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="constraint-selection-container">
+                              <div class="input-group">
+                                  <input type="text" id="trial-constraint-value" class="form-control constraint-selection-input" placeholder="Constraint">
+                              </div>
+                          </div>
+
+
+                            <div class="btn-group">
+                                <div id="compare-trials-submit-button" style="display:block;">
+                                    <button type="button" class="btn btn-success">Generate Comparison</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="overflow:auto;">
+                    <h3>Select database fields to analyze</h3>
+                </div>
+
+                <div class="row" id="trials-analysis-column-selection" style="overflow:auto;">
+                  {% for column, column_type in databaseDetails['trials'].items() -%}
+                  <div>
+                    <input type="checkbox" class="analysis-column-checkbox" data-analysis-column="{{ column }}">{{ column }}
+                    <div style="margin-left: 50px;">
+                      <input type="radio" name="{{ column }}-analysis-type" data-analysis-type="1">Test for difference of two proportions
+                      <input type="radio" name="{{ column }}-analysis-type" data-analysis-type="2">Test for equivalence of two samples
+                      <input type="radio" name="{{ column }}-analysis-type" data-analysis-type="3">Test for difference of two samples
+                     </div>
+                    <br />
+                  </div>
+                  {% endfor %}
+                </div>
+
+                <div class="row" id="trial-information-row" style="display:none;margin-top:5px;">
+                    <hr />
+                    <h2><a href="" id="trial-information-anchor">
+                        <span id="trial-information-anchor-down-icon" class="glyphicon glyphicon-chevron-down" style="color: #333;display:none;font-size:20px;" aria-hidden="true"></span>
+                        <span id="trial-information-anchor-up-icon" class="glyphicon glyphicon-chevron-up" style="color: #333;font-size:20px;" aria-hidden="true"></span>
+                        Trial Sets Information
+                    </a></h2>
+                    <div id="trial-information-container">
+                        <div style="margin-left:40px;">
+                            <h3>
+                            <a href="" id="trial-information-a-anchor">
+                                <span id="trial-information-a-anchor-down-icon" class="glyphicon glyphicon-chevron-down" style="color: #333;display:none;font-size:20px;" aria-hidden="true"></span>
+                                <span id="trial-information-a-anchor-up-icon" class="glyphicon glyphicon-chevron-up" style="color: #333;font-size:20px;" aria-hidden="true"></span>
+                                Trial Set #1:
+                            </a>
+                            </h3>
+                            <div id="trial-information-a-container" style="display:none;margin-left:40px;">
+                                <h5><span>Trials: [</span><span id="trial-a-trial-ids"></span><span>]</span></h5>
+                                {% for column, column_type in databaseDetails['trials'].items() -%}
+                                {% if column != 'trial' %}
+                                <h5><span><b>{{ column }}</b></span></h5>
+                                <h5><span>Total:</span><span id="trial-a-{{ column }}-total"></span></h5>
+                                <h5><span>Average:</span><span id="trial-a-{{ column }}-avg"></span></h5>
+                                <h5><span>Standard Deviation:</span><span id="trial-a-{{ column }}-std"></span></h5>
+                                {% endif %}
+                                {% endfor %}
+                                <!-- <h5><span><b>Injections</b></span></h5>
+                                <h5><span>Total:</span><span id="trial-a-injection-count-total"></span></h5>
+                                <h5><span>Average:</span><span id="trial-a-injection-count-avg"></span></h5>
+                                <h5><span>Standard Deviation:</span><span id="trial-a-injection-count-std"></span></h5>
+                                <h5><span><b>Number of iterations</b></span></h5>
+                                <h5><span>Total:</span><span id="trial-a-iterations-total"></span></h5>
+                                <h5><span>Average:</span><span id="trial-a-iterations-avg"></span></h5>
+                                <h5><span>Standard Deviation:</span><span id="trial-a-iterations-std"></span></h5>
+                                <h5><span><b>Detections</b></span></h5>
+                                <h5><span>Total:</span><span id="trial-a-detection-count-total"></span></h5>
+                                <h5><span>Average:</span><span id="trial-a-detection-count-avg"></span></h5>
+                                <h5><span>Standard Deviation:</span><span id="trial-a-detection-count-std"></span>
+                                <h5><span><b>Crashes</b></span></h5>
+                                <h5><span>Total:</span><span id="trial-a-crash-count-total"></span></h5>
+                                <h5><span>Average:</span><span id="trial-a-crash-count-avg"></span></h5>
+                                <h5><span>Standard Deviation:</span><span id="trial-a-crash-count-std"></span>
+                                <h5><span><b>Signals</b></span></h5>
+                                <h5><span>Total:</span><span id="trial-a-signal-count-total"></span></h5>
+                                <h5><span>Average:</span><span id="trial-a-signal-count-avg"></span></h5>
+                                <h5><span>Standard Deviation:</span><span id="trial-a-signal-count-std"></span> -->
+                            </div>
+                        </div>
+
+                        <div style="margin-left:40px;">
+                            <h3>
+                            <a href="" id="trial-information-b-anchor">
+                                <span id="trial-information-b-anchor-down-icon" class="glyphicon glyphicon-chevron-down" style="color: #333;display:none;font-size:20px;" aria-hidden="true"></span>
+                                <span id="trial-information-b-anchor-up-icon" class="glyphicon glyphicon-chevron-up" style="color: #333;font-size:20px;" aria-hidden="true"></span>
+                                Trial Set #2:
+                            </a>
+                            </h3>
+                            <div id="trial-information-b-container" style="display:none;margin-left:40px;">
+                              <h5><span>Trials: [</span><span id="trial-b-trial-ids"></span><span>]</span></h5>
+                              {% for column, column_type in databaseDetails['trials'].items() -%}
+                              {% if column != 'trial' %}
+                              <h5><span><b>{{ column }}</b></span></h5>
+                              <h5><span>Total:</span><span id="trial-b-{{ column }}-total"></span></h5>
+                              <h5><span>Average:</span><span id="trial-b-{{ column }}-avg"></span></h5>
+                              <h5><span>Standard Deviation:</span><span id="trial-b-{{ column }}-std"></span></h5>
+                              {% endif %}
+                              {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="comparison-statistics-row" style="margin-top:5px;display:none;">
+                    <hr />
+                    <h2>
+                        <a href="" id="comparison-statistics-anchor">
+                            <span id="comparison-statistics-anchor-down-icon" class="glyphicon glyphicon-chevron-down" style="color: #333;display:none;font-size:20px;" aria-hidden="true"></span>
+                            <span id="comparison-statistics-anchor-up-icon" class="glyphicon glyphicon-chevron-up" style="color: #333;font-size:20px;" aria-hidden="true"></span>Statistical Comparison
+                        </a>
+                    </h2>
+                    <div id="comparison-statistics-main-container" style="margin-left:40px;">
+                      <div>
+                        <h4>
+                          <a href="" id="comparison-statistics-anchor-{16}">
+                            <span id="comparison-statistics-anchor-{17}-down-icon" class="glyphicon glyphicon-chevron-down" style="color: #333;font-size:15px;" aria-hidden="true"></span>
+                            <span id="comparison-statistics-anchor-{18}-up-icon" class="glyphicon glyphicon-chevron-up" style="color: #333;display:none;font-size:15px;" aria-hidden="true"></span>
+                            {0}
+                          </a>
+                        </h4>
+                        <div style="margin-left:40px;">
+                          <div>
+                            <h4>
+                              <a href="">
+                                <span class="glyphicon glyphicon-chevron-down" style="color: #333;font-size:15px;" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-chevron-up" style="color: #333;display:none;font-size:15px;" aria-hidden="true"></span>
+                                Test for Difference of two Proportions
+                              </a>
+                              <span>(</span>
+                              <span class="circle" id="independent-statistics-anchor-{20}-circle"></span>
+                              <span id="independent-statistics-anchor-{21}-status"></span>
+                              <span>)</span>
+                            </h4>
+                            <div style="display:none;margin-left:40px;" class="comparison-container" id="comparison-container-function-{19}">
+                              <h5>P<sub>1</sub> = {1} / {2} = {3} / {4}</h5>
+                              <h5>P<sub>1</sub> = {5}</h5>
+                              <br />
+                              <h5>P<sub>2</sub> = {6} / {7} = {8} / {9}</h5>
+                              <h5>P<sub>2</sub> = {10}</h5>
+                              <br />
+                              <h5>Null hypothesis: P<sub>1</sub> >= P<sub>2</sub>, Alternate hypothesis: P<sub>1</sub> < P<sub>2</sub></h5>
+                              <h5>Z-value: {11}
+                              <h5>P-value ({12} Confidence Interval, {13} Significance): {14}</h5>
+                              <h5><b>Statistically Significant: {15}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="web-settings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h2 class="modal-title" style="text-align:center;">Settings</h2>
+                    </div>
+                    <div class="modal-body">
+                            <h3>Highlighting Value</h3>
+                            <p>Please enter a percentage at which to highlight lines (0-100).</p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                <div style="width:100px;">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="highlight-value-input" placeholder="Value" aria-describedby="basic-addon">
+                                            <span class="input-group-addon" id="basic-addon">%</span>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <br />
+                            <hr />
+                            <h3>Static vs dynamic instruction usage</h3>
+                            <p>Select whether to use static or dynamic instructions for the statistical calculations.</p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <form class="form-inline">
+                                            <input value="1" name="instruction-type" id="use-dynamic-instructions-input" type="radio"><span>Dynamic Instructions</span>
+                                        <br />
+                                            <input value="2" name="instruction-type" id="not-use-dynamic-instructions-input" type="radio">Static Instructions
+                                    </form>
+
+                                </div>
+                            </div>
+                            <h3>Confidence Interval</h3>
+                            <p>Please enter a confidence interval to use for the test of proportions.</p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                <div style="width:100px;">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="confidence-value-input" placeholder="Value" aria-describedby="basic-addon">
+                                            <span class="input-group-addon" id="basic-addon">%</span>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <h3>Statistical Significance of Function</h3>
+                            <p>You can use a subset of trials for the statistical significance calculation.</p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                <input id="statistical-use-all-trials" type="checkbox"> Use all trials
+                                <p>Select a range of trials to use in calculation (i.e. [Start, End]). <b>According to the database, there were {{ numTrials }} trials. </b>Trials are typically 1-based, depending on how the trials were injected into the database.</p>
+                                <div>
+                                    <div class="input-group" style="float:left;">
+                                        <input type="text" class="form-control" id="statistical-trial-start" placeholder="From">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="statistical-trial-end" placeholder="To">
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <h3>TOST Delta Calculation Method</h3>
+                            <p>When comparing trials, it is possible to compare iteration counts between two sets of trials. This is done by an equivalence test, where we provide the confidence that |it1-it2| <= delta. In setting the data, it is possible to provide a fixed value, or have the value calculated by a formula. http://tsjuzek.com/blog/the_tost.html</p>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                <input id="statistical-tost-use-formula" type="checkbox"> Use Formula
+                                <p>If not using a formula, please enter a custom delta value:</p>
+                                <div>
+                                    <div class="input-group" style="float:left;">
+                                        <input type="text" class="form-control" id="statistical-tost-formula-value" placeholder="From">
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <h3>Default Graphs</h3>
+                            <p>Select the graphs that you would like to be automatically generated when this page is loaded.</p>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                <h5><strong>Injections</strong></h5>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-1"> Types of injected functions<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-2"> Bit Locations<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-3"> Injected functions<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-4"> Injection type per function<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-5"> Injections mapped to line numbers<br>
+                                </div>
+                                <div class="col-sm-4">
+                                <h5><strong>Signals</strong></h5>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-6"> Unexpected Termination<br>
+                                </div>
+                                 <div class="col-sm-4">
+                                <h5><strong>Detections</strong></h5>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-7"> Number of trials with detection<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-8"> Detected injection bit location<br>
+                                <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-9"> Detection latency<br>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <h3>Custom Constraints</h3>
+                            <p>Select the columns in the database that you would like to use in implementing constraints</p>
+{% for table,columns in databaseDetails.items() -%}
+{% if loop.index % 3 == 1 %}
+<div class="row">
+{% endif %}
+<div class="col-sm-4">
+<h5><strong>{{table}}</strong></h5>
+{% for column in columns -%}
+<input class="settings-constraint-checkbox" data-table-name="{{table}}" data-column-name="{{column}}" type="checkbox" name="settings-table-{{table}}-checkbox-{{loop.index - 1}}"> {{column}} - {{columns[column]}}<br>
+{% endfor %}
+</div>
+{% if loop.index % 3 == 0 %}
+</div>
+{% elif loop.last %}
+</div>
+{% endif %}
+{% endfor %}
+
+                    <div style="margin-top:10px;">
+                    <hr />
+                    <a>Restore config file to default (Not yet implemented)</a>
+                    <h5><strong>After saving, please refresh the page to see changes.</strong></h5>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="settings-save">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+    <script type="text/javascript">
+        var functionList = {{functionList|tojson}};
+        var injectedFunctionList = {{injectedFunctionList|tojson}};
+        var notInjectedFunctionList = {{notInjectedFunctionList|tojson}};
+        var databaseDetails = {{databaseDetails|tojson|safe}};
+        var confidenceValue = {{confidenceValue}}
+
+    </script>
+    <script type="text/javascript" charset="utf-8" src="../static/faultsight.js"></script>
+    <script type="text/javascript">
+        initCompareTrialsPage();
+    </script>
+</html>

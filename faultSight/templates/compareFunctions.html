@@ -53,18 +53,18 @@
           display: none;
         }
 
-        .tooltip-d3 {                                                       
-            background: #eee;                                               
-            box-shadow: 0 0 5px #999999;                                    
-            color: #333;                                                 
-            display: none;                                                 
-            font-size: 18px;                                               
-            padding: 10px;                                               
-            position: absolute;                                         
-            text-align: center;                                          
-            width: 200px;                                                  
-            z-index: 100;                                                   
-        } 
+        .tooltip-d3 {
+            background: #eee;
+            box-shadow: 0 0 5px #999999;
+            color: #333;
+            display: none;
+            font-size: 18px;
+            padding: 10px;
+            position: absolute;
+            text-align: center;
+            width: 200px;
+            z-index: 100;
+        }
 
         .circle{
             display:inline-flex;
@@ -77,10 +77,10 @@
             text-decoration: none;
             border-radius: 50%;
             background-color: rgb(207,219,218);
-        } 
+        }
 
         .fail-indicator{
-            background-color: #f54337;     
+            background-color: #f54337;
         }
 
         .success-indicator{
@@ -129,10 +129,10 @@
 {% for functionName in functionList -%}
 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{functionName}}</a></li>
 {% endfor %}
-       
+
                                     </ul>
                                 </div>
-                                
+
                             </div>
                             <div class="btn-group">
                                 <div class="dropdown" id="compare-functions-dropdown-function-b" style="margin-right: 5px;">
@@ -144,7 +144,7 @@
     {% for functionName in functionList -%}
     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{functionName}}</a></li>
     {% endfor %}
-           
+
                                         </ul>
                                 </div>
                             </div>
@@ -155,7 +155,25 @@
                             </div>
                         </div>
                     </div>
-                    
+
+                    <div class="row" style="overflow:auto;">
+                        <h3>Select database fields to analyze</h3>
+                    </div>
+
+                    <div class="row" id="compare-function-analysis-column-selection" style="overflow:auto;">
+                      {% for column, column_type in databaseDetails['trials'].items() -%}
+                      <div>
+                        <input type="checkbox" class="analysis-column-checkbox" data-analysis-column="{{ column }}">{{ column }}
+                        <div style="margin-left: 50px;">
+                          <input type="radio" name="{{ column }}-analysis-type" data-analysis-type="1">Test for difference of two proportions
+                          <input type="radio" name="{{ column }}-analysis-type" data-analysis-type="2">Test for equivalence of two samples
+                          <input type="radio" name="{{ column }}-analysis-type" data-analysis-type="3">Test for difference of two samples
+                         </div>
+                        <br />
+                      </div>
+                      {% endfor %}
+                    </div>
+
                 </div>
                 <div class="row" id="function-information-row" style="margin-top:5px;display:none;">
                     <hr />
@@ -174,10 +192,15 @@
                             </a>
                             </h3>
                             <div id="function-information-a-container" style="margin-left:40px;">
-                                <h5><span>Injections: </span><span id="function-a-injection-count"></span></h5>
-                                <h5><span>During trials: [</span><span id="function-a-trials"></span><span>]</span></h5>
-                                <h5><span>Detections: </span><span id="function-a-detection-count"></span></h5>
-                                <h5><span>Crashes: </span><span id="function-a-crash-count"></span></h5>
+                              <h5><span>Trials: [</span><span id="function-a-trial-ids"></span><span>]</span></h5>
+                                {% for column, column_type in databaseDetails['trials'].items() -%}
+                                {% if column != 'trial' %}
+                                <h5><span><b>{{ column }}</b></span></h5>
+                                <h5><span>Total:</span><span id="function-a-{{ column }}-total"></span></h5>
+                                <h5><span>Average:</span><span id="function-a-{{ column }}-avg"></span></h5>
+                                <h5><span>Standard Deviation:</span><span id="function-a-{{ column }}-std"></span></h5>
+                                {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
 
@@ -190,10 +213,15 @@
                             </a>
                             </h3>
                             <div id="function-information-b-container" style="margin-left:40px;">
-                                <h5><span>Injections: </span><span id="function-b-injection-count"></span></h5>
-                                <h5><span>During trials: [</span><span id="function-b-trials"></span><span>]</span></h5>
-                                <h5><span>Detections: </span><span id="function-b-detection-count"></span></h5>
-                                <h5><span>Crashes: </span><span id="function-b-crash-count"></span></h5>
+                              <h5><span>Trials: [</span><span id="function-b-trial-ids"></span><span>]</span></h5>
+                              {% for column, column_type in databaseDetails['trials'].items() -%}
+                              {% if column != 'trial' %}
+                              <h5><span><b>{{ column }}</b></span></h5>
+                              <h5><span>Total:</span><span id="function-b-{{ column }}-total"></span></h5>
+                              <h5><span>Average:</span><span id="function-b-{{ column }}-avg"></span></h5>
+                              <h5><span>Standard Deviation:</span><span id="function-b-{{ column }}-std"></span></h5>
+                              {% endif %}
+                              {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -247,8 +275,8 @@
                         </a>
                     </h2>
                     <div id="comparison-statistics-main-container" style="margin-left:40px;">
-                        
-             
+
+
                     </div>
                 </div>
 
@@ -286,8 +314,8 @@
                                             <input value="1" name="instruction-type" id="use-dynamic-instructions-input" type="radio"><span>Dynamic Instructions</span>
                                         <br />
                                             <input value="2" name="instruction-type" id="not-use-dynamic-instructions-input" type="radio">Static Instructions
-                                    </form>      
-                                    
+                                    </form>
+
                                 </div>
                             </div>
                             <h3>Confidence Interval</h3>
@@ -333,7 +361,7 @@
                                 <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-4"> Injection type per function<br>
                                 <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-5"> Injections mapped to line numbers<br>
                                 </div>
-                                <div class="col-sm-4">     
+                                <div class="col-sm-4">
                                 <h5><strong>Signals</strong></h5>
                                 <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-6"> Unexpected Termination<br>
                                 </div>
@@ -378,7 +406,7 @@
                 </div>
             </div>
         </div>
-       
+
     </body>
     <script type="text/javascript">
         var functionList = {{functionList|tojson}};

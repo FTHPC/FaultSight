@@ -76,9 +76,99 @@ function clickBindInCompareTrialsPage() {
 	var trialSelection = {
 		'column': -1,
 		'constraintType': -1,
-		'constraint': -1
+		'constraint': -1,
+		'filterColumn': -1,
+		'filterConstraintType': -1,
+		'filterConstraint': -1,
+		'analysisColumn': {}
 	};
 
+	for (var key in databaseDetails['trials']) {
+		var analysis = {
+			'useEntry': false,
+			'analysisType': -1,
+		}
+		trialSelection['analysisColumn'][key] = analysis;
+	}
+
+	// Statistical comparison click bind
+	$("#comparison-statistics-anchor").click(function(e){
+		e.preventDefault();
+
+		if ($("#comparison-statistics-main-container").css('display') != 'none'){
+			$("#comparison-statistics-anchor-up-icon").hide();
+			$("#comparison-statistics-anchor-down-icon").show();
+		} else {
+			$("#comparison-statistics-anchor-up-icon").show();
+			$("#comparison-statistics-anchor-down-icon").hide();
+		}
+
+		$("#comparison-statistics-main-container").slideToggle();
+
+	});
+
+	// Trial Sets Information click binds
+	$("#trial-information-anchor").on("click", function(e) {
+		var targetContainer = $("#trial-information-container");
+
+		if (targetContainer.css('display') != 'none'){
+			$("#trial-information-anchor-down-icon").show();
+			$("#trial-information-anchor-up-icon").hide();
+		} else {
+			$("#trial-information-anchor-down-icon").hide();
+			$("#trial-information-anchor-up-icon").show();
+		}
+
+		targetContainer.slideToggle();
+		e.preventDefault();
+	});
+
+	$("#trial-information-a-anchor").on("click", function(e) {
+		var targetContainer = $("#trial-information-a-container");
+
+		if (targetContainer.css('display') != 'none'){
+			$("#trial-information-a-anchor-down-icon").show();
+			$("#trial-information-a-anchor-up-icon").hide();
+		} else {
+			$("#trial-information-a-anchor-down-icon").hide();
+			$("#trial-information-a-anchor-up-icon").show();
+		}
+
+		targetContainer.slideToggle();
+		e.preventDefault();
+	});
+
+	$("#trial-information-b-anchor").on("click", function(e) {
+		var targetContainer = $("#trial-information-b-container");
+
+		if (targetContainer.css('display') != 'none'){
+			$("#trial-information-b-anchor-down-icon").show();
+			$("#trial-information-b-anchor-up-icon").hide();
+		} else {
+			$("#trial-information-b-anchor-down-icon").hide();
+			$("#trial-information-b-anchor-up-icon").show();
+		}
+
+		targetContainer.slideToggle();
+		e.preventDefault();
+	});
+
+	// Filter section
+	$('#trials-filter-column-selection > li > a').on("click",function(e) {
+		var selectedColumn = this.text;
+		trialSelection['filterColumn'] = selectedColumn;
+		$(this).parents(".trials-filter-container").find("#selected-filter-text").text(this.text);
+		e.preventDefault();
+	});
+
+	$('#trials-filter-type-selection > li > a').on("click",function(e) {
+		var selectedType = $(this).attr("data-constraint-type");
+		trialSelection['filterConstraintType'] = selectedType;
+		$(this).parents(".trials-filter-type-container").find("#selected-filter-type-text").text(this.text);
+		e.preventDefault();
+	});
+
+	// Constraint section
 	$('#trials-constraint-column-selection > li > a').on("click",function(e) {
 		var selectedColumn = this.text;
 		trialSelection['column'] = selectedColumn;
@@ -93,16 +183,80 @@ function clickBindInCompareTrialsPage() {
 		e.preventDefault();
 	});
 
+	$('#trials-analysis-column-selection > div > input').on("click",function(e) {
+		console.log("checkbox");
+		var selectedColumn = $(this).attr("data-analysis-column");
+		var useEntry = trialSelection['analysisColumn'][selectedColumn]['useEntry'];
+		trialSelection['analysisColumn'][selectedColumn]['useEntry'] = !useEntry;
+	});
+
+	$('#trials-analysis-column-selection > div > div > input').on("click",function(e) {
+		console.log("radio");
+		var selectedColumn = $(this).parent().parent().find('.analysis-column-checkbox').attr("data-analysis-column");
+		console.log(selectedColumn);
+		var analysisType = $(this).attr("data-analysis-type");
+		trialSelection['analysisColumn'][selectedColumn]['analysisType'] = analysisType;
+		console.log(trialSelection);
+	});
+
+
+
+	// Submit filter and constraint
 	$('#compare-trials-submit-button').click(function(e) {
+		// Set filter value
+		var filterConstraint = $("#trial-filter-value").val();
+		if (filterConstraint.trim() != "") {
+			trialSelection['filterConstraint'] = filterConstraint;
+		}
+
+		// Set constraint value
 		var constraintValue = $("#trial-constraint-value").val();
 		trialSelection['constraint'] = constraintValue;
 
 		// Verify that all fields have been set correctly
-		if (
+		var constraintSetCorrectly =
 			trialSelection['column'] != -1 &&
-			trialSelection['constraintType'] != -1
+			trialSelection['constraintType'] != -1;
+
+		var filterSetCorrectly =
+			(
+				trialSelection['filterColumn'] == -1 &&
+				trialSelection['filterConstraintType'] == -1 &&
+				trialSelection['filterConstraint'] == -1
+			) ||
+			(
+				trialSelection['filterColumn'] != -1 &&
+				trialSelection['filterConstraintType'] != -1 &&
+				trialSelection['filterConstraint'] != -1
+			)
+
+		var analysisTypeSetCorrectly = true;
+		var performingAnalysis = false;
+		console.log(trialSelection);
+		for (var key in trialSelection['analysisColumn']) {
+			console.log(key);
+			if (analysisTypeSetCorrectly) {
+				var columnObject = trialSelection['analysisColumn'][key];
+				if (columnObject['useEntry']) {
+					performingAnalysis = true;
+					if (columnObject['analysisType'] == -1) {
+						analysisTypeSetCorrectly = false;
+					}
+				}
+			}
+		}
+
+		console.log("Set correctly: " + analysisTypeSetCorrectly);
+		console.log("Performing: " + performingAnalysis);
+		if (
+			constraintSetCorrectly &&
+			filterSetCorrectly &&
+			analysisTypeSetCorrectly &&
+			performingAnalysis
 		) {
 			compareTrials(trialSelection);
+		} else {
+			alert("Input fields invalid")
 		}
 
 		e.preventDefault();
@@ -550,6 +704,8 @@ function setupSettingsObject(callback){
         "statisticalStartTrial": 0,
         "statisticalEndTrial": 0,
         "useDynamic": true,
+				"statisticalTostUseFormula": true,
+				"statisticalTostDelta": 0,
     };
     $.each(databaseDetails, function(index,value){
         currentSettings.customConstraints[index] = [];
@@ -610,21 +766,56 @@ function clickBindInSettings(){
 	    } else {
 	    	currentSettings.statisticalStartTrial = $("#statistical-trial-start").val().trim();
     		currentSettings.statisticalEndTrial = $("#statistical-trial-end").val().trim();
-	    	if (parseInt(Number(currentSettings.statisticalStartTrial)) != currentSettings.statisticalStartTrial ||
-	    		parseInt(Number(currentSettings.statisticalEndTrial)) != currentSettings.statisticalEndTrial ||
-	    		currentSettings.statisticalStartTrial == "" || currentSettings.statisticalEndTrial == ""){
-				currentSettings.statisticalStartTrial = 0;
-    			currentSettings.statisticalEndTrial = 0;
-    			currentSettings.statisticalUseAllTrials = true;
+	    	if (
+					parseInt(Number(currentSettings.statisticalStartTrial)) != currentSettings.statisticalStartTrial ||
+    			parseInt(Number(currentSettings.statisticalEndTrial)) != currentSettings.statisticalEndTrial ||
+    			currentSettings.statisticalStartTrial == "" || currentSettings.statisticalEndTrial == ""
+				) {
+						currentSettings.statisticalStartTrial = 0;
+	    			currentSettings.statisticalEndTrial = 0;
+	    			currentSettings.statisticalUseAllTrials = true;
 	    	}
 
 	    }
 
 	    currentSettings.useDynamic = $("#use-dynamic-instructions-input").is(':checked');
 
+			// TOST
+			currentSettings.statisticalTostUseFormula = $("#statistical-tost-use-formula").is(':checked')
+	    if (currentSettings.statisticalTostUseFormula){
+	    	currentSettings.statisticalTostDelta = 0;
+	    } else {
+	    	currentSettings.statisticalTostDelta = $("#statistical-tost-formula-value").val().trim();
+	    	if (
+					parseInt(Number(currentSettings.statisticalTostDelta)) != currentSettings.statisticalTostDelta ||
+    			currentSettings.statisticalTostDelta == ""
+				) {
+						currentSettings.statisticalTostDelta = 0;
+	    			currentSettings.statisticalTostUseFormula = true;
+	    	}
+	    }
 
 	    saveSettingsToFile();
 	});
+
+	$("#statistical-use-all-trials").click(function() {
+        if ($(this).is(':checked')) {
+            $("#statistical-trial-start").prop('disabled', true);
+            $("#statistical-trial-end").prop('disabled', true);
+        } else {
+        	$("#statistical-trial-start").prop('disabled', false);
+        	$("#statistical-trial-end").prop('disabled', false);
+        }
+  });
+
+	$("#statistical-tost-use-formula").click(function() {
+        if ($(this).is(':checked')) {
+            $("#statistical-tost-formula-value").prop('disabled', true);
+        } else {
+        	$("#statistical-tost-formula-value").prop('disabled', false);
+        }
+  });
+
 }
 
 
@@ -657,17 +848,8 @@ function clickBindInFunctionPage(){
 
 	});
 
-	$("#statistical-use-all-trials").click(function() {
-        if ($(this).is(':checked')) {
-            $("#statistical-trial-start").prop('disabled', true);
-            $("#statistical-trial-end").prop('disabled', true);
-        } else {
-        	$("#statistical-trial-start").prop('disabled', false);
-        	$("#statistical-trial-end").prop('disabled', false);
-        }
-    });
 
-    $("#test-of-proportions-link").click(function(e) {
+  $("#test-of-proportions-link").click(function(e) {
 	  e.preventDefault();
 	});
 
@@ -749,12 +931,25 @@ function getSettingsFromFile(){
                 currentSettings.statisticalUseAllTrials = response.statisticalUseAllTrials;
                 $("#statistical-use-all-trials").attr("checked", currentSettings.statisticalUseAllTrials);
                 if ($("#statistical-use-all-trials").is(':checked')) {
-		            $("#statistical-trial-start").prop('disabled', true);
-		            $("#statistical-trial-end").prop('disabled', true);
-		        } else {
-		        	$("#statistical-trial-start").prop('disabled', false);
-		        	$("#statistical-trial-end").prop('disabled', false);
-		        }
+		            	$("#statistical-trial-start").prop('disabled', true);
+		            	$("#statistical-trial-end").prop('disabled', true);
+		        		} else {
+		        			$("#statistical-trial-start").prop('disabled', false);
+		        			$("#statistical-trial-end").prop('disabled', false);
+		        		}
+
+								// Set up TOST data
+								currentSettings.statisticalTostUseFormula = response.statisticalTostUseFormula;
+								$("#statistical-tost-use-formula").attr("checked", currentSettings.statisticalTostUseFormula);
+                if ($("#statistical-tost-use-formula").is(':checked')) {
+		            	$("#statistical-tost-formula-value").prop('disabled', true);
+		        		} else {
+		        			$("#statistical-tost-formula-value").prop('disabled', false);
+		        		}
+
+								currentSettings.statisticalTostDelta = response.statisticalTostDelta;
+								$("#statistical-tost-formula-value").val(currentSettings.statisticalTostDelta);
+
 
 				currentSettings.statisticalStartTrial = response.statisticalStartTrial;
 				if (!currentSettings.statisticalUseAllTrials){
@@ -1833,7 +2028,16 @@ function clickBindInCompareFunctionPage(){
 	var selectedFunctions = {
 			"functionA": 0,
 			"functionB": 0,
+			'analysisColumn': {}
 	};
+
+	for (var key in databaseDetails['trials']) {
+		var analysis = {
+			'useEntry': false,
+			'analysisType': -1,
+		}
+		selectedFunctions['analysisColumn'][key] = analysis;
+	}
 
 	$('#compare-function-a-selection-container > li > a').click(function(e) {
 
@@ -1865,7 +2069,489 @@ function clickBindInCompareFunctionPage(){
 	    e.preventDefault();
 	});
 
+	$('#compare-function-analysis-column-selection > div > input').on("click",function(e) {
+		console.log("checkbox");
+		var selectedColumn = $(this).attr("data-analysis-column");
+		var useEntry = selectedFunctions['analysisColumn'][selectedColumn]['useEntry'];
+		selectedFunctions['analysisColumn'][selectedColumn]['useEntry'] = !useEntry;
+	});
+
+	$('#compare-function-analysis-column-selection > div > div > input').on("click",function(e) {
+		console.log("radio");
+		var selectedColumn = $(this).parent().parent().find('.analysis-column-checkbox').attr("data-analysis-column");
+		console.log(selectedColumn);
+		var analysisType = $(this).attr("data-analysis-type");
+		selectedFunctions['analysisColumn'][selectedColumn]['analysisType'] = analysisType;
+		console.log(selectedFunctions);
+	});
+
 }
+
+function updateTrialComparisonPage(comparisonObject, response){
+
+	// If we want to empty the page
+	if (response == null){
+		$("#independent-statistics-row").slideUp();
+	}
+
+	$("#trial-information-row").slideDown();
+	$("#comparison-statistics-row").slideDown();
+
+	updateTrialSetInformationSection(response['information']['a'], 'a');
+	updateTrialSetInformationSection(response['information']['b'], 'b');
+
+	$("#independent-statistics-anchor-down-icon").hide();
+	$("#independent-statistics-anchor-up-icon").show();
+
+
+	// updateComparisonPageIndependentSection(response, 0, 'a')
+	// updateComparisonPageIndependentSection(response, 1, 'b')
+	//
+	updateTrialSetComparisonSection(response);
+
+}
+
+function updateTrialSetInformationSection(trialInformation, trialLetter) {
+
+	$('#trial-' + trialLetter + '-trial-ids').text(trialInformation['trial']['entries'])
+	console.log("Trial information");
+	console.log(trialInformation);
+
+	for (column in trialInformation) {
+		if (column != 'trial') {
+			$('#trial-' + trialLetter + '-' + column + '-avg').text(trialInformation[column]['avg']);
+			$('#trial-' + trialLetter + '-' + column + '-std').text(trialInformation[column]['std']);
+			$('#trial-' + trialLetter + '-' + column + '-total').text(trialInformation[column]['total']);
+		}
+	}
+
+
+	//
+	// $('#trial-' + trialLetter + '-iterations-avg').text(trialInformation['iterations_avg'])
+	// $('#trial-' + trialLetter + '-iterations-std').text(trialInformation['iterations_std'])
+	// $('#trial-' + trialLetter + '-detection-count-total').text(trialInformation['detections_total'])
+	// $('#trial-' + trialLetter + '-detection-count-avg').text(trialInformation['detections_avg'])
+	// $('#trial-' + trialLetter + '-detection-count-std').text(trialInformation['detections_std'])
+	// $('#trial-' + trialLetter + '-crash-count-total').text(trialInformation['crashes_total'])
+	// $('#trial-' + trialLetter + '-crash-count-avg').text(trialInformation['crashes_avg'])
+	// $('#trial-' + trialLetter + '-crash-count-std').text(trialInformation['crashes_std'])
+	// $('#trial-' + trialLetter + '-signal-count-total').text(trialInformation['signals_total'])
+	// $('#trial-' + trialLetter + '-signal-count-avg').text(trialInformation['signals_avg'])
+	// $('#trial-' + trialLetter + '-signal-count-std').text(trialInformation['signals_std'])
+
+}
+
+function updateTrialSetComparisonSection(trialInformation){
+
+	// injections										=> No tests
+	// Iterations										=> T-test, TOST-test
+	// Signals, Detections, Crashes => Proportion testing, Chi-Squared Test
+
+
+
+	// Clear previous data
+	$("#comparison-statistics-anchor-down-icon").hide();
+	$("#comparison-statistics-anchor-up-icon").show();
+	$("#comparison-statistics-main-container").empty();
+
+
+	// Place html in comparison div
+	for (key in trialInformation['analysisData']) {
+		var analysisItem = trialInformation['analysisData'][key];
+		if (analysisItem['analysis_type'] == 1) {
+			generate_proportion_test_html(analysisItem, "#comparison-statistics-main-container");
+		} else if (analysisItem['analysis_type'] == 2) {
+			generate_tost_test_html(analysisItem, "#comparison-statistics-main-container");
+		} else if (analysisItem['analysis_type'] == 3) {
+			generate_tost_test_html(analysisItem, "#comparison-statistics-main-container");
+		}
+
+	}
+
+	// generate_tost_test_html(trialInformation['iterations']);
+}
+
+function generate_tost_test_html(comparisonItem, insertId) {
+	console.log("Generating");
+
+	var tostComparisonHTMLBase = "\
+	<div>\
+		<h4>\
+			<a href=\"\" id=\"comparison-statistics-anchor-{16}\">\
+				<span id=\"comparison-statistics-anchor-{17}-down-icon\" class=\"glyphicon glyphicon-chevron-down\" style=\"color: #333;font-size:15px;\" aria-hidden=\"true\"></span>\
+        <span id=\"comparison-statistics-anchor-{18}-up-icon\" class=\"glyphicon glyphicon-chevron-up\" style=\"color: #333;display:none;font-size:15px;\" aria-hidden=\"true\"></span>\
+        {0}\
+			</a>\
+		</h4>\
+		<div style=\"margin-left:40px;\">\
+			<div>\
+				<h4>\
+					<a href=\"\" id=\"comparison-statistics-anchor-{22}-equivalence\">\
+						<span class=\"glyphicon glyphicon-chevron-down\" style=\"color: #333;font-size:15px;\" aria-hidden=\"true\"></span>\
+						<span class=\"glyphicon glyphicon-chevron-up\" style=\"color: #333;display:none;font-size:15px;\" aria-hidden=\"true\"></span>\
+						TOST Test for Equivalence\
+					</a>\
+					<span>(</span>\
+					<span class=\"circle\" id=\"independent-statistics-anchor-{20}-circle-tost\"></span>\
+					<span id=\"independent-statistics-anchor-{21}-status-tost\"></span>\
+					<span>)</span>\
+				</h4>\
+				<div style=\"display:none;margin-left:40px;\" class=\"comparison-container\" id=\"comparison-container-function-{19}\">\
+					<h5>Set #1: {1} = {2}</h5>\
+					<h5>Set #1: {3} = {4}</h5>\
+					<br />\
+					<h5>Set #2: {5} = {6}</h5>\
+					<h5>Set #2: {7} = {8}</h5>\
+					<br />\
+					<h5>Null hypothesis: The absolute value of the difference between the two means is greater than delta (Delta: {13})</h5>\
+					<br />\
+					<h5>Alternate hypothesis: The absolute value of the difference between the two means is within delta (Delta: {14})</h5>\
+					<h5>P-value ({9} Confidence Interval, {10} Significance): {11}</h5>\
+					<h5><b>Statistically Significant: {12}</b></h5>\
+				</div>\
+			</div>\
+		</div>\
+	</div>";
+
+	var tTestComparisonHTMLBase = "\
+	<div>\
+		<h4>\
+			<a href=\"\" id=\"comparison-statistics-anchor-{16}\">\
+				<span id=\"comparison-statistics-anchor-{17}-down-icon\" class=\"glyphicon glyphicon-chevron-down\" style=\"color: #333;font-size:15px;\" aria-hidden=\"true\"></span>\
+        <span id=\"comparison-statistics-anchor-{18}-up-icon\" class=\"glyphicon glyphicon-chevron-up\" style=\"color: #333;display:none;font-size:15px;\" aria-hidden=\"true\"></span>\
+        {0}\
+			</a>\
+		</h4>\
+		<div style=\"margin-left:40px;\">\
+			<div>\
+				<h4>\
+					<a href=\"\" id=\"comparison-statistics-anchor-{23}-difference\">\
+						<span class=\"glyphicon glyphicon-chevron-down\" style=\"color: #333;font-size:15px;\" aria-hidden=\"true\"></span>\
+						<span class=\"glyphicon glyphicon-chevron-up\" style=\"color: #333;display:none;font-size:15px;\" aria-hidden=\"true\"></span>\
+						Student's T-Test for Independence\
+					</a>\
+					<span>(</span>\
+					<span class=\"circle\" id=\"independent-statistics-anchor-{20}-circle-t_test\"></span>\
+					<span id=\"independent-statistics-anchor-{21}-status-t_test\"></span>\
+					<span>)</span>\
+				</h4>\
+				<div style=\"display:none;margin-left:40px;\" class=\"comparison-container\" id=\"comparison-container-function-{19}\">\
+					<h5>Set #1: {1} = {2}</h5>\
+					<h5>Set #1: {3} = {4}</h5>\
+					<br />\
+					<h5>Set #2: {5} = {6}</h5>\
+					<h5>Set #2: {7} = {8}</h5>\
+					<br />\
+					<h5>Null hypothesis: The two samples have identical expected values</h5>\
+					<br />\
+					<h5>Alternate hypothesis: The two samples have different expected values</h5>\
+					<h5>P-value ({9} Confidence Interval, {10} Significance): {11}</h5>\
+					<h5><b>Statistically Significant: {12}</b></h5>\
+				</div>\
+			</div>\
+		</div>\
+	</div>";
+
+
+	var htmlString;
+	if (comparisonItem['analysis_type'] == 2) {
+		htmlString = tostComparisonHTMLBase;
+	} else if (comparisonItem['analysis_type'] == 3) {
+		htmlString = tTestComparisonHTMLBase;
+	}
+
+	var test_type = comparisonItem['analysis_type_string']
+
+	htmlString = htmlString.replace("{0}", comparisonItem["type"]);
+	htmlString = htmlString.replace("{1}", comparisonItem["p1"]["avg"]["title"]);
+	htmlString = htmlString.replace("{2}", comparisonItem["p1"]["avg"]["value"]);
+	htmlString = htmlString.replace("{3}", comparisonItem["p1"]["std"]["title"]);
+	htmlString = htmlString.replace("{4}", comparisonItem["p1"]["std"]["value"]);
+	htmlString = htmlString.replace("{5}", comparisonItem["p2"]["avg"]["title"]);
+	htmlString = htmlString.replace("{6}", comparisonItem["p2"]["avg"]["value"]);
+	htmlString = htmlString.replace("{7}", comparisonItem["p2"]["std"]["title"]);
+	htmlString = htmlString.replace("{8}", comparisonItem["p2"]["std"]["value"]);
+
+	htmlString = htmlString.replace("{9}", confidenceValue);
+	htmlString = htmlString.replace("{10}", (1 - ( confidenceValue / 100.0 )).toFixed(2) );
+	htmlString = htmlString.replace("{11}", comparisonItem["p_value"]);
+	htmlString = htmlString.replace("{12}", comparisonItem["success"]);
+	htmlString = htmlString.replace("{13}", comparisonItem["delta"]);
+	htmlString = htmlString.replace("{14}", comparisonItem["delta"]);
+
+	htmlString = htmlString.replace("{16}", comparisonItem['type']);
+	htmlString = htmlString.replace("{17}", comparisonItem['type']);
+	htmlString = htmlString.replace("{18}", comparisonItem['type']);
+	htmlString = htmlString.replace("{19}", comparisonItem['type']);
+	htmlString = htmlString.replace("{20}", comparisonItem['type']);
+	htmlString = htmlString.replace("{21}", comparisonItem['type']);
+	htmlString = htmlString.replace("{22}", comparisonItem['type']);
+	htmlString = htmlString.replace("{23}", comparisonItem['type']);
+
+
+
+
+
+
+	$(insertId).append(htmlString);
+
+	if (comparisonItem["success"] == "True"){
+		$("#independent-statistics-anchor-" + comparisonItem['type'] + "-status-" + test_type).text("Statistically significant");
+		$("#independent-statistics-anchor-" + comparisonItem['type'] + "-circle-" + test_type).addClass("success-indicator");
+	} else {
+		$("#independent-statistics-anchor-" + comparisonItem['type'] + "-status-" + test_type).text("Not significant");
+		$("#independent-statistics-anchor-" + comparisonItem['type'] + "-circle-" + test_type).addClass("fail-indicator");
+	}
+
+
+	$("#comparison-statistics-anchor-" + comparisonItem['type']).click(function(e) {
+		var targetContainer = $(this).parent().parent().find(".comparison-container");
+
+		if (targetContainer.css('display') != 'none'){
+			$(this).find(".glyphicon-chevron-up").hide();
+			$(this).find(".glyphicon-chevron-down").show();
+		} else {
+			$(this).find(".glyphicon-chevron-up").show();
+			$(this).find(".glyphicon-chevron-down").hide();
+		}
+
+		targetContainer.slideToggle();
+		e.preventDefault();
+	});
+
+	$("#comparison-statistics-anchor-" + comparisonItem['type'] + '-equivalence').click(function(e) {
+		var targetContainer = $(this).parent().parent().find(".comparison-container");
+
+		if (targetContainer.css('display') != 'none'){
+			$(this).find(".glyphicon-chevron-up").hide();
+			$(this).find(".glyphicon-chevron-down").show();
+		} else {
+			$(this).find(".glyphicon-chevron-up").show();
+			$(this).find(".glyphicon-chevron-down").hide();
+		}
+
+		targetContainer.slideToggle();
+		e.preventDefault();
+	});
+
+	$("#comparison-statistics-anchor-" + comparisonItem['type'] + '-difference').click(function(e) {
+		var targetContainer = $(this).parent().parent().find(".comparison-container");
+
+		if (targetContainer.css('display') != 'none'){
+			$(this).find(".glyphicon-chevron-up").hide();
+			$(this).find(".glyphicon-chevron-down").show();
+		} else {
+			$(this).find(".glyphicon-chevron-up").show();
+			$(this).find(".glyphicon-chevron-down").hide();
+		}
+
+		targetContainer.slideToggle();
+		e.preventDefault();
+	});
+
+}
+
+function generate_proportion_test_html(comparisonItem, insertId) {
+	console.log("Comparison item:");
+	console.log(comparisonItem);
+
+
+
+	var comparisonHTMLBase = "\
+	<div>\
+		<h4>\
+			<a href=\"\" id=\"comparison-statistics-anchor-{16}\">\
+				<span id=\"comparison-statistics-anchor-{17}-down-icon\" class=\"glyphicon glyphicon-chevron-down\" style=\"color: #333;font-size:15px;\" aria-hidden=\"true\"></span>\
+        <span id=\"comparison-statistics-anchor-{18}-up-icon\" class=\"glyphicon glyphicon-chevron-up\" style=\"color: #333;display:none;font-size:15px;\" aria-hidden=\"true\"></span>\
+        {0}\
+			</a>\
+		</h4>\
+		<div style=\"margin-left:40px;\">\
+			<div>\
+				<h4>\
+					<a href=\"\"  id=\"comparison-statistics-anchor-{22}-difference\">\
+						<span class=\"glyphicon glyphicon-chevron-down\" style=\"color: #333;font-size:15px;\" aria-hidden=\"true\"></span>\
+						<span class=\"glyphicon glyphicon-chevron-up\" style=\"color: #333;display:none;font-size:15px;\" aria-hidden=\"true\"></span>\
+						Test for Difference of two Proportions\
+					</a>\
+					<span>(</span>\
+					<span class=\"circle\" id=\"independent-statistics-anchor-{20}-circle\"></span>\
+					<span id=\"independent-statistics-anchor-{21}-status\"></span>\
+					<span>)</span>\
+				</h4>\
+				<div style=\"display:none;margin-left:40px;\" class=\"comparison-container\" id=\"comparison-container-function-{19}\">\
+					<h5>P<sub>1</sub> = {1} / {2} = {3} / {4}</h5>\
+					<h5>P<sub>1</sub> = {5}</h5>\
+					<br />\
+					<h5>P<sub>2</sub> = {6} / {7} = {8} / {9}</h5>\
+					<h5>P<sub>2</sub> = {10}</h5>\
+					<br />\
+					<h5>Null hypothesis: P<sub>1</sub> >= P<sub>2</sub>, Alternate hypothesis: P<sub>1</sub> < P<sub>2</sub></h5>\
+					<h5>Z-value: {11}\
+					<h5>P-value ({12} Confidence Interval, {13} Significance): {14}</h5>\
+					<h5><b>Statistically Significant: {15}\
+				</div>\
+			</div>\
+		</div>\
+	</div>";
+
+	var comparisonErrorHTMLBase = "\
+	<div>\
+		<h4>\
+			<a href=\"\" id=\"comparison-statistics-anchor-{16}\">\
+				<span id=\"comparison-statistics-anchor-{17}-down-icon\" class=\"glyphicon glyphicon-chevron-down\" style=\"color: #333;font-size:15px;\" aria-hidden=\"true\"></span>\
+        <span id=\"comparison-statistics-anchor-{18}-up-icon\" class=\"glyphicon glyphicon-chevron-up\" style=\"color: #333;display:none;font-size:15px;\" aria-hidden=\"true\"></span>\
+        {0}\
+			</a>\
+		</h4>\
+		<div style=\"margin-left:40px;\">\
+			<div>\
+				<h4>\
+					<a href=\"\"  id=\"comparison-statistics-anchor-{22}-difference\">\
+						<span class=\"glyphicon glyphicon-chevron-down\" style=\"color: #333;font-size:15px;\" aria-hidden=\"true\"></span>\
+						<span class=\"glyphicon glyphicon-chevron-up\" style=\"color: #333;display:none;font-size:15px;\" aria-hidden=\"true\"></span>\
+						Test for Difference of two Proportions\
+					</a>\
+					<span>(</span>\
+					<span class=\"circle\" id=\"independent-statistics-anchor-{20}-circle\"></span>\
+					<span id=\"independent-statistics-anchor-{21}-status\"></span>\
+					<span>)</span>\
+				</h4>\
+				<div style=\"display:none;margin-left:40px;\" class=\"comparison-container\" id=\"comparison-container-function-{19}\">\
+					<h5>Error: {23}</h5>\
+					<br />\
+				</div>\
+			</div>\
+		</div>\
+	</div>";
+
+
+
+  	// var comparisonItem = trialInformation['detections'];
+
+  	if ($("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").length){
+
+			$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").removeClass();
+			$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").addClass("circle");
+
+  	}
+
+		var htmlString;
+
+		if ("error" in comparisonItem) {
+			print("Error");
+			htmlString = comparisonErrorHTMLBase;
+
+			htmlString = htmlString.replace("{0}", comparisonItem["type"]);
+
+			htmlString = htmlString.replace("{15}", comparisonItem["success"]);
+
+			htmlString = htmlString.replace("{16}", comparisonItem['type']);
+	  	htmlString = htmlString.replace("{17}", comparisonItem['type']);
+	  	htmlString = htmlString.replace("{18}", comparisonItem['type']);
+	  	htmlString = htmlString.replace("{19}", comparisonItem['type']);
+	  	htmlString = htmlString.replace("{20}", comparisonItem['type']);
+			htmlString = htmlString.replace("{21}", comparisonItem['type']);
+			htmlString = htmlString.replace("{22}", comparisonItem['type']);
+			htmlString = htmlString.replace("{23}", comparisonItem['error']);
+
+		} else {
+			htmlString = comparisonHTMLBase;
+
+			htmlString = htmlString.replace("{0}", comparisonItem["type"]);
+			htmlString = htmlString.replace("{1}", comparisonItem["p1"]["numerator"]["title"]);
+			htmlString = htmlString.replace("{2}", comparisonItem["p1"]["denominator"]["title"]);
+			htmlString = htmlString.replace("{3}", comparisonItem["p1"]["numerator"]["value"]);
+			htmlString = htmlString.replace("{4}", comparisonItem["p1"]["denominator"]["value"]);
+			htmlString = htmlString.replace("{5}", comparisonItem["p1"]["value"]);
+
+			htmlString = htmlString.replace("{6}", comparisonItem["p2"]["numerator"]["title"]);
+			htmlString = htmlString.replace("{7}", comparisonItem["p2"]["denominator"]["title"]);
+			htmlString = htmlString.replace("{8}", comparisonItem["p2"]["numerator"]["value"]);
+			htmlString = htmlString.replace("{9}", comparisonItem["p2"]["denominator"]["value"]);
+			htmlString = htmlString.replace("{10}", comparisonItem["p2"]["value"]);
+
+			htmlString = htmlString.replace("{11}", comparisonItem["z_value"]);
+			htmlString = htmlString.replace("{12}", confidenceValue);
+			htmlString = htmlString.replace("{13}", (1 - ( confidenceValue / 100.0 )).toFixed(2) );
+			htmlString = htmlString.replace("{14}", comparisonItem["p_value"]);
+
+
+			htmlString = htmlString.replace("{15}", comparisonItem["success"]);
+
+			htmlString = htmlString.replace("{16}", comparisonItem['type']);
+	  	htmlString = htmlString.replace("{17}", comparisonItem['type']);
+	  	htmlString = htmlString.replace("{18}", comparisonItem['type']);
+	  	htmlString = htmlString.replace("{19}", comparisonItem['type']);
+	  	htmlString = htmlString.replace("{20}", comparisonItem['type']);
+			htmlString = htmlString.replace("{21}", comparisonItem['type']);
+			htmlString = htmlString.replace("{22}", comparisonItem['type']);
+			htmlString = htmlString.replace("{23}", comparisonItem['type']);
+		}
+
+
+
+		$(insertId).append(htmlString);
+
+
+		if (comparisonItem["success"] == "True"){
+			$("#independent-statistics-anchor-" + comparisonItem["type"] + "-status").text("Statistically significant");
+    	$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").addClass("success-indicator");
+		} else {
+			$("#independent-statistics-anchor-" + comparisonItem["type"] + "-status").text("Unable to determine significance");
+    	$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").addClass("fail-indicator");
+		}
+
+
+
+  	$("#comparison-statistics-anchor-" + comparisonItem['type']).click(function(e) {
+  		//$("#comparison-container-function-" + comparisonItem['type']).slideToggle();
+  		var targetContainer = $(this).parent().parent().find(".comparison-container");
+
+  		if (targetContainer.css('display') != 'none'){
+  			$(this).find(".glyphicon-chevron-up").hide();
+				$(this).find(".glyphicon-chevron-down").show();
+			} else {
+				$(this).find(".glyphicon-chevron-up").show();
+				$(this).find(".glyphicon-chevron-down").hide();
+			}
+
+  		targetContainer.slideToggle();
+	    e.preventDefault();
+		});
+
+		$("#comparison-statistics-anchor-" + comparisonItem['type'] + '-equivalence').click(function(e) {
+			var targetContainer = $(this).parent().parent().find(".comparison-container");
+
+			if (targetContainer.css('display') != 'none'){
+				$(this).find(".glyphicon-chevron-up").hide();
+				$(this).find(".glyphicon-chevron-down").show();
+			} else {
+				$(this).find(".glyphicon-chevron-up").show();
+				$(this).find(".glyphicon-chevron-down").hide();
+			}
+
+			targetContainer.slideToggle();
+			e.preventDefault();
+		});
+
+		$("#comparison-statistics-anchor-" + comparisonItem['type'] + '-difference').click(function(e) {
+			var targetContainer = $(this).parent().parent().find(".comparison-container");
+
+			if (targetContainer.css('display') != 'none'){
+				$(this).find(".glyphicon-chevron-up").hide();
+				$(this).find(".glyphicon-chevron-down").show();
+			} else {
+				$(this).find(".glyphicon-chevron-up").show();
+				$(this).find(".glyphicon-chevron-down").hide();
+			}
+
+			targetContainer.slideToggle();
+			e.preventDefault();
+		});
+
+}
+
 
 
 function compareFunctions(comparisonObject){
@@ -1921,22 +2607,51 @@ function updateComparisonPage(comparisonObject, response){
 
 }
 
+function updateFunctionSetInformationSection(trialInformation, trialLetter) {
+
+	$('#function-' + trialLetter + '-trial-ids').text(trialInformation['trial']['entries'])
+	console.log("Trial information");
+	console.log(trialInformation);
+
+	for (column in trialInformation) {
+		if (column != 'trial') {
+			$('#function-' + trialLetter + '-' + column + '-avg').text(trialInformation[column]['avg']);
+			$('#function-' + trialLetter + '-' + column + '-std').text(trialInformation[column]['std']);
+			$('#function-' + trialLetter + '-' + column + '-total').text(trialInformation[column]['total']);
+		}
+	}
+}
 
 function updateFunctionInformationSection(response){
-	var functionInformation = response[3];
+	var functionInformation = response[5];
 
-	$("#function-a-injection-count").text(functionInformation[0]["injection_count"]);
-	$("#function-b-injection-count").text(functionInformation[1]["injection_count"]);
-
-	$("#function-a-trials").text(functionInformation[0]["trial_list"]);
-	$("#function-b-trials").text(functionInformation[1]["trial_list"]);
-
-	$("#function-a-detection-count").text(functionInformation[0]["detection_count"]);
-	$("#function-b-detection-count").text(functionInformation[1]["detection_count"]);
-
-	$("#function-a-crash-count").text(functionInformation[0]["crash_count"]);
-	$("#function-b-crash-count").text(functionInformation[1]["crash_count"]);
-
+	updateFunctionSetInformationSection(functionInformation['information']['a'], 'a');
+	updateFunctionSetInformationSection(functionInformation['information']['b'], 'b');
+	//
+	// $('#function-' + trialLetter + '-trial-ids').text(trialInformation['trial']['entries'])
+	// console.log("Trial information");
+	// console.log(trialInformation);
+	//
+	// for (column in trialInformation) {
+	// 	if (column != 'trial') {
+	// 		$('#function-' + trialLetter + '-' + column + '-avg').text(trialInformation[column]['avg']);
+	// 		$('#function-' + trialLetter + '-' + column + '-std').text(trialInformation[column]['std']);
+	// 		$('#function-' + trialLetter + '-' + column + '-total').text(trialInformation[column]['total']);
+	// 	}
+	// }
+	//
+	// $("#function-a-injection-count").text(functionInformation[0]["injection_count"]);
+	// $("#function-b-injection-count").text(functionInformation[1]["injection_count"]);
+	//
+	// $("#function-a-trials").text(functionInformation[0]["trial_list"]);
+	// $("#function-b-trials").text(functionInformation[1]["trial_list"]);
+	//
+	// $("#function-a-detection-count").text(functionInformation[0]["detection_count"]);
+	// $("#function-b-detection-count").text(functionInformation[1]["detection_count"]);
+	//
+	// $("#function-a-crash-count").text(functionInformation[0]["crash_count"]);
+	// $("#function-b-crash-count").text(functionInformation[1]["crash_count"]);
+	//
 
 
 }
@@ -1982,6 +2697,8 @@ function updateComparisonPageIndependentSection(response, functionId, functionLe
 
     var successfulCount = 0;
 
+		console.log("Response:");
+		console.log(response);
     for (var i = 0; i < response[functionId].length; i++){
     	var item = response[functionId][i];
     	var injectionTypeHTMLCode = injectionTypeHTMLCodeBase;
@@ -2035,7 +2752,20 @@ function updateComparisonPageComparisonSection(response){
 
 
 	// Place html in comparison div
-	var comparisonData = response[2];
+	var comparisonData = response[5];
+
+	// Place html in comparison div
+	for (key in comparisonData['analysisData']) {
+		var analysisItem = comparisonData['analysisData'][key];
+		if (analysisItem['analysis_type'] == 1) {
+			generate_proportion_test_html(analysisItem, "#comparison-statistics-main-container");
+		} else if (analysisItem['analysis_type'] == 2) {
+			generate_tost_test_html(analysisItem, "#comparison-statistics-main-container");
+		} else if (analysisItem['analysis_type'] == 3) {
+			generate_tost_test_html(analysisItem, "#comparison-statistics-main-container");
+		}
+
+	}
 
 	var comparisonHTMLBase = "<div>\
                             <h4><a href=\"\" id=\"comparison-statistics-anchor-{16}\">\
@@ -2070,76 +2800,72 @@ function updateComparisonPageComparisonSection(response){
 
     	if ($("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").length){
 
-			$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").removeClass();
-			$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").addClass("circle");
+				$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").removeClass();
+				$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").addClass("circle");
 
-    	}
-
-
-    	var htmlString = comparisonHTMLBase;
-    	htmlString = htmlString.replace("{0}", comparisonItem["type"]);
-		htmlString = htmlString.replace("{1}", comparisonItem["p1"]["numerator"]["title"]);
-		htmlString = htmlString.replace("{2}", comparisonItem["p1"]["denominator"]["title"]);
-		htmlString = htmlString.replace("{3}", comparisonItem["p1"]["numerator"]["value"]);
-		htmlString = htmlString.replace("{4}", comparisonItem["p1"]["denominator"]["value"]);
-		htmlString = htmlString.replace("{5}", comparisonItem["p1"]["value"]);
-
-		htmlString = htmlString.replace("{6}", comparisonItem["p2"]["numerator"]["title"]);
-		htmlString = htmlString.replace("{7}", comparisonItem["p2"]["denominator"]["title"]);
-		htmlString = htmlString.replace("{8}", comparisonItem["p2"]["numerator"]["value"]);
-		htmlString = htmlString.replace("{9}", comparisonItem["p2"]["denominator"]["value"]);
-		htmlString = htmlString.replace("{10}", comparisonItem["p2"]["value"]);
-
-		htmlString = htmlString.replace("{11}", comparisonItem["z_value"]);
-		htmlString = htmlString.replace("{12}", confidenceValue);
-		htmlString = htmlString.replace("{13}", (1 - ( confidenceValue / 100.0 )).toFixed(2) );
-		htmlString = htmlString.replace("{14}", comparisonItem["p_value"]);
+	  	}
 
 
-		htmlString = htmlString.replace("{15}", comparisonItem["success"]);
+	  	var htmlString = comparisonHTMLBase;
+	  	htmlString = htmlString.replace("{0}", comparisonItem["type"]);
+			htmlString = htmlString.replace("{1}", comparisonItem["p1"]["numerator"]["title"]);
+			htmlString = htmlString.replace("{2}", comparisonItem["p1"]["denominator"]["title"]);
+			htmlString = htmlString.replace("{3}", comparisonItem["p1"]["numerator"]["value"]);
+			htmlString = htmlString.replace("{4}", comparisonItem["p1"]["denominator"]["value"]);
+			htmlString = htmlString.replace("{5}", comparisonItem["p1"]["value"]);
 
-		htmlString = htmlString.replace("{16}", comparisonItem['type']);
-    	htmlString = htmlString.replace("{17}", comparisonItem['type']);
-    	htmlString = htmlString.replace("{18}", comparisonItem['type']);
-    	htmlString = htmlString.replace("{19}", comparisonItem['type']);
-    	htmlString = htmlString.replace("{20}", comparisonItem['type']);
-    	htmlString = htmlString.replace("{21}", comparisonItem['type']);
+			htmlString = htmlString.replace("{6}", comparisonItem["p2"]["numerator"]["title"]);
+			htmlString = htmlString.replace("{7}", comparisonItem["p2"]["denominator"]["title"]);
+			htmlString = htmlString.replace("{8}", comparisonItem["p2"]["numerator"]["value"]);
+			htmlString = htmlString.replace("{9}", comparisonItem["p2"]["denominator"]["value"]);
+			htmlString = htmlString.replace("{10}", comparisonItem["p2"]["value"]);
 
-		$("#comparison-statistics-main-container").append(htmlString);
+			htmlString = htmlString.replace("{11}", comparisonItem["z_value"]);
+			htmlString = htmlString.replace("{12}", confidenceValue);
+			htmlString = htmlString.replace("{13}", (1 - ( confidenceValue / 100.0 )).toFixed(2) );
+			htmlString = htmlString.replace("{14}", comparisonItem["p_value"]);
 
 
-		if (comparisonItem["success"] == "True"){
-			$("#independent-statistics-anchor-" + comparisonItem["type"] + "-status").text("Statistically significant");
+			htmlString = htmlString.replace("{15}", comparisonItem["success"]);
+
+			htmlString = htmlString.replace("{16}", comparisonItem['type']);
+	  	htmlString = htmlString.replace("{17}", comparisonItem['type']);
+	  	htmlString = htmlString.replace("{18}", comparisonItem['type']);
+	  	htmlString = htmlString.replace("{19}", comparisonItem['type']);
+	  	htmlString = htmlString.replace("{20}", comparisonItem['type']);
+	  	htmlString = htmlString.replace("{21}", comparisonItem['type']);
+
+			$("#comparison-statistics-main-container").append(htmlString);
+
+
+			if (comparisonItem["success"] == "True"){
+				$("#independent-statistics-anchor-" + comparisonItem["type"] + "-status").text("Statistically significant");
 	    	$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").addClass("success-indicator");
-		} else {
-			$("#independent-statistics-anchor-" + comparisonItem["type"] + "-status").text("Unable to determine significance");
+			} else {
+				$("#independent-statistics-anchor-" + comparisonItem["type"] + "-status").text("Unable to determine significance");
 	    	$("#independent-statistics-anchor-" + comparisonItem["type"] + "-circle").addClass("fail-indicator");
-
-		}
+			}
 
     }
 
     for (var i = 0; i < comparisonData.length; i++){
     	var comparisonItem = comparisonData[i];
     	$("#comparison-statistics-anchor-" + comparisonItem['type']).click(function(e) {
-	    		//$("#comparison-container-function-" + comparisonItem['type']).slideToggle();
+	  		//$("#comparison-container-function-" + comparisonItem['type']).slideToggle();
+	  		var targetContainer = $(this).parent().parent().find(".comparison-container");
 
-	    		var targetContainer = $(this).parent().parent().find(".comparison-container");
-
-	    		if (targetContainer.css('display') != 'none'){
-	    			$(this).find(".glyphicon-chevron-up").hide();
+	  		if (targetContainer.css('display') != 'none'){
+	  			$(this).find(".glyphicon-chevron-up").hide();
 					$(this).find(".glyphicon-chevron-down").show();
 				} else {
 					$(this).find(".glyphicon-chevron-up").show();
 					$(this).find(".glyphicon-chevron-down").hide();
 				}
 
-
-	    		targetContainer.slideToggle();
-			    e.preventDefault();
-		});
+	  		targetContainer.slideToggle();
+		    e.preventDefault();
+			});
     }
-
 
 }
 
