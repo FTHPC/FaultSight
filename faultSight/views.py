@@ -423,7 +423,7 @@ def proportion_test(function_name, confidence_value):
 
     # Check if user is interested in subset of trials
     use_all_trials = False
-    if read_id_from_config("FaultSight", "statisticalUseAllTrials") == "True":
+    if read_id_from_config("FaultSight", "statisticalUseAllTrials") == True:
       use_all_trials = True
 
     min_trial = int(read_id_from_config("FaultSight", "statisticalStartTrial"))
@@ -433,17 +433,14 @@ def proportion_test(function_name, confidence_value):
     # Type-independent data query
     num_total_sites = calculate_num_sites_for_function(function_name)
 
-
     num_total_injections = 0
 
     if use_all_trials:
-
         num_total_injections = db.session.query(sites)\
                     .join(injections, sites.siteId==injections.siteId)\
                     .filter(sites.func == function_name)\
                     .count()
     else:
-
         num_total_injections = db.session.query(sites)\
                     .join(injections, sites.siteId==injections.siteId)\
                     .filter(sites.func == function_name)\
