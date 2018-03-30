@@ -28,6 +28,7 @@ import sqlite3, os, sys
 #   update_site_location(db_connection, site, file = "", func = "", line = ""):
 #   update_site_opcode(db_connection, site, opcode):
 #   update_site_num_executions(db_connection, site, num_executions):
+#   update_site_custom_field(db_connection, site, field, value)
 #
 #
 #
@@ -47,7 +48,7 @@ import sqlite3, os, sys
 #   update_trial_crashed(db_connection, is_crashed)
 #   update_trial_detected(db_connection, is_detected)
 #   update_trial_signal(db_connection, is_signal)
-#   update_trial_num_iterations(db_connection, num_iterations)
+#   update_trial_custom_field(db_connection, field_name, value)
 #
 # Finish inserting injection campaign information
 #   end_trial(db_connection)
@@ -583,13 +584,6 @@ def update_site_type(db_connection, site, type):
         .update({"type": type})
     session.commit()
 
-    #query = table.update().\
-    #    where(table.site == site).\
-    #    values(type=type)
-    #
-    #conn = db_connection['engine'].connect()
-    #conn.execute(query)
-
 def update_site_comment(db_connection, site, comment):
     table = get_reflected_table(db_connection, 'sites')
     from sqlalchemy.orm import sessionmaker
@@ -598,13 +592,6 @@ def update_site_comment(db_connection, site, comment):
         .filter(table.site == site)\
         .update({"comment": comment})
     session.commit()
-
-    #query = table.update().\
-    #    where(table.site == site).\
-    #    values(comment=comment)
-    #
-    #conn = db_connection['engine'].connect()
-    #conn.execute(query)
 
 def update_site_location(db_connection, site, file = "", func = "", line = ""):
     table = get_reflected_table(db_connection, 'sites')
@@ -615,13 +602,6 @@ def update_site_location(db_connection, site, file = "", func = "", line = ""):
         .update({"file": file, "func": func, "line": line})
     session.commit()
 
-    #query = table.update().\
-    #    where(table.site == site).\
-    #    values(file=file, func=func, line=line)
-    #
-    #conn = db_connection['engine'].connect()
-    #conn.execute(query)
-
 def update_site_opcode(db_connection, site, opcode):
     table = get_reflected_table(db_connection, 'sites')
     from sqlalchemy.orm import sessionmaker
@@ -630,14 +610,6 @@ def update_site_opcode(db_connection, site, opcode):
         .filter(table.site == site)\
         .update({"opcode": opcode})
     session.commit()
-
-    #query = table.update().\
-    #    where(table.site == site).\
-    #    values(opcode=opcode)
-    #
-    #conn = db_connection['engine'].connect()
-    #conn.execute(query)
-
 
 def update_site_num_executions(db_connection, site, num_executions):
     table = get_reflected_table(db_connection, 'sites')
@@ -649,8 +621,14 @@ def update_site_num_executions(db_connection, site, num_executions):
     session.commit()
 
 
-
-
+def update_site_custom_field(db_connection, site, field, value):
+    table = get_reflected_table(db_connection, 'sites')
+    from sqlalchemy.orm import sessionmaker
+    session = sessionmaker(bind=db_connection['engine'])()
+    session.query(table)\
+        .filter(table.site == site)\
+        .update({field: value})
+    session.commit()
 
 # Update current trial entries
 
@@ -811,15 +789,16 @@ def update_trial_signal(db_connection, is_signal):
         .update({"signal": is_signal})
     session.commit()
 
-def update_trial_num_iterations(db_connection, num_iterations):
+def update_trial_custom_field(db_connection, field_name, value):
     """
-    Update whether a iterations have been calculated for the current trial
+    Update a custom field for the current trial
 
     Requires start_trial(db_connection, row_arguments) to have been called first
 
     Args:
         db_connection (dictionary): Custom dictionary containing database connection information
-        num_iterations (integer): number of iterations for the current trial
+        field_name (string): field name to update
+        value (int / string / bool): field value
     """
 
     if (db_connection['trial_number'] == None):
@@ -831,7 +810,7 @@ def update_trial_num_iterations(db_connection, num_iterations):
     session = sessionmaker(bind=db_connection['engine'])()
     session.query(table)\
         .filter(table.trial == db_connection['trial_number'])\
-        .update({"numIterations": num_iterations})
+        .update({field_name: value})
     session.commit()
 
 # Insert rows into database
