@@ -53,18 +53,18 @@
           display: none;
         }
 
-        .tooltip-d3 {                                                       
-            background: #eee;                                               
-            box-shadow: 0 0 5px #999999;                                    
-            color: #333;                                                 
-            display: none;                                                 
-            font-size: 18px;                                               
-            padding: 10px;                                               
-            position: absolute;                                         
-            text-align: center;                                          
-            width: 200px;                                                  
-            z-index: 100;                                                   
-        }  
+        .tooltip-d3 {
+            background: #eee;
+            box-shadow: 0 0 5px #999999;
+            color: #333;
+            display: none;
+            font-size: 18px;
+            padding: 10px;
+            position: absolute;
+            text-align: center;
+            width: 200px;
+            z-index: 100;
+        }
     </style>
     <body>
         <script type="text/javascript" src="../static/prism.js"></script>
@@ -76,6 +76,7 @@
         <script type="text/javascript" src="../static/jquery.tooltipster.min.js"></script>
         <script type="text/javascript" src="../static/saveSvgAsPng.js"></script>
         <script type="text/javascript" src="../static/jquery.bpopup.min.js"></script>
+        <script type="text/javascript" src="../static/d3-save-svg.min.js"></script>
         <div id="main-page-container">
             <div id="main-left"></div>
             <div id="main-right">
@@ -107,7 +108,7 @@
                     <button id="missing-file-location-submit">Submit</button>
                     </div>
                 </div>
-      
+
                 <div class="row" style="margin-top:5px;">
                     <hr />
                     <h2 id="statistics-anchor">Statistical Analysis</h2>
@@ -132,7 +133,7 @@
                             <h5>Null hypothesis: P<sub>1</sub> = P<sub>2</sub>, Alternate hypothesis: P<sub>1</sub> != P<sub>2</sub></h5>
                             <h5>Z-value: {{proportionTestType['zValue']}}
                             <h5>P-value ({{confidenceValue}}% confidence interval, {{ 1 - ( confidenceValue / 100.0 ) }} significance): {{proportionTestType['pVal']}}</h5>
-                            <h5><b>Statistically Significant: 
+                            <h5><b>Statistically Significant:
                             {% if proportionTestType['success'] %}
                             <span style="color:green">True</span>
                             {% else %}
@@ -144,7 +145,7 @@
                         {% endfor %}
                     </div>
                 </div>
-                
+
                 <div class="row" style="margin-top:5px;">
                     <div class="col-xs-12">
                     <hr />
@@ -154,9 +155,12 @@
                         <div id="my-graphs-container">
                             {% for i in range(myGraphListLength) %}
                             <div class="row col-xs-12">
-                            <div class="save-graph-button" id="my-graph-save-button-{{loop.index}}" data-location="my-graph-{{loop.index}}-svd" style="display:none;">
-                                    <button type="button" class="btn btn-info">Save Graph</button>
-                                </div>
+                              <div class="save-graph-button" id="my-graph-save-button-{{loop.index}}" data-location="my-graph-{{loop.index}}-svd" style="display:none;">
+                                  <button type="button" class="btn btn-info">Save Graph</button>
+                              </div>
+                              <div class="save-graph-svg-button" id="my-graph-save-svg-button-{{loop.index}}" data-location="my-graph-{{loop.index}}-svd" style="display:none;">
+                                  <button type="button" class="btn btn-info">Save Graph as SVG (Chrome only)</button>
+                              </div>
                             </div>
                             <div class="row col-xs-12">
                                 <div id="my-graph-input-{{loop.index}}" style="display:none;">
@@ -169,7 +173,7 @@
                             {% endfor %}
                         </div>
                     </div>
-                    
+
 
 
                     <div class="row">
@@ -283,7 +287,7 @@
 <li role="presentation"><a role="menuitem" tabindex="-1" data-function-name="{{functionName}}" data-region-type="1" href="#">Entire Function</a></li>
 <li role="presentation"><a role="menuitem" tabindex="-1" data-function-name="{{functionName}}" data-region-type="2" href="#">Custom line numbers</a></li>
 {% endfor %}
-       
+
                                     </ul>
                                 </div>
                             </div>
@@ -295,11 +299,11 @@
                                     <input type="text" class="form-control" id="graph-code-region-end" placeholder="Ending line number">
                                 </div>
                             </div>
-                            
-                            
+
+
                         </div>
                     </div>
-                    
+
                     <div class="row graph-submit-row" style="margin-top:5px;">
                         <div class="btn-toolbar">
                             <div class="btn-group">
@@ -327,6 +331,11 @@
                             <div class="btn-group">
                                 <div class="save-graph-button" id="save-graph-button" data-location="custom-graph-svd" style="display:none;">
                                     <button type="button" class="btn btn-info">Save Graph</button>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <div class="save-graph-svg-button" id="save-graph-svg-button" data-location="custom-graph-svd" style="display:none;">
+                                    <button type="button" class="btn btn-info">Save Graphas SVG (Chrome only)</button>
                                 </div>
                             </div>
                         </div>
@@ -390,8 +399,8 @@
                                             <input value="1" name="instruction-type" id="use-dynamic-instructions-input" type="radio"><span>Dynamic Instructions</span>
                                         <br />
                                             <input value="2" name="instruction-type" id="not-use-dynamic-instructions-input" type="radio">Static Instructions
-                                    </form>      
-                                    
+                                    </form>
+
                                 </div>
                             </div>
                             <br />
@@ -425,7 +434,7 @@
                                 <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-4"> Injection type per function<br>
                                 <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-5"> Injections mapped to line numbers<br>
                                 </div>
-                                <div class="col-sm-4">     
+                                <div class="col-sm-4">
                                 <h5><strong>Signals</strong></h5>
                                 <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-6"> Unexpected Termination<br>
                                 </div>
@@ -470,7 +479,7 @@
                 </div>
             </div>
         </div>
-       
+
     </body>
     <script type="text/javascript">
           var functionName = '{{functionName}}';
@@ -480,7 +489,7 @@
         var myGraphList = {{myGraphList|safe}};
         var databaseDetails = {{databaseDetails|tojson|safe}};
         var numHighlights = 0;
-        
+
     </script>
     <script type="text/javascript" charset="utf-8" src="../static/faultsight.js"></script>
     <script type="text/javascript">

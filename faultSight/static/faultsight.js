@@ -306,7 +306,8 @@ function drawMyGraphs(){
             $("#my-graph-" + (i + 1)).append("<p>Attempted to create chart: <b>" + myGraphList[i][1].title + "</b>. Empty dataset returned. No chart will be generated.</p>");
         } else {
         	generateGraph(myGraphList[i], "#my-graph-" + (i + 1), "#my-graph-input-"+ (i + 1), "my-graph-" + (i+1) + "-svd", CHART_BAR);
-	        $("#my-graph-save-button-" + (i+1)).fadeIn()
+	        $("#my-graph-save-button-" + (i+1)).fadeIn();
+					$("#my-graph-save-svg-button-" + (i+1)).fadeIn();
         }
 
 	}
@@ -818,6 +819,12 @@ function clickBindInSettings(){
 
 }
 
+function saveSvgAsSvg(svgEl, name) {
+		var config = {
+			filename: name,
+		}
+		d3_save_svg.save(svgEl, config);
+}
 
 function clickBindInFunctionPage(){
 	$('#see-entire').bind('click', function(e) {
@@ -830,8 +837,15 @@ function clickBindInFunctionPage(){
 	//For saving graphs that you have just created
 	$(".save-graph-button").click(function(e){
 		var dataLocation = $(this).attr("data-location");
-	    saveSvgAsPng(document.getElementById(dataLocation), "diagram.png", {backgroundColor:"#FFF"});
+    saveSvgAsPng(document.getElementById(dataLocation), "diagram.png", {backgroundColor:"#FFF"});
 	});
+
+	//For saving graphs that you have just created
+	$(".save-graph-svg-button").click(function(e){
+		var dataLocation = $(this).attr("data-location");
+    saveSvgAsSvg(document.getElementById(dataLocation), "svg-diagram.svg");
+	});
+
 
 	// Click to toggle the display of the test-of-proportions results
 	$("#test-of-proportions-header").click(function(e){
@@ -888,6 +902,11 @@ function clickBindInMainPage(){
 	$(".save-graph-button").click(function(e){
 		var dataLocation = $(this).attr("data-location");
 	    saveSvgAsPng(document.getElementById(dataLocation), "diagram.png", {backgroundColor:"#FFF"});
+	});
+
+	$(".save-graph-svg-button").click(function(e){
+		var dataLocation = $(this).attr("data-location");
+    saveSvgAsSvg(document.getElementById(dataLocation), "svg-diagram.svg");
 	});
 }
 
@@ -2916,6 +2935,7 @@ function setupGraphCreation(isFunctionPage){
 		$("#graph-focus-text").text(this.text);
 		$("#graph-detail-text").text("Focus");
 		$("#save-graph-button").fadeOut();
+		$("#save-graph-svg-button").fadeOut();
 	    $("#add-constraint-button").fadeOut();
 	    e.preventDefault();
 	});
@@ -2929,6 +2949,7 @@ function setupGraphCreation(isFunctionPage){
 		$("#line-number-selection").fadeOut();
 		$("#create-graph-button").fadeOut();
 		$("#save-graph-button").fadeOut();
+		$("#save-graph-svg-button").fadeOut();
 	    $("#add-constraint-button").fadeOut();
 		e.preventDefault();
 	});
@@ -2945,7 +2966,8 @@ function setupGraphCreation(isFunctionPage){
 		determineType(this.text);
 		$("#graph-type-text").text(this.text);
 	    $("#add-constraint-button").fadeIn();
-		$("#save-graph-button").fadeOut();
+			$("#save-graph-button").fadeOut();
+			$("#save-graph-svg-button").fadeOut();
 		$("#line-number-selection").fadeOut();
 		$("#create-graph-button").fadeIn();
 		e.preventDefault();
@@ -2975,6 +2997,7 @@ function setupGraphCreation(isFunctionPage){
 	    $("#create-graph-button").fadeIn();
 		$("#graph-code-region-text").text(this.text);
 		$("#save-graph-button").fadeOut();
+		$("#save-graph-svg-button").fadeOut();
 		e.preventDefault();
 	});
 
@@ -3123,7 +3146,8 @@ function setupGraphCreation(isFunctionPage){
 	    //$("#custom-graph-svd").remove()
 		createGraph(selectedGraph, "custom-graph-svd");
 		$("#save-graph-button").fadeIn();
-	    e.preventDefault();
+		$("#save-graph-svg-button").fadeIn();
+    e.preventDefault();
 	});
 
 

@@ -76,6 +76,7 @@
         <script type="text/javascript" src="../static/jquery.tooltipster.min.js"></script>
         <script type="text/javascript" src="../static/saveSvgAsPng.js"></script>
         <script type="text/javascript" src="../static/jquery.bpopup.min.js"></script>
+        <script type="text/javascript" src="../static/d3-save-svg.min.js"></script>
         <div id="main-page-container">
             <div id="main-left"></div>
             <div id="main-right">
@@ -182,8 +183,11 @@
                         <div id="my-graphs-container">
                             {% for i in range(myGraphListLength) %}
                             <div class="row">
-                            <div class="save-graph-button" id="my-graph-save-button-{{loop.index}}" data-location="my-graph-{{loop.index}}-svd" style="display:none;">
+                                <div style="float:left;" class="save-graph-button" id="my-graph-save-button-{{loop.index}}" data-location="my-graph-{{loop.index}}-svd" style="display:none;">
                                     <button type="button" class="btn btn-info">Save Graph</button>
+                                </div>
+                                <div class="save-graph-svg-button" id="my-graph-save-svg-button-{{loop.index}}" data-location="my-graph-{{loop.index}}-svd" style="display:none;">
+                                    <button type="button" class="btn btn-info">Save Graph as SVG (Chrome only)</button>
                                 </div>
                             </div>
                             <div class="row">
@@ -352,6 +356,12 @@
                                 <div class="save-graph-button" id="save-graph-button" data-location="custom-graph-svd" style="display:none;">
                                     <button type="button" class="btn btn-info">Save Graph</button>
                                 </div>
+
+                            </div>
+                            <div class="btn-group">
+                              <div class="save-graph-svg-button" id="save-graph-svg-button" data-location="custom-graph-svd" style="display:none;">
+                                  <button type="button" class="btn btn-info">Save Graph as SVG (Chrome only)</button>
+                              </div>
                             </div>
                         </div>
                     </div>
