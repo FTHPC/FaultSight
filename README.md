@@ -60,6 +60,9 @@ This tool requires the user to generate the FaultSight database, which follows a
 
 For detailed information on generating the database file, look at the README located at `/databaseSetup/README.md`. If you are using FlipIt, there are specific instructions located at `databaseSetup/examples/FlipIt/README.md`
 
+Downloading Charts
+-----
+Generated charts can be downloaded as png, svg, or json file formats. The structure of the json file is straightforward - it consists of an array with two elements. The first is an array of JSON objects, where each element is a component of the chart (slice of piechart, bar in barchart). The second is a JSON object containing chart metadata (chart title, axis title, etc).
 
 Need more help?
 -----
