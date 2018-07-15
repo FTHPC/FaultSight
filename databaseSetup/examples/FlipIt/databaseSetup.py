@@ -156,6 +156,7 @@ def create_and_connect_database(database_directory):
     Base = declarative_base()
 
     from sqlalchemy import Table, Column, Integer, String, Float, MetaData
+    from sqlalchemy.sql import text
 
     metadata = MetaData()
 
@@ -169,17 +170,15 @@ def create_and_connect_database(database_directory):
         Column('func', String, nullable=True),
         Column('line', Integer, nullable=True),
         Column('opcode', Integer, nullable=True),
-        Column('numExecutions', Integer, nullable=False, default=1)
     )
 
     trials = Table('trials', metadata,
         Column('trial', Integer, primary_key=True,autoincrement=True),
-        Column('numInj', Integer, nullable=False, default=0),
-        Column('crashed', Integer, nullable=False, default=0), # Boolean
-        Column('detected', Integer, nullable=False, default=0), # Boolean
+        Column('numInj', Integer, nullable=False, server_default=text('0')),
+        Column('crashed', Integer, nullable=False, server_default=text('0')), # Boolean
+        Column('detected', Integer, nullable=False, server_default=text('0')), # Boolean
         Column('path', String, nullable=True),
-        Column('signal', Integer, nullable=False, default=0), # Boolean
-        Column('numIterations', Integer, nullable=True)
+        Column('signal', Integer, nullable=False, server_default=text('0')), # Boolean
     )
 
     injections = Table('injections', metadata,
@@ -1035,6 +1034,11 @@ def reflect_database(db_connection):
                    'detections',
                    'signals']
 
+    from sqlalchemy import MetaData
+
+    metadata = MetaData()
+    metadata.create_all(db_connection['engine'])
+    db_connection['metadata'] = metadata
     db_connection['metadata'].reflect(db_connection['engine'], only=relevant_tables)
     db_connection['Base'] = automap_base(metadata=db_connection['metadata'])
     db_connection['Base'].prepare()

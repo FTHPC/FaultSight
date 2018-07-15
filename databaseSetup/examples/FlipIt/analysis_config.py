@@ -67,7 +67,7 @@ more_detail_funcs = ["foobar"]
     your system
 """
 busError = "exit signal Bus error"
-assertMessage = "Assertion"
+assertMessage = "Receiving Sig"
 segError = "Sig 11"
 
 """Snipit of a detection message. This SHOULD be changed based on your

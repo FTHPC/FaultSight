@@ -1,4 +1,4 @@
-from faultSight.database import db, relevant_tables, sites, trials, injections, detections, table_mapping
+from faultSight.database import db, relevant_tables, sites, trials, injections, detections, table_mapping, signals
 from faultSight.constants import *
 from faultSight.utils import *
 
@@ -79,14 +79,18 @@ def query_filter(query, region_data, constraint_data):
 
     # Join each of the custom tables on 'trial' column
     for constraint in constraint_data:
+        joined_tables = [mapper.class_.__table__.name for mapper in query._join_entities]
+        print joined_tables
+        if constraint['table'] in joined_tables:
+            break
         if constraint['table'] == 'trials':
             query = query.join(trials, trials.trial == injections.trial)
         elif constraint['table']  == 'signals':
             query = query.join(trials, trials.trial == injections.trial)
-            query = query.join(signals, signals.trial == trial.trial)
+            query = query.join(signals, signals.trial == trials.trial)
         elif constraint['table']  == 'detections':
             query = query.join(trials, trials.trial == injections.trial)
-            query = query.join(detections, detections.trial == trial.trial)
+            query = query.join(detections, detections.trial == trials.trial)
 
     # Region filter
     query = filter_query_on_region(region_data, query)

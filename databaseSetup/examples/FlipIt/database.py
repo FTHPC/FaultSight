@@ -292,15 +292,22 @@ def readTrials(c, filePrefix, customParser = None):
             if assertMessage in l:
                 signal = True
                 crashed = True
-                row_arguments = {
-                    'signal': 6,
-                    'crashed': crashed
-                }
-                if rank != None:
-                        row_arguments['rank'] = rank
+                try:
+                    sig_string = l.split()[2]
+                    signal = int(sig_string)
+                    row_arguments = {
+                        'signal': signal,
+                        'crashed': crashed
+                    }
+                    if rank != None:
+                            row_arguments['rank'] = rank
 
-                insert_signal(c, row_arguments)
-                #c.execute("INSERT INTO signals VALUES (?,?)", (trial, 6))
+                    insert_signal(c, row_arguments)
+                    #c.execute("INSERT INTO signals VALUES (?,?)", (trial, 6))
+                except:
+                    print("Couldn't parse the emitted signal")
+
+
 
             if busError in l:
                 signal = True

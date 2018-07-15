@@ -1133,7 +1133,7 @@ def generate_trial_information(list_trials):
         trial_information[column]['total'] = total
         trial_information[column]['avg'] = avg
         trial_information[column]['std'] = std
-        trial_information[column]['entries'] = list_trials
+        trial_information[column]['entries'] = column_entries_as_list
 
     return trial_information
 

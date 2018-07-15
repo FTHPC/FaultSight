@@ -139,8 +139,8 @@
                                             <input value="1" name="instruction-type" id="use-dynamic-instructions-input" type="radio"><span>Dynamic Instructions</span>
                                         <br />
                                             <input value="2" name="instruction-type" id="not-use-dynamic-instructions-input" type="radio">Static Instructions
-                                    </form>      
-                                    
+                                    </form>
+
                                 </div>
                             </div>
                             <h3>Confidence Interval</h3>
@@ -186,7 +186,7 @@
                                 <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-4"> Injection type per function<br>
                                 <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-5"> Injections mapped to line numbers<br>
                                 </div>
-                                <div class="col-sm-4">     
+                                <div class="col-sm-4">
                                 <h5><strong>Signals</strong></h5>
                                 <input class="settings-my-graph-checkbox" type="checkbox" name="settings-my-graph-checkbox-6"> Unexpected Termination<br>
                                 </div>
@@ -231,7 +231,7 @@
                 </div>
             </div>
         </div>
-       
+
     </body>
     <script type="text/javascript">
 
@@ -244,8 +244,8 @@
         var myGraphList = [];
         var databaseDetails = {{databaseDetails|tojson|safe}};
         var numHighlights = 0;
+        var localGeneratedGraph;
 
-        
     </script>
     <script type="text/javascript" charset="utf-8" src="../static/faultsight.js"></script>
     <script type="text/javascript">

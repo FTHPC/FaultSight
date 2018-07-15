@@ -335,7 +335,12 @@
                             </div>
                             <div class="btn-group">
                                 <div class="save-graph-svg-button" id="save-graph-svg-button" data-location="custom-graph-svd" style="display:none;">
-                                    <button type="button" class="btn btn-info">Save Graphas SVG (Chrome only)</button>
+                                    <button type="button" class="btn btn-info">Save Graph as SVG (Chrome only)</button>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <div class="save-graph-json-button" id="save-graph-json-button" data-location="custom-graph-svd" style="display:none;">
+                                    <button type="button" class="btn btn-info">Save data as JSON</button>
                                 </div>
                             </div>
                         </div>
@@ -489,7 +494,7 @@
         var myGraphList = {{myGraphList|safe}};
         var databaseDetails = {{databaseDetails|tojson|safe}};
         var numHighlights = 0;
-
+        var localGeneratedGraph;
     </script>
     <script type="text/javascript" charset="utf-8" src="../static/faultsight.js"></script>
     <script type="text/javascript">
