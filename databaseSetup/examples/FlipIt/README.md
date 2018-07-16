@@ -4,7 +4,7 @@ Instructions for using FaultSite with Flipit:
 
 2.) Modify the `analysis_config.py` such that it points to the FlipIt injection campaign.
 
-3.) `cd` to this directory, and generate the database via
+3.) Navigate to this directory, and generate the database via
 
 ```
 python 'main.py'
@@ -12,4 +12,4 @@ python 'main.py'
 
 3.) This will generate a database file `campaign.db` in this directory.  Copy this to the `database` directory in FaultSight (`/faultSight/database`).
 
-4.) Refer to the main README for running FaultSight with this new database.
+4.) Refer to the main README instructions for running FaultSight with this new database.

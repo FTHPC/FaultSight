@@ -1,7 +1,7 @@
-NOTE: If using FaultSight with FlipIt, please refer to the instructions provided in databaseSetup/examples/FlipIt/README.md
+NOTE: If using FaultSight with FlipIt, please refer to the more specific instructions provided in databaseSetup/examples/FlipIt/README.md
 
 
-For setting up a database for FaultSight, use the API calls provided in `databaseSetup.py` to generate a sqlite3 database file.
+For setting up a database for FaultSight, use the API calls provided in `databaseSetup.py` to generate a sqlite3 database file. 
 
 The database contains five tables: `Sites`, `Trials`, `Injections`, `Signals`, and `Detections`. Setting up the database involves the following general steps:
 
@@ -13,7 +13,7 @@ The database contains five tables: `Sites`, `Trials`, `Injections`, `Signals`, a
 
 4.) Insert site information (if site information is known prior to inserting injections into database)
 
-5.) Store injection campaign information. This involves storing injection, raised signal, and detection data.
+5.) Store injection campaign information. This involves storing injection, signal, and detection data.
 
 6.) End trial. Repeat steps 3 - 6 for every trial in the injection campaign.
 
