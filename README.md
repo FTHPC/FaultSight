@@ -20,7 +20,32 @@ This program depends on the following python packages:
 - scipy
 
 
-Usage
+
+Running FaultSight with the provided Matrix-matrix multiplication injection campaign
+-----
+If you just want to give FaultSight a quick try, we provide sample data for a
+matrix-matrix multiplication (MMM) injection campaign in the `example_data` folder. This
+is a fault injection campaign that has been run using FilpIt on three different
+matrix-matrix multiplication functions - the standard three-loop algorithm, the
+tiled mmm algorithm, and the Strassen mmm algorithm.
+
+There is already an existing FaultSight database file that has been created
+from this mmm data, and has already been placed in the FaultSight database folder.
+FaultSight can be run with this database file simply be running
+
+`python run.py`
+
+from the root FaultSight folder. Once the python file is running, navigate to
+the following url in your browser:
+```
+http://127.0.0.1:5000/
+```
+
+
+
+
+
+Setting up FaultSight
 -----
 
 To use this tool:
@@ -49,9 +74,20 @@ This tool requires the user to generate the FaultSight database, which follows a
 
 For detailed information on generating the database file, look at the README located at `/databaseSetup/README.md`. If you are using FlipIt, there are specific instructions located at `databaseSetup/examples/FlipIt/README.md`
 
+Using FaultSight features
+-----
+[to be written]
+
+
 Downloading Charts
 -----
 Once FaultSight is running, generating charts for your injection campaign should be self-explanatory. Generated charts can be downloaded as png, svg, or json file formats. The structure of the json file is straightforward - it consists of an array with two elements. The first is an array of JSON objects, where each element is a component of the chart (slice of piechart, bar in barchart). The second is a JSON object containing chart metadata (chart title, axis title, etc).
+
+
+Data from the workshop paper
+-----
+Feel free to request the files from eahorn2@illinois.edu or jonccal@clemson.edu
+
 
 Need more help?
 -----
