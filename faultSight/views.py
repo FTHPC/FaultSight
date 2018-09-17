@@ -96,16 +96,18 @@ def showFunction(function_name):
 
     # Sites relevant to the function, that were injected into
     injected_function_sites = []
-    for site in db.session.query(sites)\
-                              .join(injections, sites.siteId==injections.siteId)\
-                              .filter(sites.func == function_name):
-        site_dict = {'file': site.file, 'line': site.line}
+    for injection in db.session.query(sites)\
+                    .join(injections, sites.siteId==injections.siteId)\
+                    .filter(sites.func == function_name)\
+                    .values(sites.file, sites.line):
+        site_dict = {'file': injection.file, 'line': injection.line}
         injected_function_sites.append(site_dict)
 
     # All sites relevant to the function
     all_function_sites = []
     for site in db.session.query(sites)\
-                              .filter(sites.func == function_name):
+                              .filter(sites.func == function_name)\
+                              .values(sites.file, sites.line):
         site_dict = {'file': site.file, 'line': site.line}
         all_function_sites.append(site_dict)
 
@@ -563,26 +565,33 @@ def get_function_file(possible_files):
     return ""
 
 def analyse_line_count(lines):
-    # Finding min and max lines, so we can later select 'relevant' lines.
-    minimum = np.min(lines)
-    minimum = minimum if minimum >= 0 else 0
-    maximum = np.max(lines)+1
-    bins = np.arange(minimum, maximum+1)
-    values, bins = np.histogram(lines, bins, density=False) # <------------ check here
-    bins = np.arange(minimum, maximum)
-    values = 1.*values/np.sum(values)*100 # percents
+    successful_mapped_lines = [inj for inj in lines if inj > 0]
+    failed_injection = len([failed for failed in lines if failed <= 0])
+    total_injections = len(lines)
+    failed_injection_percentage = 100 * (float(failed_injection) / total_injections)
 
-    # Finds the number of injections that were not mapped to lines.
-    failed_injection = 0
+    minimum = np.min(successful_mapped_lines)
+    maximum = np.max(successful_mapped_lines) + 1
 
-    # This means that there were injections that couldn't be mapped to line nums
-    if minimum == 0:
-        failed_injection = str(values[0])
-        values[0] = 0
-        minimum = np.argmax(values > 0)
-        values = values[minimum:]
-    print("Minimum: ", minimum, "Maximum: ", maximum)
-    return minimum, maximum, values, failed_injection
+    # Get percentage injections per line
+    injection_counts_dict = dict()
+    for line in successful_mapped_lines:
+       try:
+          injection_counts_dict[line] += 1
+       except KeyError:
+          injection_counts_dict[line] = 1
+
+    # Convert dictionary to list of injections
+    injection_counts_per_line = []
+    curr_line = minimum
+    for line in range(minimum, maximum):
+        if line in injection_counts_dict:
+            percentage = 100 * (injection_counts_dict[line] / float(total_injections))
+            injection_counts_per_line.append(percentage)
+        else:
+            injection_counts_per_line.append(0)
+
+    return minimum, maximum, injection_counts_per_line, failed_injection_percentage
 
 
 
@@ -617,9 +626,9 @@ def get_machine_instructions(func, highlight_lines, num_injections_in_applicatio
                           'Comment': site.comment,
                           'Type': site.type,
                           'InjectionCount': num_injections_at_site,
-                          'InjectionPercentageLine': num_injections_at_site / float(num_injections_in_line),
-                          'InjectionPercentageFunction': num_injections_at_site / float(num_injections_in_function),
-                          'InjectionPercentageApplication': num_injections_at_site / float(num_injections_in_application),
+                          'InjectionPercentageLine': 100 * (num_injections_at_site / float(num_injections_in_line)),
+                          'InjectionPercentageFunction': 100 * (num_injections_at_site / float(num_injections_in_function)),
+                          'InjectionPercentageApplication': 100 * (num_injections_at_site / float(num_injections_in_application)),
                           #'Site': site.site,
                         }
 
