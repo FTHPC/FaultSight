@@ -1,0 +1,110 @@
+Currently Loaded Modulefiles:
+  1) gmp/4.3.2     3) mpc/0.8.1     5) mpich/3.1.4
+  2) mpfr/2.4.2    4) gcc/4.8.1
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 13: 31207 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 44739064 &>test_4753.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 25: 31213 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 21148151 &>test_4756.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 57: 31231 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 750659 &>test_4764.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 61: 31233 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 11732518 &>test_4765.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 65: 31235 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23881844 &>test_4766.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 73: 31239 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 29165890 &>test_4768.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 89: 31247 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 18008698 &>test_4772.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 105: 31427 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 31953077 &>test_4776.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 109: 31429 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 40219215 &>test_4777.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 113: 31431 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 32632520 &>test_4778.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 117: 31433 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 8678002 &>test_4779.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 121: 31435 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 8513321 &>test_4780.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 125: 31437 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 35190241 &>test_4781.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 129: 31439 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23312381 &>test_4782.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 141: 31445 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 45975717 &>test_4785.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 153: 31451 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 35899578 &>test_4788.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 157: 31454 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 6101290 &>test_4789.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 181: 31507 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 12686592 &>test_4795.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 189: 31647 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 17175723 &>test_4797.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 205: 31657 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 20580423 &>test_4801.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 213: 31661 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33126514 &>test_4803.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 217: 31663 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 14926185 &>test_4804.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 221: 31665 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 26192887 &>test_4805.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 225: 31667 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 5889020 &>test_4806.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 229: 31669 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 27715663 &>test_4807.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 233: 31671 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 31057712 &>test_4808.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 245: 31711 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 6963937 &>test_4811.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 257: 31717 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 42272566 &>test_4814.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 261: 31720 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 8922707 &>test_4815.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 273: 31727 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 20327915 &>test_4818.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 281: 31731 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 45813848 &>test_4820.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 285: 31733 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 36528964 &>test_4821.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 301: 31878 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 8263970 &>test_4825.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 305: 31880 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 13968552 &>test_4826.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 321: 31890 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 9032709 &>test_4830.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 325: 31892 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 34043712 &>test_4831.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 365: 31914 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 10903376 &>test_4841.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 381: 32092 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33605582 &>test_4845.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 389: 32096 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 37977458 &>test_4847.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 393: 32098 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 41422557 &>test_4848.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 413: 32110 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 4707781 &>test_4853.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 417: 32112 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 29918154 &>test_4854.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 421: 32114 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33072502 &>test_4855.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 425: 32116 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 43349527 &>test_4856.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 437: 32122 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 47151498 &>test_4859.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 445: 32126 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 1716606 &>test_4861.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 473: 32338 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 21687540 &>test_4868.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 481: 32342 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 26410557 &>test_4870.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 485: 32344 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 745582 &>test_4871.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 493: 32348 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 32043997 &>test_4873.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 497: 32350 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 44785357 &>test_4874.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 505: 32355 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23206385 &>test_4876.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 509: 32358 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24889870 &>test_4877.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 517: 32396 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 45968967 &>test_4879.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 525: 32400 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 32075662 &>test_4881.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 561: 32555 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 31855363 &>test_4890.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 573: 32561 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 7822519 &>test_4893.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 581: 32565 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 35354783 &>test_4895.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 601: 32577 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 28348211 &>test_4900.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 613: 32583 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 46703741 &>test_4903.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 621: 32587 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 3779955 &>test_4905.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 633: 32593 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 18914429 &>test_4908.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 677:   319 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 19112093 &>test_4919.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 685:   323 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23108460 &>test_4921.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 689:   326 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 19287145 &>test_4922.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 721:   543 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 5752842 &>test_4930.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 733:   616 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 41540500 &>test_4933.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 745:   623 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 13037338 &>test_4936.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 769:   686 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 32243805 &>test_4942.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 781:   694 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 34846269 &>test_4945.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 785:   696 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24393876 &>test_4946.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 793:   700 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 38535373 &>test_4948.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 805:   851 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 36114450 &>test_4951.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 813:   855 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 1679256 &>test_4953.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 829:   869 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24114727 &>test_4957.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 833:   872 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 13326584 &>test_4958.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 841:   876 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 26928741 &>test_4960.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 865:   888 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 21362744 &>test_4966.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 893:  1105 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 22538660 &>test_4973.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 901:  1109 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 9895240 &>test_4975.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 909:  1113 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 7242872 &>test_4977.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 925:  1123 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 38188526 &>test_4981.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 941:  1131 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 20646083 &>test_4985.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 945:  1133 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 4797544 &>test_4986.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 961:  1183 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 21912858 &>test_4990.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 985:  1357 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 25050053 &>test_4996.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 989:  1359 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 49699584 &>test_4997.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 1001:  1365 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24705318 &>test_5000.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 1005:  1367 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33421392 &>test_5001.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 1009:  1369 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 21742929 &>test_5002.txt
+/var/spool/pbs/mom_priv/jobs/2569507.pbs02.SC: line 1013:  1371 Segmentation fault      (core dumped) /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 7016029 &>test_5003.txt
+ 
+ 
++------------------------------------------+ 
+| PALMETTO CLUSTER PBS RESOURCES REQUESTED | 
++------------------------------------------+ 
+ 
+mem=14gb,ncpus=32,walltime=24:00:00
+ 
+ 
++-------------------------------------+ 
+| PALMETTO CLUSTER PBS RESOURCES USED | 
++-------------------------------------+ 
+ 
+cpupercent=99,cput=01:52:52,mem=31380kb,ncpus=32,vmem=268764kb,walltime=01:53:30
+ 
+ 

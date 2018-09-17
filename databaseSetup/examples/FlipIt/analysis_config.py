@@ -13,7 +13,7 @@ rebuild_database = True
     ----
     analysis scripts recursilvely search this directory for the logs
 """
-LLVM_log_path = "../../../../trials/llvm"
+LLVM_log_path = "../../../example_data/mmm/trials/src/"
 
 """Determines what type of log files to look for and parse.
 
@@ -36,7 +36,7 @@ LLVM_log_type = "Binary"
     --------
     migrate.py to suffix _# or _#.txt to existing run output files
 """
-trial_path = "../../../../trials"
+trial_path = "../../../example_data/mmm/trials"
 
 """Begining of the trial file name e.g. foo for trials foo_1 or foo_1.txt
 """
@@ -48,11 +48,11 @@ trial_prefix = "test"
     -----
     assumes stdout and stderr are in the same file
 """
-srcPath = "../../../../trials/src/"
+srcPath = "../../../example_data/mmm/trials/src/"
 
 """Number of fault injection trials to read
 """
-numTrials = 3000.
+numTrials = 6000.
 
 """Names of functions that a more detailed analysis should be conducted for
 
@@ -66,9 +66,9 @@ more_detail_funcs = ["foobar"]
 """Snipits of system generated messages. These SHOULD be changed based on
     your system
 """
-busError = "exit signal Bus error"
-assertMessage = "Receiving Sig"
-segError = "Sig 11"
+busError = "EXIT CODE: 7"
+assertMessage = "Assertion"
+segError = "EXIT CODE: 11"
 
 """Snipit of a detection message. This SHOULD be changed based on your
     detection scheme

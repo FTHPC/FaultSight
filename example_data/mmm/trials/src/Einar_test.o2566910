@@ -1,0 +1,70 @@
+Currently Loaded Modulefiles:
+  1) gmp/4.3.2     3) mpc/0.8.1     5) mpich/3.1.4
+  2) mpfr/2.4.2    4) gcc/4.8.1
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 41: 18996 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 31218643 &>test_2760.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 53: 20228 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 38297291 &>test_2763.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 57: 20230 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 15081825 &>test_2764.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 89: 20288 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 10511772 &>test_2772.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 97: 20292 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 25326641 &>test_2774.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 105: 20431 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 49144070 &>test_2776.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 121: 20615 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 29003390 &>test_2780.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 125: 20617 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 25536837 &>test_2781.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 141: 20625 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 36552756 &>test_2785.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 145: 20632 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 4011054 &>test_2786.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 165: 20672 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 27591595 &>test_2791.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 209: 20584 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 23851350 &>test_2802.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 273: 32717 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 7838663 &>test_2818.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 277: 32719 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 27092499 &>test_2819.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 293: 32728 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 12064184 &>test_2823.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 305: 32734 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 8426756 &>test_2826.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 333:   660 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 36560003 &>test_2833.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 337:   662 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 46839823 &>test_2834.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 361:  2832 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 8780564 &>test_2840.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 373: 16393 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 39560285 &>test_2843.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 377: 19545 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 9352002 &>test_2844.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 385: 29548 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 35750083 &>test_2846.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 393:  4922 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 37378491 &>test_2848.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 397:  8435 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 18954587 &>test_2849.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 469: 30574 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 20027693 &>test_2867.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 473: 30576 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 18643290 &>test_2868.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 501:  5393 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 36123921 &>test_2875.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 517: 25106 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 43239672 &>test_2879.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 525: 32430 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 38630004 &>test_2881.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 581: 28066 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 8643067 &>test_2895.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 589: 28070 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 42494363 &>test_2897.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 617: 28294 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 2663409 &>test_2904.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 629: 28301 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 31106694 &>test_2907.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 633: 28303 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 31321468 &>test_2908.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 645: 31757 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 32033133 &>test_2911.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 681: 13649 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 33728809 &>test_2920.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 733:  3194 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 44058902 &>test_2933.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 745:  3201 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 37811130 &>test_2936.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 753:  3205 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 15937756 &>test_2938.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 757:  3207 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 3857489 &>test_2939.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 801:  3473 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 41716239 &>test_2950.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 833:  3524 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 47406311 &>test_2958.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 873:  3682 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 10527426 &>test_2968.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 905:  3700 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 45186993 &>test_2976.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 921:  3879 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 12985249 &>test_2980.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 925:  3881 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 40453724 &>test_2981.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 945:  3892 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 3596879 &>test_2986.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 949:  3894 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 33592118 &>test_2987.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 953:  3896 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 20936413 &>test_2988.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 965:  3903 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 49176747 &>test_2991.txt
+/var/spool/pbs/mom_priv/jobs/2566910.pbs02.SC: line 997:  3962 Segmentation fault      (core dumped) /home/calhou3/research/einar/tile --stateFile /home/calhou3/research/FlipIt//.einar 26886195 &>test_2999.txt
+ 
+ 
++------------------------------------------+ 
+| PALMETTO CLUSTER PBS RESOURCES REQUESTED | 
++------------------------------------------+ 
+ 
+mem=14gb,ncpus=32,walltime=24:00:00
+ 
+ 
++-------------------------------------+ 
+| PALMETTO CLUSTER PBS RESOURCES USED | 
++-------------------------------------+ 
+ 
+cpupercent=98,cput=02:13:56,mem=20624kb,ncpus=32,vmem=257928kb,walltime=02:14:32
+ 
+ 

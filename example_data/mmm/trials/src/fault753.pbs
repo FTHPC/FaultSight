@@ -1,0 +1,1013 @@
+#!/bin/bash
+#PBS -l select=2:ncpus=16:mem=7gb
+#PBS -l walltime=24:00:00
+#PBS -j oe
+#PBS -A jr5
+#PBS -N Einar_test
+module load gcc/4.8.1
+module load mpich
+module list
+
+mkdir $PBS_O_WORKDIR/test_753
+cd $PBS_O_WORKDIR/test_753
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 34063399 &> test_753.txt
+
+mkdir $PBS_O_WORKDIR/test_754
+cd $PBS_O_WORKDIR/test_754
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 45740201 &> test_754.txt
+
+mkdir $PBS_O_WORKDIR/test_755
+cd $PBS_O_WORKDIR/test_755
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 5931530 &> test_755.txt
+
+mkdir $PBS_O_WORKDIR/test_756
+cd $PBS_O_WORKDIR/test_756
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 35767350 &> test_756.txt
+
+mkdir $PBS_O_WORKDIR/test_757
+cd $PBS_O_WORKDIR/test_757
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 30950720 &> test_757.txt
+
+mkdir $PBS_O_WORKDIR/test_758
+cd $PBS_O_WORKDIR/test_758
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 47904202 &> test_758.txt
+
+mkdir $PBS_O_WORKDIR/test_759
+cd $PBS_O_WORKDIR/test_759
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 2337 &> test_759.txt
+
+mkdir $PBS_O_WORKDIR/test_760
+cd $PBS_O_WORKDIR/test_760
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 33874364 &> test_760.txt
+
+mkdir $PBS_O_WORKDIR/test_761
+cd $PBS_O_WORKDIR/test_761
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 30733769 &> test_761.txt
+
+mkdir $PBS_O_WORKDIR/test_762
+cd $PBS_O_WORKDIR/test_762
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 2219318 &> test_762.txt
+
+mkdir $PBS_O_WORKDIR/test_763
+cd $PBS_O_WORKDIR/test_763
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 23450706 &> test_763.txt
+
+mkdir $PBS_O_WORKDIR/test_764
+cd $PBS_O_WORKDIR/test_764
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 43946763 &> test_764.txt
+
+mkdir $PBS_O_WORKDIR/test_765
+cd $PBS_O_WORKDIR/test_765
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 37711919 &> test_765.txt
+
+mkdir $PBS_O_WORKDIR/test_766
+cd $PBS_O_WORKDIR/test_766
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 42261676 &> test_766.txt
+
+mkdir $PBS_O_WORKDIR/test_767
+cd $PBS_O_WORKDIR/test_767
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 37273038 &> test_767.txt
+
+mkdir $PBS_O_WORKDIR/test_768
+cd $PBS_O_WORKDIR/test_768
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 10040248 &> test_768.txt
+
+mkdir $PBS_O_WORKDIR/test_769
+cd $PBS_O_WORKDIR/test_769
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 22236158 &> test_769.txt
+
+mkdir $PBS_O_WORKDIR/test_770
+cd $PBS_O_WORKDIR/test_770
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 26718673 &> test_770.txt
+
+mkdir $PBS_O_WORKDIR/test_771
+cd $PBS_O_WORKDIR/test_771
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 31814703 &> test_771.txt
+
+mkdir $PBS_O_WORKDIR/test_772
+cd $PBS_O_WORKDIR/test_772
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 42551996 &> test_772.txt
+
+mkdir $PBS_O_WORKDIR/test_773
+cd $PBS_O_WORKDIR/test_773
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 44371962 &> test_773.txt
+
+mkdir $PBS_O_WORKDIR/test_774
+cd $PBS_O_WORKDIR/test_774
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 13651978 &> test_774.txt
+
+mkdir $PBS_O_WORKDIR/test_775
+cd $PBS_O_WORKDIR/test_775
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 32626163 &> test_775.txt
+
+mkdir $PBS_O_WORKDIR/test_776
+cd $PBS_O_WORKDIR/test_776
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 25846325 &> test_776.txt
+
+mkdir $PBS_O_WORKDIR/test_777
+cd $PBS_O_WORKDIR/test_777
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 36632796 &> test_777.txt
+
+mkdir $PBS_O_WORKDIR/test_778
+cd $PBS_O_WORKDIR/test_778
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 37196767 &> test_778.txt
+
+mkdir $PBS_O_WORKDIR/test_779
+cd $PBS_O_WORKDIR/test_779
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 8495503 &> test_779.txt
+
+mkdir $PBS_O_WORKDIR/test_780
+cd $PBS_O_WORKDIR/test_780
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 17054963 &> test_780.txt
+
+mkdir $PBS_O_WORKDIR/test_781
+cd $PBS_O_WORKDIR/test_781
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 1028996 &> test_781.txt
+
+mkdir $PBS_O_WORKDIR/test_782
+cd $PBS_O_WORKDIR/test_782
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 30889688 &> test_782.txt
+
+mkdir $PBS_O_WORKDIR/test_783
+cd $PBS_O_WORKDIR/test_783
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 35231879 &> test_783.txt
+
+mkdir $PBS_O_WORKDIR/test_784
+cd $PBS_O_WORKDIR/test_784
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 12125402 &> test_784.txt
+
+mkdir $PBS_O_WORKDIR/test_785
+cd $PBS_O_WORKDIR/test_785
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 37276284 &> test_785.txt
+
+mkdir $PBS_O_WORKDIR/test_786
+cd $PBS_O_WORKDIR/test_786
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 34428593 &> test_786.txt
+
+mkdir $PBS_O_WORKDIR/test_787
+cd $PBS_O_WORKDIR/test_787
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 20773963 &> test_787.txt
+
+mkdir $PBS_O_WORKDIR/test_788
+cd $PBS_O_WORKDIR/test_788
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 14744244 &> test_788.txt
+
+mkdir $PBS_O_WORKDIR/test_789
+cd $PBS_O_WORKDIR/test_789
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 7779203 &> test_789.txt
+
+mkdir $PBS_O_WORKDIR/test_790
+cd $PBS_O_WORKDIR/test_790
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 19567199 &> test_790.txt
+
+mkdir $PBS_O_WORKDIR/test_791
+cd $PBS_O_WORKDIR/test_791
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 24109711 &> test_791.txt
+
+mkdir $PBS_O_WORKDIR/test_792
+cd $PBS_O_WORKDIR/test_792
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 35280842 &> test_792.txt
+
+mkdir $PBS_O_WORKDIR/test_793
+cd $PBS_O_WORKDIR/test_793
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 37046830 &> test_793.txt
+
+mkdir $PBS_O_WORKDIR/test_794
+cd $PBS_O_WORKDIR/test_794
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 23293631 &> test_794.txt
+
+mkdir $PBS_O_WORKDIR/test_795
+cd $PBS_O_WORKDIR/test_795
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 46046855 &> test_795.txt
+
+mkdir $PBS_O_WORKDIR/test_796
+cd $PBS_O_WORKDIR/test_796
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 14382890 &> test_796.txt
+
+mkdir $PBS_O_WORKDIR/test_797
+cd $PBS_O_WORKDIR/test_797
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 35648253 &> test_797.txt
+
+mkdir $PBS_O_WORKDIR/test_798
+cd $PBS_O_WORKDIR/test_798
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 13462517 &> test_798.txt
+
+mkdir $PBS_O_WORKDIR/test_799
+cd $PBS_O_WORKDIR/test_799
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 24085152 &> test_799.txt
+
+mkdir $PBS_O_WORKDIR/test_800
+cd $PBS_O_WORKDIR/test_800
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 14706527 &> test_800.txt
+
+mkdir $PBS_O_WORKDIR/test_801
+cd $PBS_O_WORKDIR/test_801
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 4535979 &> test_801.txt
+
+mkdir $PBS_O_WORKDIR/test_802
+cd $PBS_O_WORKDIR/test_802
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 35964640 &> test_802.txt
+
+mkdir $PBS_O_WORKDIR/test_803
+cd $PBS_O_WORKDIR/test_803
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 6852900 &> test_803.txt
+
+mkdir $PBS_O_WORKDIR/test_804
+cd $PBS_O_WORKDIR/test_804
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 49967658 &> test_804.txt
+
+mkdir $PBS_O_WORKDIR/test_805
+cd $PBS_O_WORKDIR/test_805
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 3698626 &> test_805.txt
+
+mkdir $PBS_O_WORKDIR/test_806
+cd $PBS_O_WORKDIR/test_806
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 18551757 &> test_806.txt
+
+mkdir $PBS_O_WORKDIR/test_807
+cd $PBS_O_WORKDIR/test_807
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 1076474 &> test_807.txt
+
+mkdir $PBS_O_WORKDIR/test_808
+cd $PBS_O_WORKDIR/test_808
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 41145783 &> test_808.txt
+
+mkdir $PBS_O_WORKDIR/test_809
+cd $PBS_O_WORKDIR/test_809
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 25470690 &> test_809.txt
+
+mkdir $PBS_O_WORKDIR/test_810
+cd $PBS_O_WORKDIR/test_810
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 43049575 &> test_810.txt
+
+mkdir $PBS_O_WORKDIR/test_811
+cd $PBS_O_WORKDIR/test_811
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 34594418 &> test_811.txt
+
+mkdir $PBS_O_WORKDIR/test_812
+cd $PBS_O_WORKDIR/test_812
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 26239243 &> test_812.txt
+
+mkdir $PBS_O_WORKDIR/test_813
+cd $PBS_O_WORKDIR/test_813
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 46133937 &> test_813.txt
+
+mkdir $PBS_O_WORKDIR/test_814
+cd $PBS_O_WORKDIR/test_814
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 24526016 &> test_814.txt
+
+mkdir $PBS_O_WORKDIR/test_815
+cd $PBS_O_WORKDIR/test_815
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 48655659 &> test_815.txt
+
+mkdir $PBS_O_WORKDIR/test_816
+cd $PBS_O_WORKDIR/test_816
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 46414618 &> test_816.txt
+
+mkdir $PBS_O_WORKDIR/test_817
+cd $PBS_O_WORKDIR/test_817
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 44898533 &> test_817.txt
+
+mkdir $PBS_O_WORKDIR/test_818
+cd $PBS_O_WORKDIR/test_818
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 15096815 &> test_818.txt
+
+mkdir $PBS_O_WORKDIR/test_819
+cd $PBS_O_WORKDIR/test_819
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 48276258 &> test_819.txt
+
+mkdir $PBS_O_WORKDIR/test_820
+cd $PBS_O_WORKDIR/test_820
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 9509012 &> test_820.txt
+
+mkdir $PBS_O_WORKDIR/test_821
+cd $PBS_O_WORKDIR/test_821
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 11922082 &> test_821.txt
+
+mkdir $PBS_O_WORKDIR/test_822
+cd $PBS_O_WORKDIR/test_822
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 447148 &> test_822.txt
+
+mkdir $PBS_O_WORKDIR/test_823
+cd $PBS_O_WORKDIR/test_823
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 22106598 &> test_823.txt
+
+mkdir $PBS_O_WORKDIR/test_824
+cd $PBS_O_WORKDIR/test_824
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 9246764 &> test_824.txt
+
+mkdir $PBS_O_WORKDIR/test_825
+cd $PBS_O_WORKDIR/test_825
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 2661987 &> test_825.txt
+
+mkdir $PBS_O_WORKDIR/test_826
+cd $PBS_O_WORKDIR/test_826
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 25420567 &> test_826.txt
+
+mkdir $PBS_O_WORKDIR/test_827
+cd $PBS_O_WORKDIR/test_827
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 12450693 &> test_827.txt
+
+mkdir $PBS_O_WORKDIR/test_828
+cd $PBS_O_WORKDIR/test_828
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 2167667 &> test_828.txt
+
+mkdir $PBS_O_WORKDIR/test_829
+cd $PBS_O_WORKDIR/test_829
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 30256868 &> test_829.txt
+
+mkdir $PBS_O_WORKDIR/test_830
+cd $PBS_O_WORKDIR/test_830
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 31056536 &> test_830.txt
+
+mkdir $PBS_O_WORKDIR/test_831
+cd $PBS_O_WORKDIR/test_831
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 13961724 &> test_831.txt
+
+mkdir $PBS_O_WORKDIR/test_832
+cd $PBS_O_WORKDIR/test_832
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 47298966 &> test_832.txt
+
+mkdir $PBS_O_WORKDIR/test_833
+cd $PBS_O_WORKDIR/test_833
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 26862143 &> test_833.txt
+
+mkdir $PBS_O_WORKDIR/test_834
+cd $PBS_O_WORKDIR/test_834
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 40429404 &> test_834.txt
+
+mkdir $PBS_O_WORKDIR/test_835
+cd $PBS_O_WORKDIR/test_835
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 25695874 &> test_835.txt
+
+mkdir $PBS_O_WORKDIR/test_836
+cd $PBS_O_WORKDIR/test_836
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 36816786 &> test_836.txt
+
+mkdir $PBS_O_WORKDIR/test_837
+cd $PBS_O_WORKDIR/test_837
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 39806548 &> test_837.txt
+
+mkdir $PBS_O_WORKDIR/test_838
+cd $PBS_O_WORKDIR/test_838
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 20223539 &> test_838.txt
+
+mkdir $PBS_O_WORKDIR/test_839
+cd $PBS_O_WORKDIR/test_839
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 45855915 &> test_839.txt
+
+mkdir $PBS_O_WORKDIR/test_840
+cd $PBS_O_WORKDIR/test_840
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 11506575 &> test_840.txt
+
+mkdir $PBS_O_WORKDIR/test_841
+cd $PBS_O_WORKDIR/test_841
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 9324523 &> test_841.txt
+
+mkdir $PBS_O_WORKDIR/test_842
+cd $PBS_O_WORKDIR/test_842
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 26573522 &> test_842.txt
+
+mkdir $PBS_O_WORKDIR/test_843
+cd $PBS_O_WORKDIR/test_843
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 21760798 &> test_843.txt
+
+mkdir $PBS_O_WORKDIR/test_844
+cd $PBS_O_WORKDIR/test_844
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 43741222 &> test_844.txt
+
+mkdir $PBS_O_WORKDIR/test_845
+cd $PBS_O_WORKDIR/test_845
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 32898317 &> test_845.txt
+
+mkdir $PBS_O_WORKDIR/test_846
+cd $PBS_O_WORKDIR/test_846
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 8430526 &> test_846.txt
+
+mkdir $PBS_O_WORKDIR/test_847
+cd $PBS_O_WORKDIR/test_847
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 20206549 &> test_847.txt
+
+mkdir $PBS_O_WORKDIR/test_848
+cd $PBS_O_WORKDIR/test_848
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 7236640 &> test_848.txt
+
+mkdir $PBS_O_WORKDIR/test_849
+cd $PBS_O_WORKDIR/test_849
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 5308584 &> test_849.txt
+
+mkdir $PBS_O_WORKDIR/test_850
+cd $PBS_O_WORKDIR/test_850
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 4677862 &> test_850.txt
+
+mkdir $PBS_O_WORKDIR/test_851
+cd $PBS_O_WORKDIR/test_851
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 36451876 &> test_851.txt
+
+mkdir $PBS_O_WORKDIR/test_852
+cd $PBS_O_WORKDIR/test_852
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 19987859 &> test_852.txt
+
+mkdir $PBS_O_WORKDIR/test_853
+cd $PBS_O_WORKDIR/test_853
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 6043285 &> test_853.txt
+
+mkdir $PBS_O_WORKDIR/test_854
+cd $PBS_O_WORKDIR/test_854
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 36060157 &> test_854.txt
+
+mkdir $PBS_O_WORKDIR/test_855
+cd $PBS_O_WORKDIR/test_855
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 13863450 &> test_855.txt
+
+mkdir $PBS_O_WORKDIR/test_856
+cd $PBS_O_WORKDIR/test_856
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 13995790 &> test_856.txt
+
+mkdir $PBS_O_WORKDIR/test_857
+cd $PBS_O_WORKDIR/test_857
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 35203219 &> test_857.txt
+
+mkdir $PBS_O_WORKDIR/test_858
+cd $PBS_O_WORKDIR/test_858
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 528808 &> test_858.txt
+
+mkdir $PBS_O_WORKDIR/test_859
+cd $PBS_O_WORKDIR/test_859
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 24454905 &> test_859.txt
+
+mkdir $PBS_O_WORKDIR/test_860
+cd $PBS_O_WORKDIR/test_860
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 31337080 &> test_860.txt
+
+mkdir $PBS_O_WORKDIR/test_861
+cd $PBS_O_WORKDIR/test_861
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 5478243 &> test_861.txt
+
+mkdir $PBS_O_WORKDIR/test_862
+cd $PBS_O_WORKDIR/test_862
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 48586648 &> test_862.txt
+
+mkdir $PBS_O_WORKDIR/test_863
+cd $PBS_O_WORKDIR/test_863
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 26923995 &> test_863.txt
+
+mkdir $PBS_O_WORKDIR/test_864
+cd $PBS_O_WORKDIR/test_864
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 22908069 &> test_864.txt
+
+mkdir $PBS_O_WORKDIR/test_865
+cd $PBS_O_WORKDIR/test_865
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 7244002 &> test_865.txt
+
+mkdir $PBS_O_WORKDIR/test_866
+cd $PBS_O_WORKDIR/test_866
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 28939249 &> test_866.txt
+
+mkdir $PBS_O_WORKDIR/test_867
+cd $PBS_O_WORKDIR/test_867
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 30215607 &> test_867.txt
+
+mkdir $PBS_O_WORKDIR/test_868
+cd $PBS_O_WORKDIR/test_868
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 37206453 &> test_868.txt
+
+mkdir $PBS_O_WORKDIR/test_869
+cd $PBS_O_WORKDIR/test_869
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 18384456 &> test_869.txt
+
+mkdir $PBS_O_WORKDIR/test_870
+cd $PBS_O_WORKDIR/test_870
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 31150940 &> test_870.txt
+
+mkdir $PBS_O_WORKDIR/test_871
+cd $PBS_O_WORKDIR/test_871
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 22734193 &> test_871.txt
+
+mkdir $PBS_O_WORKDIR/test_872
+cd $PBS_O_WORKDIR/test_872
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 14833982 &> test_872.txt
+
+mkdir $PBS_O_WORKDIR/test_873
+cd $PBS_O_WORKDIR/test_873
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 48309604 &> test_873.txt
+
+mkdir $PBS_O_WORKDIR/test_874
+cd $PBS_O_WORKDIR/test_874
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 7818879 &> test_874.txt
+
+mkdir $PBS_O_WORKDIR/test_875
+cd $PBS_O_WORKDIR/test_875
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 35825563 &> test_875.txt
+
+mkdir $PBS_O_WORKDIR/test_876
+cd $PBS_O_WORKDIR/test_876
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 18008762 &> test_876.txt
+
+mkdir $PBS_O_WORKDIR/test_877
+cd $PBS_O_WORKDIR/test_877
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 22038984 &> test_877.txt
+
+mkdir $PBS_O_WORKDIR/test_878
+cd $PBS_O_WORKDIR/test_878
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 28762317 &> test_878.txt
+
+mkdir $PBS_O_WORKDIR/test_879
+cd $PBS_O_WORKDIR/test_879
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 35112201 &> test_879.txt
+
+mkdir $PBS_O_WORKDIR/test_880
+cd $PBS_O_WORKDIR/test_880
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 29113697 &> test_880.txt
+
+mkdir $PBS_O_WORKDIR/test_881
+cd $PBS_O_WORKDIR/test_881
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 42716868 &> test_881.txt
+
+mkdir $PBS_O_WORKDIR/test_882
+cd $PBS_O_WORKDIR/test_882
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 6612752 &> test_882.txt
+
+mkdir $PBS_O_WORKDIR/test_883
+cd $PBS_O_WORKDIR/test_883
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 35172635 &> test_883.txt
+
+mkdir $PBS_O_WORKDIR/test_884
+cd $PBS_O_WORKDIR/test_884
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 27959275 &> test_884.txt
+
+mkdir $PBS_O_WORKDIR/test_885
+cd $PBS_O_WORKDIR/test_885
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 43802922 &> test_885.txt
+
+mkdir $PBS_O_WORKDIR/test_886
+cd $PBS_O_WORKDIR/test_886
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 7936089 &> test_886.txt
+
+mkdir $PBS_O_WORKDIR/test_887
+cd $PBS_O_WORKDIR/test_887
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 27100597 &> test_887.txt
+
+mkdir $PBS_O_WORKDIR/test_888
+cd $PBS_O_WORKDIR/test_888
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 13581924 &> test_888.txt
+
+mkdir $PBS_O_WORKDIR/test_889
+cd $PBS_O_WORKDIR/test_889
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 9460682 &> test_889.txt
+
+mkdir $PBS_O_WORKDIR/test_890
+cd $PBS_O_WORKDIR/test_890
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 7276495 &> test_890.txt
+
+mkdir $PBS_O_WORKDIR/test_891
+cd $PBS_O_WORKDIR/test_891
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 7897185 &> test_891.txt
+
+mkdir $PBS_O_WORKDIR/test_892
+cd $PBS_O_WORKDIR/test_892
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 24465811 &> test_892.txt
+
+mkdir $PBS_O_WORKDIR/test_893
+cd $PBS_O_WORKDIR/test_893
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 42286395 &> test_893.txt
+
+mkdir $PBS_O_WORKDIR/test_894
+cd $PBS_O_WORKDIR/test_894
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 85975 &> test_894.txt
+
+mkdir $PBS_O_WORKDIR/test_895
+cd $PBS_O_WORKDIR/test_895
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 28231010 &> test_895.txt
+
+mkdir $PBS_O_WORKDIR/test_896
+cd $PBS_O_WORKDIR/test_896
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 42743225 &> test_896.txt
+
+mkdir $PBS_O_WORKDIR/test_897
+cd $PBS_O_WORKDIR/test_897
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 46862265 &> test_897.txt
+
+mkdir $PBS_O_WORKDIR/test_898
+cd $PBS_O_WORKDIR/test_898
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 21323540 &> test_898.txt
+
+mkdir $PBS_O_WORKDIR/test_899
+cd $PBS_O_WORKDIR/test_899
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 8379742 &> test_899.txt
+
+mkdir $PBS_O_WORKDIR/test_900
+cd $PBS_O_WORKDIR/test_900
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 16214124 &> test_900.txt
+
+mkdir $PBS_O_WORKDIR/test_901
+cd $PBS_O_WORKDIR/test_901
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 29766113 &> test_901.txt
+
+mkdir $PBS_O_WORKDIR/test_902
+cd $PBS_O_WORKDIR/test_902
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 20012254 &> test_902.txt
+
+mkdir $PBS_O_WORKDIR/test_903
+cd $PBS_O_WORKDIR/test_903
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 17430478 &> test_903.txt
+
+mkdir $PBS_O_WORKDIR/test_904
+cd $PBS_O_WORKDIR/test_904
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 13357426 &> test_904.txt
+
+mkdir $PBS_O_WORKDIR/test_905
+cd $PBS_O_WORKDIR/test_905
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 24864336 &> test_905.txt
+
+mkdir $PBS_O_WORKDIR/test_906
+cd $PBS_O_WORKDIR/test_906
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 30528016 &> test_906.txt
+
+mkdir $PBS_O_WORKDIR/test_907
+cd $PBS_O_WORKDIR/test_907
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 11248363 &> test_907.txt
+
+mkdir $PBS_O_WORKDIR/test_908
+cd $PBS_O_WORKDIR/test_908
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 21367597 &> test_908.txt
+
+mkdir $PBS_O_WORKDIR/test_909
+cd $PBS_O_WORKDIR/test_909
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 46377867 &> test_909.txt
+
+mkdir $PBS_O_WORKDIR/test_910
+cd $PBS_O_WORKDIR/test_910
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 20787765 &> test_910.txt
+
+mkdir $PBS_O_WORKDIR/test_911
+cd $PBS_O_WORKDIR/test_911
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 11017403 &> test_911.txt
+
+mkdir $PBS_O_WORKDIR/test_912
+cd $PBS_O_WORKDIR/test_912
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 28469286 &> test_912.txt
+
+mkdir $PBS_O_WORKDIR/test_913
+cd $PBS_O_WORKDIR/test_913
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 19154591 &> test_913.txt
+
+mkdir $PBS_O_WORKDIR/test_914
+cd $PBS_O_WORKDIR/test_914
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 7891786 &> test_914.txt
+
+mkdir $PBS_O_WORKDIR/test_915
+cd $PBS_O_WORKDIR/test_915
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 1043780 &> test_915.txt
+
+mkdir $PBS_O_WORKDIR/test_916
+cd $PBS_O_WORKDIR/test_916
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 46977166 &> test_916.txt
+
+mkdir $PBS_O_WORKDIR/test_917
+cd $PBS_O_WORKDIR/test_917
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 42752603 &> test_917.txt
+
+mkdir $PBS_O_WORKDIR/test_918
+cd $PBS_O_WORKDIR/test_918
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 48244884 &> test_918.txt
+
+mkdir $PBS_O_WORKDIR/test_919
+cd $PBS_O_WORKDIR/test_919
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 5937710 &> test_919.txt
+
+mkdir $PBS_O_WORKDIR/test_920
+cd $PBS_O_WORKDIR/test_920
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 800758 &> test_920.txt
+
+mkdir $PBS_O_WORKDIR/test_921
+cd $PBS_O_WORKDIR/test_921
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 46566372 &> test_921.txt
+
+mkdir $PBS_O_WORKDIR/test_922
+cd $PBS_O_WORKDIR/test_922
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 8721547 &> test_922.txt
+
+mkdir $PBS_O_WORKDIR/test_923
+cd $PBS_O_WORKDIR/test_923
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 1622314 &> test_923.txt
+
+mkdir $PBS_O_WORKDIR/test_924
+cd $PBS_O_WORKDIR/test_924
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 28355259 &> test_924.txt
+
+mkdir $PBS_O_WORKDIR/test_925
+cd $PBS_O_WORKDIR/test_925
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 29772622 &> test_925.txt
+
+mkdir $PBS_O_WORKDIR/test_926
+cd $PBS_O_WORKDIR/test_926
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 16721079 &> test_926.txt
+
+mkdir $PBS_O_WORKDIR/test_927
+cd $PBS_O_WORKDIR/test_927
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 15349471 &> test_927.txt
+
+mkdir $PBS_O_WORKDIR/test_928
+cd $PBS_O_WORKDIR/test_928
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 17449119 &> test_928.txt
+
+mkdir $PBS_O_WORKDIR/test_929
+cd $PBS_O_WORKDIR/test_929
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 969213 &> test_929.txt
+
+mkdir $PBS_O_WORKDIR/test_930
+cd $PBS_O_WORKDIR/test_930
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 34125913 &> test_930.txt
+
+mkdir $PBS_O_WORKDIR/test_931
+cd $PBS_O_WORKDIR/test_931
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 26564850 &> test_931.txt
+
+mkdir $PBS_O_WORKDIR/test_932
+cd $PBS_O_WORKDIR/test_932
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 5150319 &> test_932.txt
+
+mkdir $PBS_O_WORKDIR/test_933
+cd $PBS_O_WORKDIR/test_933
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 10624885 &> test_933.txt
+
+mkdir $PBS_O_WORKDIR/test_934
+cd $PBS_O_WORKDIR/test_934
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 4203038 &> test_934.txt
+
+mkdir $PBS_O_WORKDIR/test_935
+cd $PBS_O_WORKDIR/test_935
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 7964342 &> test_935.txt
+
+mkdir $PBS_O_WORKDIR/test_936
+cd $PBS_O_WORKDIR/test_936
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 43686382 &> test_936.txt
+
+mkdir $PBS_O_WORKDIR/test_937
+cd $PBS_O_WORKDIR/test_937
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 27142894 &> test_937.txt
+
+mkdir $PBS_O_WORKDIR/test_938
+cd $PBS_O_WORKDIR/test_938
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 3167985 &> test_938.txt
+
+mkdir $PBS_O_WORKDIR/test_939
+cd $PBS_O_WORKDIR/test_939
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 40805133 &> test_939.txt
+
+mkdir $PBS_O_WORKDIR/test_940
+cd $PBS_O_WORKDIR/test_940
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 5852371 &> test_940.txt
+
+mkdir $PBS_O_WORKDIR/test_941
+cd $PBS_O_WORKDIR/test_941
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 19188797 &> test_941.txt
+
+mkdir $PBS_O_WORKDIR/test_942
+cd $PBS_O_WORKDIR/test_942
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 45907660 &> test_942.txt
+
+mkdir $PBS_O_WORKDIR/test_943
+cd $PBS_O_WORKDIR/test_943
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 38522582 &> test_943.txt
+
+mkdir $PBS_O_WORKDIR/test_944
+cd $PBS_O_WORKDIR/test_944
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 24768573 &> test_944.txt
+
+mkdir $PBS_O_WORKDIR/test_945
+cd $PBS_O_WORKDIR/test_945
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 5011960 &> test_945.txt
+
+mkdir $PBS_O_WORKDIR/test_946
+cd $PBS_O_WORKDIR/test_946
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 4565620 &> test_946.txt
+
+mkdir $PBS_O_WORKDIR/test_947
+cd $PBS_O_WORKDIR/test_947
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 31876737 &> test_947.txt
+
+mkdir $PBS_O_WORKDIR/test_948
+cd $PBS_O_WORKDIR/test_948
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 5356333 &> test_948.txt
+
+mkdir $PBS_O_WORKDIR/test_949
+cd $PBS_O_WORKDIR/test_949
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 19133397 &> test_949.txt
+
+mkdir $PBS_O_WORKDIR/test_950
+cd $PBS_O_WORKDIR/test_950
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 14804602 &> test_950.txt
+
+mkdir $PBS_O_WORKDIR/test_951
+cd $PBS_O_WORKDIR/test_951
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 38691046 &> test_951.txt
+
+mkdir $PBS_O_WORKDIR/test_952
+cd $PBS_O_WORKDIR/test_952
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 7434788 &> test_952.txt
+
+mkdir $PBS_O_WORKDIR/test_953
+cd $PBS_O_WORKDIR/test_953
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 20288126 &> test_953.txt
+
+mkdir $PBS_O_WORKDIR/test_954
+cd $PBS_O_WORKDIR/test_954
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 16195321 &> test_954.txt
+
+mkdir $PBS_O_WORKDIR/test_955
+cd $PBS_O_WORKDIR/test_955
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 38869643 &> test_955.txt
+
+mkdir $PBS_O_WORKDIR/test_956
+cd $PBS_O_WORKDIR/test_956
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 32454618 &> test_956.txt
+
+mkdir $PBS_O_WORKDIR/test_957
+cd $PBS_O_WORKDIR/test_957
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 40364089 &> test_957.txt
+
+mkdir $PBS_O_WORKDIR/test_958
+cd $PBS_O_WORKDIR/test_958
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 1734825 &> test_958.txt
+
+mkdir $PBS_O_WORKDIR/test_959
+cd $PBS_O_WORKDIR/test_959
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 46047405 &> test_959.txt
+
+mkdir $PBS_O_WORKDIR/test_960
+cd $PBS_O_WORKDIR/test_960
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 37545897 &> test_960.txt
+
+mkdir $PBS_O_WORKDIR/test_961
+cd $PBS_O_WORKDIR/test_961
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 49270123 &> test_961.txt
+
+mkdir $PBS_O_WORKDIR/test_962
+cd $PBS_O_WORKDIR/test_962
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 48049016 &> test_962.txt
+
+mkdir $PBS_O_WORKDIR/test_963
+cd $PBS_O_WORKDIR/test_963
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 15178187 &> test_963.txt
+
+mkdir $PBS_O_WORKDIR/test_964
+cd $PBS_O_WORKDIR/test_964
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 47242178 &> test_964.txt
+
+mkdir $PBS_O_WORKDIR/test_965
+cd $PBS_O_WORKDIR/test_965
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 22244307 &> test_965.txt
+
+mkdir $PBS_O_WORKDIR/test_966
+cd $PBS_O_WORKDIR/test_966
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 26383276 &> test_966.txt
+
+mkdir $PBS_O_WORKDIR/test_967
+cd $PBS_O_WORKDIR/test_967
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 724564 &> test_967.txt
+
+mkdir $PBS_O_WORKDIR/test_968
+cd $PBS_O_WORKDIR/test_968
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 47416151 &> test_968.txt
+
+mkdir $PBS_O_WORKDIR/test_969
+cd $PBS_O_WORKDIR/test_969
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 44238297 &> test_969.txt
+
+mkdir $PBS_O_WORKDIR/test_970
+cd $PBS_O_WORKDIR/test_970
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 2803221 &> test_970.txt
+
+mkdir $PBS_O_WORKDIR/test_971
+cd $PBS_O_WORKDIR/test_971
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 960192 &> test_971.txt
+
+mkdir $PBS_O_WORKDIR/test_972
+cd $PBS_O_WORKDIR/test_972
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 46172235 &> test_972.txt
+
+mkdir $PBS_O_WORKDIR/test_973
+cd $PBS_O_WORKDIR/test_973
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 2908717 &> test_973.txt
+
+mkdir $PBS_O_WORKDIR/test_974
+cd $PBS_O_WORKDIR/test_974
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 28549990 &> test_974.txt
+
+mkdir $PBS_O_WORKDIR/test_975
+cd $PBS_O_WORKDIR/test_975
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 47090317 &> test_975.txt
+
+mkdir $PBS_O_WORKDIR/test_976
+cd $PBS_O_WORKDIR/test_976
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 40222443 &> test_976.txt
+
+mkdir $PBS_O_WORKDIR/test_977
+cd $PBS_O_WORKDIR/test_977
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 37709385 &> test_977.txt
+
+mkdir $PBS_O_WORKDIR/test_978
+cd $PBS_O_WORKDIR/test_978
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 43636275 &> test_978.txt
+
+mkdir $PBS_O_WORKDIR/test_979
+cd $PBS_O_WORKDIR/test_979
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 39584948 &> test_979.txt
+
+mkdir $PBS_O_WORKDIR/test_980
+cd $PBS_O_WORKDIR/test_980
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 14297270 &> test_980.txt
+
+mkdir $PBS_O_WORKDIR/test_981
+cd $PBS_O_WORKDIR/test_981
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 8938244 &> test_981.txt
+
+mkdir $PBS_O_WORKDIR/test_982
+cd $PBS_O_WORKDIR/test_982
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 42403697 &> test_982.txt
+
+mkdir $PBS_O_WORKDIR/test_983
+cd $PBS_O_WORKDIR/test_983
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 39521602 &> test_983.txt
+
+mkdir $PBS_O_WORKDIR/test_984
+cd $PBS_O_WORKDIR/test_984
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 274731 &> test_984.txt
+
+mkdir $PBS_O_WORKDIR/test_985
+cd $PBS_O_WORKDIR/test_985
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 30566853 &> test_985.txt
+
+mkdir $PBS_O_WORKDIR/test_986
+cd $PBS_O_WORKDIR/test_986
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 46368664 &> test_986.txt
+
+mkdir $PBS_O_WORKDIR/test_987
+cd $PBS_O_WORKDIR/test_987
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 32928756 &> test_987.txt
+
+mkdir $PBS_O_WORKDIR/test_988
+cd $PBS_O_WORKDIR/test_988
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 39496388 &> test_988.txt
+
+mkdir $PBS_O_WORKDIR/test_989
+cd $PBS_O_WORKDIR/test_989
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 8288013 &> test_989.txt
+
+mkdir $PBS_O_WORKDIR/test_990
+cd $PBS_O_WORKDIR/test_990
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 14545958 &> test_990.txt
+
+mkdir $PBS_O_WORKDIR/test_991
+cd $PBS_O_WORKDIR/test_991
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 40833906 &> test_991.txt
+
+mkdir $PBS_O_WORKDIR/test_992
+cd $PBS_O_WORKDIR/test_992
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 43004707 &> test_992.txt
+
+mkdir $PBS_O_WORKDIR/test_993
+cd $PBS_O_WORKDIR/test_993
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 15086247 &> test_993.txt
+
+mkdir $PBS_O_WORKDIR/test_994
+cd $PBS_O_WORKDIR/test_994
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 28728576 &> test_994.txt
+
+mkdir $PBS_O_WORKDIR/test_995
+cd $PBS_O_WORKDIR/test_995
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 36990767 &> test_995.txt
+
+mkdir $PBS_O_WORKDIR/test_996
+cd $PBS_O_WORKDIR/test_996
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 47876527 &> test_996.txt
+
+mkdir $PBS_O_WORKDIR/test_997
+cd $PBS_O_WORKDIR/test_997
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 39873004 &> test_997.txt
+
+mkdir $PBS_O_WORKDIR/test_998
+cd $PBS_O_WORKDIR/test_998
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 39448693 &> test_998.txt
+
+mkdir $PBS_O_WORKDIR/test_999
+cd $PBS_O_WORKDIR/test_999
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 22759245 &> test_999.txt
+
+mkdir $PBS_O_WORKDIR/test_1000
+cd $PBS_O_WORKDIR/test_1000
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 41267400 &> test_1000.txt
+
+mkdir $PBS_O_WORKDIR/test_1001
+cd $PBS_O_WORKDIR/test_1001
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 42136184 &> test_1001.txt
+
+mkdir $PBS_O_WORKDIR/test_1002
+cd $PBS_O_WORKDIR/test_1002
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 40215375 &> test_1002.txt
+
+mkdir $PBS_O_WORKDIR/test_1003
+cd $PBS_O_WORKDIR/test_1003
+/home/calhou3/research/einar/regular --stateFile /home/calhou3/research/FlipIt//.einar 142545 &> test_1003.txt

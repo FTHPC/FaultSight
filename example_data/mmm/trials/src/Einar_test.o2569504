@@ -1,0 +1,124 @@
+Currently Loaded Modulefiles:
+  1) gmp/4.3.2     3) mpc/0.8.1     5) mpich/3.1.4
+  2) mpfr/2.4.2    4) gcc/4.8.1
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 17: 31408 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 10968528 &>test_4252.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 29: 31414 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 32636232 &>test_4255.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 37: 31419 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 44977397 &>test_4257.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 41: 31421 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 35841806 &>test_4258.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 49: 31426 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 16450140 &>test_4260.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 65: 31459 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 39989658 &>test_4264.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 73: 31463 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 46513500 &>test_4266.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 81: 31501 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33688911 &>test_4268.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 89: 31506 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 12453173 &>test_4270.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 97: 31511 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 9515780 &>test_4272.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 105: 31653 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 191728 &>test_4274.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 109: 31655 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 6889522 &>test_4275.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 117: 31659 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 29903187 &>test_4277.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 121: 31661 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 21478222 &>test_4278.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 125: 31663 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 44485051 &>test_4279.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 129: 31665 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 31229781 &>test_4280.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 161: 31683 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 22726465 &>test_4288.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 165: 31685 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 22407085 &>test_4289.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 173: 31689 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 31388601 &>test_4291.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 189: 31741 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33380737 &>test_4295.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 197: 31883 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 28529545 &>test_4297.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 205: 31887 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 11197729 &>test_4299.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 217: 31927 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 8744281 &>test_4302.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 237: 31938 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 19993151 &>test_4307.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 245: 31943 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 8780754 &>test_4309.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 257: 31949 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 16735629 &>test_4312.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 261: 31951 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24835649 &>test_4313.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 265: 31953 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 2389075 &>test_4314.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 281: 31961 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33439051 &>test_4318.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 297: 32110 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 25699571 &>test_4322.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 305: 32114 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 6933947 &>test_4324.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 309: 32116 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23587392 &>test_4325.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 313: 32118 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23335066 &>test_4326.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 329: 32126 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33825738 &>test_4330.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 333: 32128 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 31777695 &>test_4331.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 341: 32133 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 22391651 &>test_4333.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 345: 32135 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 39634741 &>test_4334.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 365: 32180 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 16067771 &>test_4339.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 369: 32183 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 49371695 &>test_4340.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 385: 32331 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 27116150 &>test_4344.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 389: 32334 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 35859403 &>test_4345.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 413: 32347 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 14713 &>test_4351.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 417: 32349 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23840561 &>test_4352.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 425: 32353 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 16213634 &>test_4354.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 437: 32360 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24850086 &>test_4357.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 441: 32362 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23038743 &>test_4358.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 445: 32364 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 43248118 &>test_4359.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 449: 32367 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 31205467 &>test_4360.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 469: 32557 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 16672137 &>test_4365.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 489: 32622 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 13058986 &>test_4370.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 497: 32627 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23288123 &>test_4372.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 501: 32629 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24755755 &>test_4373.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 509: 32633 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24087835 &>test_4375.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 517: 32637 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 4287233 &>test_4377.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 537: 32647 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 38422740 &>test_4382.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 545: 32652 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 5733060 &>test_4384.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 577:   341 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 44213524 &>test_4392.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 593:   351 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 15889361 &>test_4396.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 601:   357 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 358696 &>test_4398.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 609:   362 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 22262209 &>test_4400.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 613:   364 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 4275148 &>test_4401.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 621:   402 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 11170976 &>test_4403.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 625:   404 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 47487264 &>test_4404.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 641:   415 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 27071448 &>test_4408.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 661:   586 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 31276941 &>test_4413.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 673:   592 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 10338074 &>test_4416.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 677:   594 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 38951166 &>test_4417.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 681:   596 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 41851201 &>test_4418.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 685:   599 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 17220897 &>test_4419.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 689:   601 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 28043358 &>test_4420.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 693:   603 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 37675379 &>test_4421.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 701:   608 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23569509 &>test_4423.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 705:   610 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 26940530 &>test_4424.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 709:   613 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 39399028 &>test_4425.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 713:   615 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 36836039 &>test_4426.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 717:   617 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33951331 &>test_4427.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 729:   667 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 22825406 &>test_4430.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 741:   673 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33720998 &>test_4433.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 749:   831 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 39807477 &>test_4435.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 753:   833 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 4308729 &>test_4436.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 757:   835 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 48528642 &>test_4437.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 773:   893 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 21625658 &>test_4441.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 793:   904 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 34250812 &>test_4446.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 797:   906 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 46008456 &>test_4447.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 809:   914 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 43820650 &>test_4450.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 813:   917 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 15549281 &>test_4451.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 817:   921 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 8729016 &>test_4452.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 829:   929 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 41003638 &>test_4455.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 833:   932 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 34708341 &>test_4456.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 837:   942 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 28662054 &>test_4457.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 849:  1102 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 6414104 &>test_4460.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 873:  1115 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 34861645 &>test_4466.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 877:  1117 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 29302461 &>test_4467.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 881:  1119 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 22612253 &>test_4468.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 905:  1167 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 9178348 &>test_4474.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 921:  1175 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 16349502 &>test_4478.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 933:  1322 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 13346630 &>test_4481.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 937:  1324 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 26454240 &>test_4482.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 953:  1335 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 2380868 &>test_4486.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 965:  1341 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 11915253 &>test_4489.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 969:  1343 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 15985428 &>test_4490.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 973:  1345 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 26678790 &>test_4491.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 993:  1355 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 7575563 &>test_4496.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 1001:  1404 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 44121596 &>test_4498.txt
+/var/spool/pbs/mom_priv/jobs/2569504.pbs02.SC: line 1009:  1409 Segmentation fault      /home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 22345728 &>test_4500.txt
+ 
+ 
++------------------------------------------+ 
+| PALMETTO CLUSTER PBS RESOURCES REQUESTED | 
++------------------------------------------+ 
+ 
+mem=14gb,ncpus=32,walltime=24:00:00
+ 
+ 
++-------------------------------------+ 
+| PALMETTO CLUSTER PBS RESOURCES USED | 
++-------------------------------------+ 
+ 
+cpupercent=98,cput=01:49:05,mem=28964kb,ncpus=32,vmem=268764kb,walltime=01:49:15
+ 
+ 

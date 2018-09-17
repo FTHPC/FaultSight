@@ -1,0 +1,16 @@
+Fault injector seed: 28535735
+Starting faulty computation.
+
+/*********************************Start**************************************/
+
+Successfully injected Converted Pointer error!!
+Rank: 0
+Total # faults injected: 1
+Bit position is: 4
+Index of the fault site: 12463
+Fault site probability: 1.000000e-08
+Chosen random probability is: 1.214467e-09
+Attempts since last injection: 19965028
+
+/*********************************End**************************************/
+Number of incorrect elements: 2

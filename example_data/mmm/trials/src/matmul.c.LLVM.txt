@@ -1,0 +1,911 @@
+File Version #: 1
+File Name: matmul.c
+
+Function Name: matmul
+------------------------------------------------------------------------------
+#0	Alloca	Result	Pointer	__NF:0
+#1	Alloca	Result	Pointer	__NF:0
+#2	Alloca	Result	Pointer	__NF:0
+#3	Alloca	Result	Pointer	__NF:0
+#4	Alloca	Result	Pointer	__NF:0
+#5	Alloca	Result	Pointer	__NF:0
+#6	Alloca	Result	Pointer	__NF:0
+#7	Store	Value	Pointer	__NF:0
+#8	Store	Value	Pointer	__NF:0
+#9	Store	Value	Pointer	__NF:0
+#10	Store	Value	Arith-Fix	__NF:0
+#11	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:10
+#12	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:10
+#13	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:10
+#14	ICmp	Arg 1	Control-Branch	/home/calhou3/research/einar/matmul.c:10
+#15	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:11
+#16	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:11
+#17	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:11
+#18	ICmp	Arg 0	Control-Branch	/home/calhou3/research/einar/matmul.c:11
+#19	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:13
+#20	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:14
+#21	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:14
+#22	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:14
+#23	ICmp	Arg 0	Control-Branch	/home/calhou3/research/einar/matmul.c:14
+#24	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#25	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#26	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#27	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#28	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#29	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:15
+#30	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:15
+#31	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#32	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#33	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#34	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#35	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#36	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#37	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:15
+#38	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:15
+#39	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#40	FMul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#41	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#42	FAdd	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#43	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:15
+#44	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:14
+#45	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:14
+#46	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:14
+#47	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:16
+#48	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:16
+#49	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:16
+#50	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:16
+#51	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:16
+#52	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:16
+#53	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:16
+#54	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:16
+#55	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:16
+#56	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:11
+#57	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:11
+#58	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:11
+#59	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:10
+#60	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:10
+#61	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:10
+
+Function Name: min
+------------------------------------------------------------------------------
+#62	Alloca	Result	Pointer	__NF:0
+#63	Alloca	Result	Pointer	__NF:0
+#64	Store	Value	Arith-Fix	__NF:0
+#65	Store	Value	Arith-Fix	__NF:0
+#66	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:21
+#67	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:21
+#68	ICmp	Arg 0	Control-Branch	/home/calhou3/research/einar/matmul.c:21
+#69	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:21
+#70	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:21
+#71	PHI	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:21
+
+Function Name: matmul_tiled
+------------------------------------------------------------------------------
+#72	Alloca	Result	Pointer	__NF:0
+#73	Alloca	Result	Pointer	__NF:0
+#74	Alloca	Result	Pointer	__NF:0
+#75	Alloca	Result	Pointer	__NF:0
+#76	Alloca	Result	Pointer	__NF:0
+#77	Alloca	Result	Pointer	__NF:0
+#78	Alloca	Result	Pointer	__NF:0
+#79	Alloca	Result	Pointer	__NF:0
+#80	Alloca	Result	Pointer	__NF:0
+#81	Alloca	Result	Pointer	__NF:0
+#82	Alloca	Result	Pointer	__NF:0
+#83	Store	Value	Pointer	__NF:0
+#84	Store	Value	Pointer	__NF:0
+#85	Store	Value	Pointer	__NF:0
+#86	Store	Value	Arith-Fix	__NF:0
+#87	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:29
+#88	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:29
+#89	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:29
+#90	ICmp	Arg 0	Control-Branch	/home/calhou3/research/einar/matmul.c:29
+#91	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:33
+#92	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:33
+#93	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:33
+#94	ICmp	Arg 1	Control-Branch	/home/calhou3/research/einar/matmul.c:33
+#95	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:35
+#96	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:35
+#97	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:35
+#98	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:35
+#99	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:35
+#100	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:35
+#101	ICmp	Arg 1	Control-Branch	/home/calhou3/research/einar/matmul.c:35
+#102	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:37
+#103	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:37
+#104	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:37
+#105	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:37
+#106	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:37
+#107	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:37
+#108	ICmp	Arg 1	Control-Branch	/home/calhou3/research/einar/matmul.c:37
+#109	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:39
+#110	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:40
+#111	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:40
+#112	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:40
+#113	ICmp	Arg 0	Control-Branch	/home/calhou3/research/einar/matmul.c:40
+#114	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#115	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#116	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#117	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#118	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#119	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:41
+#120	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:41
+#121	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#122	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#123	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#124	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#125	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#126	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#127	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:41
+#128	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:41
+#129	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#130	FMul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#131	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#132	FAdd	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#133	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:41
+#134	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:40
+#135	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:40
+#136	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:40
+#137	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:42
+#138	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:42
+#139	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:42
+#140	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:42
+#141	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:42
+#142	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:42
+#143	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:42
+#144	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:42
+#145	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:42
+#146	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:37
+#147	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:37
+#148	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:37
+#149	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:35
+#150	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:35
+#151	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:35
+#152	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:33
+#153	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:33
+#154	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:33
+#155	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:29
+#156	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:29
+#157	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:29
+
+Function Name: matadd
+------------------------------------------------------------------------------
+#158	Alloca	Result	Pointer	__NF:0
+#159	Alloca	Result	Pointer	__NF:0
+#160	Alloca	Result	Pointer	__NF:0
+#161	Alloca	Result	Pointer	__NF:0
+#162	Alloca	Result	Pointer	__NF:0
+#163	Alloca	Result	Pointer	__NF:0
+#164	Store	Value	Pointer	__NF:0
+#165	Store	Value	Pointer	__NF:0
+#166	Store	Value	Pointer	__NF:0
+#167	Store	Value	Arith-Fix	__NF:0
+#168	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:54
+#169	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:54
+#170	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:54
+#171	ICmp	Arg 1	Control-Branch	/home/calhou3/research/einar/matmul.c:54
+#172	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:55
+#173	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:55
+#174	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:55
+#175	ICmp	Arg 0	Control-Branch	/home/calhou3/research/einar/matmul.c:55
+#176	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#177	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#178	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#179	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#180	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#181	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:57
+#182	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:57
+#183	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#184	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#185	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#186	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#187	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#188	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#189	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:57
+#190	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:57
+#191	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#192	FAdd	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#193	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#194	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#195	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#196	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#197	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#198	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:57
+#199	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:57
+#200	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:57
+#201	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:55
+#202	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:55
+#203	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:55
+#204	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:54
+#205	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:54
+#206	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:54
+
+Function Name: print
+------------------------------------------------------------------------------
+#207	Alloca	Result	Pointer	__NF:0
+#208	Alloca	Result	Pointer	__NF:0
+#209	Alloca	Result	Pointer	__NF:0
+#210	Alloca	Result	Pointer	__NF:0
+#211	Alloca	Result	Pointer	__NF:0
+#212	Store	Value	Pointer	__NF:0
+#213	Store	Value	Arith-Fix	__NF:0
+#214	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:64
+#215	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:65
+#216	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:65
+#217	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:65
+#218	ICmp	Arg 1	Control-Branch	/home/calhou3/research/einar/matmul.c:65
+#219	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:67
+#220	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:67
+#221	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:67
+#222	ICmp	Arg 0	Control-Branch	/home/calhou3/research/einar/matmul.c:67
+#223	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:69
+#224	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:69
+#225	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:69
+#226	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:69
+#227	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:69
+#228	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:69
+#229	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:69
+#230	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:69
+#231	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:69
+#232	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:70
+#233	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:70
+#234	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:67
+#235	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:67
+#236	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:67
+#237	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:72
+#238	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:65
+#239	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:65
+#240	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:65
+
+Function Name: matsub
+------------------------------------------------------------------------------
+#241	Alloca	Result	Pointer	__NF:0
+#242	Alloca	Result	Pointer	__NF:0
+#243	Alloca	Result	Pointer	__NF:0
+#244	Alloca	Result	Pointer	__NF:0
+#245	Alloca	Result	Pointer	__NF:0
+#246	Alloca	Result	Pointer	__NF:0
+#247	Store	Value	Pointer	__NF:0
+#248	Store	Value	Pointer	__NF:0
+#249	Store	Value	Pointer	__NF:0
+#250	Store	Value	Arith-Fix	__NF:0
+#251	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:79
+#252	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:79
+#253	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:79
+#254	ICmp	Arg 1	Control-Branch	/home/calhou3/research/einar/matmul.c:79
+#255	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:80
+#256	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:80
+#257	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:80
+#258	ICmp	Arg 1	Control-Branch	/home/calhou3/research/einar/matmul.c:80
+#259	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#260	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#261	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#262	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#263	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#264	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:82
+#265	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:82
+#266	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#267	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#268	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#269	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#270	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#271	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#272	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:82
+#273	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:82
+#274	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#275	FSub	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#276	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#277	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#278	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#279	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#280	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#281	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:82
+#282	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:82
+#283	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:82
+#284	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:80
+#285	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:80
+#286	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:80
+#287	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:79
+#288	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:79
+#289	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:79
+
+Function Name: matmul_strassen
+------------------------------------------------------------------------------
+#290	Alloca	Result	Pointer	__NF:0
+#291	Alloca	Result	Pointer	__NF:0
+#292	Alloca	Result	Pointer	__NF:0
+#293	Alloca	Result	Pointer	__NF:0
+#294	Alloca	Result	Pointer	__NF:0
+#295	Alloca	Result	Pointer	__NF:0
+#296	Alloca	Result	Pointer	__NF:0
+#297	Alloca	Result	Pointer	__NF:0
+#298	Alloca	Result	Pointer	__NF:0
+#299	Alloca	Result	Pointer	__NF:0
+#300	Alloca	Result	Pointer	__NF:0
+#301	Alloca	Result	Pointer	__NF:0
+#302	Alloca	Result	Pointer	__NF:0
+#303	Alloca	Result	Pointer	__NF:0
+#304	Alloca	Result	Pointer	__NF:0
+#305	Alloca	Result	Pointer	__NF:0
+#306	Alloca	Result	Pointer	__NF:0
+#307	Alloca	Result	Pointer	__NF:0
+#308	Alloca	Result	Pointer	__NF:0
+#309	Alloca	Result	Pointer	__NF:0
+#310	Alloca	Result	Pointer	__NF:0
+#311	Alloca	Result	Pointer	__NF:0
+#312	Alloca	Result	Pointer	__NF:0
+#313	Alloca	Result	Pointer	__NF:0
+#314	Alloca	Result	Pointer	__NF:0
+#315	Alloca	Result	Pointer	__NF:0
+#316	Alloca	Result	Pointer	__NF:0
+#317	Alloca	Result	Pointer	__NF:0
+#318	Alloca	Result	Pointer	__NF:0
+#319	Alloca	Result	Pointer	__NF:0
+#320	Alloca	Result	Pointer	__NF:0
+#321	Alloca	Result	Pointer	__NF:0
+#322	Alloca	Result	Pointer	__NF:0
+#323	Store	Value	Pointer	__NF:0
+#324	Store	Value	Pointer	__NF:0
+#325	Store	Value	Pointer	__NF:0
+#326	Store	Value	Arith-Fix	__NF:0
+#327	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:88
+#328	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:88
+#329	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:88
+#330	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:88
+#331	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:88
+#332	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:88
+#333	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:88
+#334	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:89
+#335	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:89
+#336	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:89
+#337	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:89
+#338	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:89
+#339	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:89
+#340	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:89
+#341	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:91
+#342	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:91
+#343	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:91
+#344	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:91
+#345	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:91
+#346	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:91
+#347	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:91
+#348	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:92
+#349	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:92
+#350	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:92
+#351	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:92
+#352	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:92
+#353	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:92
+#354	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:92
+#355	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:93
+#356	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:93
+#357	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:93
+#358	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:93
+#359	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:93
+#360	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:93
+#361	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:93
+#362	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:94
+#363	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:94
+#364	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:94
+#365	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:94
+#366	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:94
+#367	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:94
+#368	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:94
+#369	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:96
+#370	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:96
+#371	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:96
+#372	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:96
+#373	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:96
+#374	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:96
+#375	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:96
+#376	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:97
+#377	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:97
+#378	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:97
+#379	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:97
+#380	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:97
+#381	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:97
+#382	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:97
+#383	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:98
+#384	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:98
+#385	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:98
+#386	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:98
+#387	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:98
+#388	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:98
+#389	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:98
+#390	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:99
+#391	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:99
+#392	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:99
+#393	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:99
+#394	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:99
+#395	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:99
+#396	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:99
+#397	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:101
+#398	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:101
+#399	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:101
+#400	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:101
+#401	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:101
+#402	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:101
+#403	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:101
+#404	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:102
+#405	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:102
+#406	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:102
+#407	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:102
+#408	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:102
+#409	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:102
+#410	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:102
+#411	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:103
+#412	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:103
+#413	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:103
+#414	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:103
+#415	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:103
+#416	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:103
+#417	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:103
+#418	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:104
+#419	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:104
+#420	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:104
+#421	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:104
+#422	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:104
+#423	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:104
+#424	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:104
+#425	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:107
+#426	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:107
+#427	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:107
+#428	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:107
+#429	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:107
+#430	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:107
+#431	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:107
+#432	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:108
+#433	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:108
+#434	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:108
+#435	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:108
+#436	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:108
+#437	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:108
+#438	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:108
+#439	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:109
+#440	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:109
+#441	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:109
+#442	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:109
+#443	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:109
+#444	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:109
+#445	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:109
+#446	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:110
+#447	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:110
+#448	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:110
+#449	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:110
+#450	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:110
+#451	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:110
+#452	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:110
+#453	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:111
+#454	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:111
+#455	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:111
+#456	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:111
+#457	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:111
+#458	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:111
+#459	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:111
+#460	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:112
+#461	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:112
+#462	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:112
+#463	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:112
+#464	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:112
+#465	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:112
+#466	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:112
+#467	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:113
+#468	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:113
+#469	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:113
+#470	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:113
+#471	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:113
+#472	Call	Result	Pointer	/home/calhou3/research/einar/matmul.c:113
+#473	Store	Value	Pointer	/home/calhou3/research/einar/matmul.c:113
+#474	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:119
+#475	SDiv	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:119
+#476	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:119
+#477	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:120
+#478	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:120
+#479	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:120
+#480	ICmp	Arg 0	Control-Branch	/home/calhou3/research/einar/matmul.c:120
+#481	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:123
+#482	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:123
+#483	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:123
+#484	ICmp	Arg 1	Control-Branch	/home/calhou3/research/einar/matmul.c:123
+#485	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:125
+#486	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:125
+#487	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:125
+#488	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:125
+#489	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:125
+#490	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:125
+#491	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:125
+#492	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:125
+#493	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:125
+#494	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:125
+#495	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:125
+#496	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:125
+#497	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:125
+#498	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:125
+#499	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:125
+#500	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:125
+#501	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:126
+#502	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:126
+#503	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:126
+#504	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:126
+#505	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:126
+#506	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:126
+#507	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:126
+#508	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:126
+#509	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:126
+#510	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:126
+#511	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:126
+#512	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:126
+#513	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:126
+#514	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:126
+#515	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:126
+#516	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:126
+#517	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#518	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#519	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#520	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#521	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#522	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#523	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#524	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:128
+#525	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:128
+#526	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#527	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#528	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#529	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#530	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#531	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#532	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:128
+#533	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:128
+#534	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:128
+#535	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#536	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#537	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#538	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#539	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#540	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#541	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#542	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:129
+#543	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:129
+#544	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#545	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#546	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#547	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#548	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#549	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#550	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:129
+#551	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:129
+#552	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:129
+#553	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#554	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#555	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#556	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#557	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#558	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#559	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#560	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:131
+#561	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:131
+#562	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#563	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#564	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#565	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#566	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#567	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#568	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:131
+#569	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:131
+#570	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:131
+#571	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#572	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#573	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#574	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#575	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#576	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#577	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#578	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:132
+#579	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:132
+#580	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#581	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#582	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#583	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#584	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#585	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#586	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:132
+#587	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:132
+#588	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:132
+#589	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#590	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#591	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#592	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#593	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#594	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#595	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#596	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#597	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#598	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:134
+#599	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:134
+#600	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#601	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#602	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#603	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#604	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#605	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#606	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:134
+#607	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:134
+#608	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:134
+#609	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#610	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#611	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#612	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#613	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#614	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#615	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#616	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#617	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#618	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:135
+#619	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:135
+#620	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#621	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#622	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#623	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#624	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#625	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#626	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:135
+#627	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:135
+#628	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:135
+#629	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:123
+#630	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:123
+#631	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:123
+#632	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:120
+#633	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:120
+#634	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:120
+#635	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:145
+#636	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:145
+#637	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:145
+#638	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:145
+#639	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:145
+#640	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:146
+#641	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:146
+#642	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:146
+#643	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:146
+#644	Call	Arg 1	Pointer	/home/calhou3/research/einar/matmul.c:146
+#645	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:147
+#646	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:147
+#647	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:147
+#648	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:147
+#649	Call	Arg 1	Pointer	/home/calhou3/research/einar/matmul.c:147
+#650	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:150
+#651	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:150
+#652	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:150
+#653	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:150
+#654	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:150
+#655	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:151
+#656	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:151
+#657	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:151
+#658	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:151
+#659	Call	Arg 1	Pointer	/home/calhou3/research/einar/matmul.c:151
+#660	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:154
+#661	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:154
+#662	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:154
+#663	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:154
+#664	Call	Arg 2	Pointer	/home/calhou3/research/einar/matmul.c:154
+#665	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:155
+#666	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:155
+#667	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:155
+#668	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:155
+#669	Call	Arg 2	Pointer	/home/calhou3/research/einar/matmul.c:155
+#670	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:158
+#671	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:158
+#672	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:158
+#673	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:158
+#674	Call	Arg 1	Pointer	/home/calhou3/research/einar/matmul.c:158
+#675	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:159
+#676	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:159
+#677	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:159
+#678	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:159
+#679	Call	Arg 2	Pointer	/home/calhou3/research/einar/matmul.c:159
+#680	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:162
+#681	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:162
+#682	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:162
+#683	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:162
+#684	Call	Arg 1	Pointer	/home/calhou3/research/einar/matmul.c:162
+#685	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:163
+#686	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:163
+#687	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:163
+#688	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:163
+#689	Call	Arg 2	Pointer	/home/calhou3/research/einar/matmul.c:163
+#690	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:166
+#691	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:166
+#692	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:166
+#693	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:166
+#694	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:166
+#695	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:167
+#696	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:167
+#697	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:167
+#698	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:167
+#699	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:167
+#700	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:168
+#701	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:168
+#702	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:168
+#703	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:168
+#704	Call	Arg 1	Pointer	/home/calhou3/research/einar/matmul.c:168
+#705	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:171
+#706	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:171
+#707	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:171
+#708	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:171
+#709	Call	Arg 2	Pointer	/home/calhou3/research/einar/matmul.c:171
+#710	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:172
+#711	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:172
+#712	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:172
+#713	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:172
+#714	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:172
+#715	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:173
+#716	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:173
+#717	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:173
+#718	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:173
+#719	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:173
+#720	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:179
+#721	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:179
+#722	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:179
+#723	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:179
+#724	Call	Arg 1	Pointer	/home/calhou3/research/einar/matmul.c:179
+#725	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:180
+#726	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:180
+#727	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:180
+#728	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:180
+#729	Call	Arg 1	Pointer	/home/calhou3/research/einar/matmul.c:180
+#730	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:181
+#731	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:181
+#732	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:181
+#733	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:181
+#734	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:181
+#735	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:184
+#736	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:184
+#737	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:184
+#738	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:184
+#739	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:184
+#740	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:187
+#741	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:187
+#742	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:187
+#743	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:187
+#744	Call	Arg 2	Pointer	/home/calhou3/research/einar/matmul.c:187
+#745	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:190
+#746	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:190
+#747	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:190
+#748	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:190
+#749	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:190
+#750	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:191
+#751	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:191
+#752	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:191
+#753	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:191
+#754	Call	Arg 1	Pointer	/home/calhou3/research/einar/matmul.c:191
+#755	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:192
+#756	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:192
+#757	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:192
+#758	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:192
+#759	Call	Arg 1	Pointer	/home/calhou3/research/einar/matmul.c:192
+#760	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:194
+#761	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:194
+#762	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:194
+#763	ICmp	Arg 0	Control-Branch	/home/calhou3/research/einar/matmul.c:194
+#764	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:197
+#765	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:197
+#766	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:197
+#767	ICmp	Arg 0	Control-Branch	/home/calhou3/research/einar/matmul.c:197
+#768	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:199
+#769	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:199
+#770	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:199
+#771	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:199
+#772	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:199
+#773	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:199
+#774	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:199
+#775	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:199
+#776	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:199
+#777	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:199
+#778	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:199
+#779	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:199
+#780	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:199
+#781	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:199
+#782	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:199
+#783	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:199
+#784	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#785	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#786	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#787	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#788	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#789	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:200
+#790	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:200
+#791	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#792	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#793	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#794	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#795	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#796	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#797	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#798	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#799	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:200
+#800	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:200
+#801	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:200
+#802	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#803	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#804	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#805	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#806	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#807	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:201
+#808	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:201
+#809	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#810	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#811	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#812	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#813	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#814	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#815	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#816	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#817	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:201
+#818	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:201
+#819	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:201
+#820	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#821	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#822	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#823	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#824	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#825	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:202
+#826	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:202
+#827	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#828	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#829	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#830	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#831	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#832	Mul	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#833	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#834	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#835	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#836	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#837	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:202
+#838	GetElementPtr	Result	Pointer	/home/calhou3/research/einar/matmul.c:202
+#839	Store	Value	Arith-FP	/home/calhou3/research/einar/matmul.c:202
+#840	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:197
+#841	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:197
+#842	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:197
+#843	Load	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:194
+#844	Add	Result	Arith-FP	/home/calhou3/research/einar/matmul.c:194
+#845	Store	Value	Arith-Fix	/home/calhou3/research/einar/matmul.c:194
+#846	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:205
+#847	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:205
+#848	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:206
+#849	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:206
+#850	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:208
+#851	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:208
+#852	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:209
+#853	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:209
+#854	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:210
+#855	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:210
+#856	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:211
+#857	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:211
+#858	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:213
+#859	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:213
+#860	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:214
+#861	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:214
+#862	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:215
+#863	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:215
+#864	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:216
+#865	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:216
+#866	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:218
+#867	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:218
+#868	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:219
+#869	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:219
+#870	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:220
+#871	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:220
+#872	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:221
+#873	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:221
+#874	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:223
+#875	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:223
+#876	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:224
+#877	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:224
+#878	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:225
+#879	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:225
+#880	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:226
+#881	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:226
+#882	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:227
+#883	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:227
+#884	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:228
+#885	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:228
+#886	Load	Result	Pointer	/home/calhou3/research/einar/matmul.c:229
+#887	Call	Arg 0	Pointer	/home/calhou3/research/einar/matmul.c:229

@@ -1,0 +1,1013 @@
+#!/bin/bash
+#PBS -l select=2:ncpus=16:mem=7gb
+#PBS -l walltime=24:00:00
+#PBS -j oe
+#PBS -A jr5
+#PBS -N Einar_test
+module load gcc/4.8.1
+module load mpich
+module list
+
+mkdir $PBS_O_WORKDIR/test_5255
+cd $PBS_O_WORKDIR/test_5255
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 32807807 &> test_5255.txt
+
+mkdir $PBS_O_WORKDIR/test_5256
+cd $PBS_O_WORKDIR/test_5256
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 20305290 &> test_5256.txt
+
+mkdir $PBS_O_WORKDIR/test_5257
+cd $PBS_O_WORKDIR/test_5257
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 46711700 &> test_5257.txt
+
+mkdir $PBS_O_WORKDIR/test_5258
+cd $PBS_O_WORKDIR/test_5258
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23764684 &> test_5258.txt
+
+mkdir $PBS_O_WORKDIR/test_5259
+cd $PBS_O_WORKDIR/test_5259
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 35291097 &> test_5259.txt
+
+mkdir $PBS_O_WORKDIR/test_5260
+cd $PBS_O_WORKDIR/test_5260
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 34354597 &> test_5260.txt
+
+mkdir $PBS_O_WORKDIR/test_5261
+cd $PBS_O_WORKDIR/test_5261
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 16255937 &> test_5261.txt
+
+mkdir $PBS_O_WORKDIR/test_5262
+cd $PBS_O_WORKDIR/test_5262
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 37157969 &> test_5262.txt
+
+mkdir $PBS_O_WORKDIR/test_5263
+cd $PBS_O_WORKDIR/test_5263
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 10679558 &> test_5263.txt
+
+mkdir $PBS_O_WORKDIR/test_5264
+cd $PBS_O_WORKDIR/test_5264
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 3721305 &> test_5264.txt
+
+mkdir $PBS_O_WORKDIR/test_5265
+cd $PBS_O_WORKDIR/test_5265
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 11203081 &> test_5265.txt
+
+mkdir $PBS_O_WORKDIR/test_5266
+cd $PBS_O_WORKDIR/test_5266
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23830388 &> test_5266.txt
+
+mkdir $PBS_O_WORKDIR/test_5267
+cd $PBS_O_WORKDIR/test_5267
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 40906352 &> test_5267.txt
+
+mkdir $PBS_O_WORKDIR/test_5268
+cd $PBS_O_WORKDIR/test_5268
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 40536942 &> test_5268.txt
+
+mkdir $PBS_O_WORKDIR/test_5269
+cd $PBS_O_WORKDIR/test_5269
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 4940515 &> test_5269.txt
+
+mkdir $PBS_O_WORKDIR/test_5270
+cd $PBS_O_WORKDIR/test_5270
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 12510833 &> test_5270.txt
+
+mkdir $PBS_O_WORKDIR/test_5271
+cd $PBS_O_WORKDIR/test_5271
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 43054548 &> test_5271.txt
+
+mkdir $PBS_O_WORKDIR/test_5272
+cd $PBS_O_WORKDIR/test_5272
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 47330612 &> test_5272.txt
+
+mkdir $PBS_O_WORKDIR/test_5273
+cd $PBS_O_WORKDIR/test_5273
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 6661016 &> test_5273.txt
+
+mkdir $PBS_O_WORKDIR/test_5274
+cd $PBS_O_WORKDIR/test_5274
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 10811772 &> test_5274.txt
+
+mkdir $PBS_O_WORKDIR/test_5275
+cd $PBS_O_WORKDIR/test_5275
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 4691964 &> test_5275.txt
+
+mkdir $PBS_O_WORKDIR/test_5276
+cd $PBS_O_WORKDIR/test_5276
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 31192914 &> test_5276.txt
+
+mkdir $PBS_O_WORKDIR/test_5277
+cd $PBS_O_WORKDIR/test_5277
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 25255914 &> test_5277.txt
+
+mkdir $PBS_O_WORKDIR/test_5278
+cd $PBS_O_WORKDIR/test_5278
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 45797010 &> test_5278.txt
+
+mkdir $PBS_O_WORKDIR/test_5279
+cd $PBS_O_WORKDIR/test_5279
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 13065163 &> test_5279.txt
+
+mkdir $PBS_O_WORKDIR/test_5280
+cd $PBS_O_WORKDIR/test_5280
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 13004945 &> test_5280.txt
+
+mkdir $PBS_O_WORKDIR/test_5281
+cd $PBS_O_WORKDIR/test_5281
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 3410402 &> test_5281.txt
+
+mkdir $PBS_O_WORKDIR/test_5282
+cd $PBS_O_WORKDIR/test_5282
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 49810398 &> test_5282.txt
+
+mkdir $PBS_O_WORKDIR/test_5283
+cd $PBS_O_WORKDIR/test_5283
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 6771638 &> test_5283.txt
+
+mkdir $PBS_O_WORKDIR/test_5284
+cd $PBS_O_WORKDIR/test_5284
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 44225894 &> test_5284.txt
+
+mkdir $PBS_O_WORKDIR/test_5285
+cd $PBS_O_WORKDIR/test_5285
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 7893294 &> test_5285.txt
+
+mkdir $PBS_O_WORKDIR/test_5286
+cd $PBS_O_WORKDIR/test_5286
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 27036016 &> test_5286.txt
+
+mkdir $PBS_O_WORKDIR/test_5287
+cd $PBS_O_WORKDIR/test_5287
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 27600809 &> test_5287.txt
+
+mkdir $PBS_O_WORKDIR/test_5288
+cd $PBS_O_WORKDIR/test_5288
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 47429862 &> test_5288.txt
+
+mkdir $PBS_O_WORKDIR/test_5289
+cd $PBS_O_WORKDIR/test_5289
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 44328696 &> test_5289.txt
+
+mkdir $PBS_O_WORKDIR/test_5290
+cd $PBS_O_WORKDIR/test_5290
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 46287528 &> test_5290.txt
+
+mkdir $PBS_O_WORKDIR/test_5291
+cd $PBS_O_WORKDIR/test_5291
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 7035411 &> test_5291.txt
+
+mkdir $PBS_O_WORKDIR/test_5292
+cd $PBS_O_WORKDIR/test_5292
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24338275 &> test_5292.txt
+
+mkdir $PBS_O_WORKDIR/test_5293
+cd $PBS_O_WORKDIR/test_5293
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 8108960 &> test_5293.txt
+
+mkdir $PBS_O_WORKDIR/test_5294
+cd $PBS_O_WORKDIR/test_5294
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 29755228 &> test_5294.txt
+
+mkdir $PBS_O_WORKDIR/test_5295
+cd $PBS_O_WORKDIR/test_5295
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 46119347 &> test_5295.txt
+
+mkdir $PBS_O_WORKDIR/test_5296
+cd $PBS_O_WORKDIR/test_5296
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 35609004 &> test_5296.txt
+
+mkdir $PBS_O_WORKDIR/test_5297
+cd $PBS_O_WORKDIR/test_5297
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 36967943 &> test_5297.txt
+
+mkdir $PBS_O_WORKDIR/test_5298
+cd $PBS_O_WORKDIR/test_5298
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 42260426 &> test_5298.txt
+
+mkdir $PBS_O_WORKDIR/test_5299
+cd $PBS_O_WORKDIR/test_5299
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 47729965 &> test_5299.txt
+
+mkdir $PBS_O_WORKDIR/test_5300
+cd $PBS_O_WORKDIR/test_5300
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24663902 &> test_5300.txt
+
+mkdir $PBS_O_WORKDIR/test_5301
+cd $PBS_O_WORKDIR/test_5301
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 8689887 &> test_5301.txt
+
+mkdir $PBS_O_WORKDIR/test_5302
+cd $PBS_O_WORKDIR/test_5302
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 28486170 &> test_5302.txt
+
+mkdir $PBS_O_WORKDIR/test_5303
+cd $PBS_O_WORKDIR/test_5303
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 13159136 &> test_5303.txt
+
+mkdir $PBS_O_WORKDIR/test_5304
+cd $PBS_O_WORKDIR/test_5304
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 22530044 &> test_5304.txt
+
+mkdir $PBS_O_WORKDIR/test_5305
+cd $PBS_O_WORKDIR/test_5305
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 28939285 &> test_5305.txt
+
+mkdir $PBS_O_WORKDIR/test_5306
+cd $PBS_O_WORKDIR/test_5306
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 38051425 &> test_5306.txt
+
+mkdir $PBS_O_WORKDIR/test_5307
+cd $PBS_O_WORKDIR/test_5307
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 28069311 &> test_5307.txt
+
+mkdir $PBS_O_WORKDIR/test_5308
+cd $PBS_O_WORKDIR/test_5308
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 40419165 &> test_5308.txt
+
+mkdir $PBS_O_WORKDIR/test_5309
+cd $PBS_O_WORKDIR/test_5309
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 165074 &> test_5309.txt
+
+mkdir $PBS_O_WORKDIR/test_5310
+cd $PBS_O_WORKDIR/test_5310
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 17698698 &> test_5310.txt
+
+mkdir $PBS_O_WORKDIR/test_5311
+cd $PBS_O_WORKDIR/test_5311
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 3897339 &> test_5311.txt
+
+mkdir $PBS_O_WORKDIR/test_5312
+cd $PBS_O_WORKDIR/test_5312
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24294128 &> test_5312.txt
+
+mkdir $PBS_O_WORKDIR/test_5313
+cd $PBS_O_WORKDIR/test_5313
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 2760463 &> test_5313.txt
+
+mkdir $PBS_O_WORKDIR/test_5314
+cd $PBS_O_WORKDIR/test_5314
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33392856 &> test_5314.txt
+
+mkdir $PBS_O_WORKDIR/test_5315
+cd $PBS_O_WORKDIR/test_5315
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 29499940 &> test_5315.txt
+
+mkdir $PBS_O_WORKDIR/test_5316
+cd $PBS_O_WORKDIR/test_5316
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 30997961 &> test_5316.txt
+
+mkdir $PBS_O_WORKDIR/test_5317
+cd $PBS_O_WORKDIR/test_5317
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 13996675 &> test_5317.txt
+
+mkdir $PBS_O_WORKDIR/test_5318
+cd $PBS_O_WORKDIR/test_5318
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 4987173 &> test_5318.txt
+
+mkdir $PBS_O_WORKDIR/test_5319
+cd $PBS_O_WORKDIR/test_5319
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 49938153 &> test_5319.txt
+
+mkdir $PBS_O_WORKDIR/test_5320
+cd $PBS_O_WORKDIR/test_5320
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 44780134 &> test_5320.txt
+
+mkdir $PBS_O_WORKDIR/test_5321
+cd $PBS_O_WORKDIR/test_5321
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 14826967 &> test_5321.txt
+
+mkdir $PBS_O_WORKDIR/test_5322
+cd $PBS_O_WORKDIR/test_5322
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 28833004 &> test_5322.txt
+
+mkdir $PBS_O_WORKDIR/test_5323
+cd $PBS_O_WORKDIR/test_5323
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 4388103 &> test_5323.txt
+
+mkdir $PBS_O_WORKDIR/test_5324
+cd $PBS_O_WORKDIR/test_5324
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 7233342 &> test_5324.txt
+
+mkdir $PBS_O_WORKDIR/test_5325
+cd $PBS_O_WORKDIR/test_5325
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 15673719 &> test_5325.txt
+
+mkdir $PBS_O_WORKDIR/test_5326
+cd $PBS_O_WORKDIR/test_5326
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 16422131 &> test_5326.txt
+
+mkdir $PBS_O_WORKDIR/test_5327
+cd $PBS_O_WORKDIR/test_5327
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 2179037 &> test_5327.txt
+
+mkdir $PBS_O_WORKDIR/test_5328
+cd $PBS_O_WORKDIR/test_5328
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 17689369 &> test_5328.txt
+
+mkdir $PBS_O_WORKDIR/test_5329
+cd $PBS_O_WORKDIR/test_5329
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 48418585 &> test_5329.txt
+
+mkdir $PBS_O_WORKDIR/test_5330
+cd $PBS_O_WORKDIR/test_5330
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 35738036 &> test_5330.txt
+
+mkdir $PBS_O_WORKDIR/test_5331
+cd $PBS_O_WORKDIR/test_5331
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 19663826 &> test_5331.txt
+
+mkdir $PBS_O_WORKDIR/test_5332
+cd $PBS_O_WORKDIR/test_5332
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 14201006 &> test_5332.txt
+
+mkdir $PBS_O_WORKDIR/test_5333
+cd $PBS_O_WORKDIR/test_5333
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 39700645 &> test_5333.txt
+
+mkdir $PBS_O_WORKDIR/test_5334
+cd $PBS_O_WORKDIR/test_5334
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 18105119 &> test_5334.txt
+
+mkdir $PBS_O_WORKDIR/test_5335
+cd $PBS_O_WORKDIR/test_5335
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 43012693 &> test_5335.txt
+
+mkdir $PBS_O_WORKDIR/test_5336
+cd $PBS_O_WORKDIR/test_5336
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 29072402 &> test_5336.txt
+
+mkdir $PBS_O_WORKDIR/test_5337
+cd $PBS_O_WORKDIR/test_5337
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 28227150 &> test_5337.txt
+
+mkdir $PBS_O_WORKDIR/test_5338
+cd $PBS_O_WORKDIR/test_5338
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 11420133 &> test_5338.txt
+
+mkdir $PBS_O_WORKDIR/test_5339
+cd $PBS_O_WORKDIR/test_5339
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24948302 &> test_5339.txt
+
+mkdir $PBS_O_WORKDIR/test_5340
+cd $PBS_O_WORKDIR/test_5340
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 9338393 &> test_5340.txt
+
+mkdir $PBS_O_WORKDIR/test_5341
+cd $PBS_O_WORKDIR/test_5341
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 34336829 &> test_5341.txt
+
+mkdir $PBS_O_WORKDIR/test_5342
+cd $PBS_O_WORKDIR/test_5342
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 40453863 &> test_5342.txt
+
+mkdir $PBS_O_WORKDIR/test_5343
+cd $PBS_O_WORKDIR/test_5343
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 43671900 &> test_5343.txt
+
+mkdir $PBS_O_WORKDIR/test_5344
+cd $PBS_O_WORKDIR/test_5344
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 32964428 &> test_5344.txt
+
+mkdir $PBS_O_WORKDIR/test_5345
+cd $PBS_O_WORKDIR/test_5345
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 17968413 &> test_5345.txt
+
+mkdir $PBS_O_WORKDIR/test_5346
+cd $PBS_O_WORKDIR/test_5346
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 47061280 &> test_5346.txt
+
+mkdir $PBS_O_WORKDIR/test_5347
+cd $PBS_O_WORKDIR/test_5347
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 25573447 &> test_5347.txt
+
+mkdir $PBS_O_WORKDIR/test_5348
+cd $PBS_O_WORKDIR/test_5348
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 14792509 &> test_5348.txt
+
+mkdir $PBS_O_WORKDIR/test_5349
+cd $PBS_O_WORKDIR/test_5349
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 43445288 &> test_5349.txt
+
+mkdir $PBS_O_WORKDIR/test_5350
+cd $PBS_O_WORKDIR/test_5350
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23461589 &> test_5350.txt
+
+mkdir $PBS_O_WORKDIR/test_5351
+cd $PBS_O_WORKDIR/test_5351
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 16523815 &> test_5351.txt
+
+mkdir $PBS_O_WORKDIR/test_5352
+cd $PBS_O_WORKDIR/test_5352
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 29141224 &> test_5352.txt
+
+mkdir $PBS_O_WORKDIR/test_5353
+cd $PBS_O_WORKDIR/test_5353
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 10786268 &> test_5353.txt
+
+mkdir $PBS_O_WORKDIR/test_5354
+cd $PBS_O_WORKDIR/test_5354
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 40082490 &> test_5354.txt
+
+mkdir $PBS_O_WORKDIR/test_5355
+cd $PBS_O_WORKDIR/test_5355
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 13226457 &> test_5355.txt
+
+mkdir $PBS_O_WORKDIR/test_5356
+cd $PBS_O_WORKDIR/test_5356
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24992535 &> test_5356.txt
+
+mkdir $PBS_O_WORKDIR/test_5357
+cd $PBS_O_WORKDIR/test_5357
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 48124740 &> test_5357.txt
+
+mkdir $PBS_O_WORKDIR/test_5358
+cd $PBS_O_WORKDIR/test_5358
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 5867673 &> test_5358.txt
+
+mkdir $PBS_O_WORKDIR/test_5359
+cd $PBS_O_WORKDIR/test_5359
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 12873708 &> test_5359.txt
+
+mkdir $PBS_O_WORKDIR/test_5360
+cd $PBS_O_WORKDIR/test_5360
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 9553498 &> test_5360.txt
+
+mkdir $PBS_O_WORKDIR/test_5361
+cd $PBS_O_WORKDIR/test_5361
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33107515 &> test_5361.txt
+
+mkdir $PBS_O_WORKDIR/test_5362
+cd $PBS_O_WORKDIR/test_5362
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 18629139 &> test_5362.txt
+
+mkdir $PBS_O_WORKDIR/test_5363
+cd $PBS_O_WORKDIR/test_5363
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 1785936 &> test_5363.txt
+
+mkdir $PBS_O_WORKDIR/test_5364
+cd $PBS_O_WORKDIR/test_5364
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 22005676 &> test_5364.txt
+
+mkdir $PBS_O_WORKDIR/test_5365
+cd $PBS_O_WORKDIR/test_5365
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24700285 &> test_5365.txt
+
+mkdir $PBS_O_WORKDIR/test_5366
+cd $PBS_O_WORKDIR/test_5366
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 39602758 &> test_5366.txt
+
+mkdir $PBS_O_WORKDIR/test_5367
+cd $PBS_O_WORKDIR/test_5367
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 14668539 &> test_5367.txt
+
+mkdir $PBS_O_WORKDIR/test_5368
+cd $PBS_O_WORKDIR/test_5368
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 2631634 &> test_5368.txt
+
+mkdir $PBS_O_WORKDIR/test_5369
+cd $PBS_O_WORKDIR/test_5369
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 45912387 &> test_5369.txt
+
+mkdir $PBS_O_WORKDIR/test_5370
+cd $PBS_O_WORKDIR/test_5370
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 32858592 &> test_5370.txt
+
+mkdir $PBS_O_WORKDIR/test_5371
+cd $PBS_O_WORKDIR/test_5371
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 36002445 &> test_5371.txt
+
+mkdir $PBS_O_WORKDIR/test_5372
+cd $PBS_O_WORKDIR/test_5372
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 42215646 &> test_5372.txt
+
+mkdir $PBS_O_WORKDIR/test_5373
+cd $PBS_O_WORKDIR/test_5373
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 36320477 &> test_5373.txt
+
+mkdir $PBS_O_WORKDIR/test_5374
+cd $PBS_O_WORKDIR/test_5374
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 34332823 &> test_5374.txt
+
+mkdir $PBS_O_WORKDIR/test_5375
+cd $PBS_O_WORKDIR/test_5375
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24242939 &> test_5375.txt
+
+mkdir $PBS_O_WORKDIR/test_5376
+cd $PBS_O_WORKDIR/test_5376
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 17896534 &> test_5376.txt
+
+mkdir $PBS_O_WORKDIR/test_5377
+cd $PBS_O_WORKDIR/test_5377
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33487721 &> test_5377.txt
+
+mkdir $PBS_O_WORKDIR/test_5378
+cd $PBS_O_WORKDIR/test_5378
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 30133873 &> test_5378.txt
+
+mkdir $PBS_O_WORKDIR/test_5379
+cd $PBS_O_WORKDIR/test_5379
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 25200197 &> test_5379.txt
+
+mkdir $PBS_O_WORKDIR/test_5380
+cd $PBS_O_WORKDIR/test_5380
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 5859448 &> test_5380.txt
+
+mkdir $PBS_O_WORKDIR/test_5381
+cd $PBS_O_WORKDIR/test_5381
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 40465430 &> test_5381.txt
+
+mkdir $PBS_O_WORKDIR/test_5382
+cd $PBS_O_WORKDIR/test_5382
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 14260743 &> test_5382.txt
+
+mkdir $PBS_O_WORKDIR/test_5383
+cd $PBS_O_WORKDIR/test_5383
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 49011917 &> test_5383.txt
+
+mkdir $PBS_O_WORKDIR/test_5384
+cd $PBS_O_WORKDIR/test_5384
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 17086137 &> test_5384.txt
+
+mkdir $PBS_O_WORKDIR/test_5385
+cd $PBS_O_WORKDIR/test_5385
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 31675977 &> test_5385.txt
+
+mkdir $PBS_O_WORKDIR/test_5386
+cd $PBS_O_WORKDIR/test_5386
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 42597741 &> test_5386.txt
+
+mkdir $PBS_O_WORKDIR/test_5387
+cd $PBS_O_WORKDIR/test_5387
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 19991580 &> test_5387.txt
+
+mkdir $PBS_O_WORKDIR/test_5388
+cd $PBS_O_WORKDIR/test_5388
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 9289620 &> test_5388.txt
+
+mkdir $PBS_O_WORKDIR/test_5389
+cd $PBS_O_WORKDIR/test_5389
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 15620098 &> test_5389.txt
+
+mkdir $PBS_O_WORKDIR/test_5390
+cd $PBS_O_WORKDIR/test_5390
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 19127871 &> test_5390.txt
+
+mkdir $PBS_O_WORKDIR/test_5391
+cd $PBS_O_WORKDIR/test_5391
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 7501585 &> test_5391.txt
+
+mkdir $PBS_O_WORKDIR/test_5392
+cd $PBS_O_WORKDIR/test_5392
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 44256185 &> test_5392.txt
+
+mkdir $PBS_O_WORKDIR/test_5393
+cd $PBS_O_WORKDIR/test_5393
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 5881694 &> test_5393.txt
+
+mkdir $PBS_O_WORKDIR/test_5394
+cd $PBS_O_WORKDIR/test_5394
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 46811247 &> test_5394.txt
+
+mkdir $PBS_O_WORKDIR/test_5395
+cd $PBS_O_WORKDIR/test_5395
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 42093023 &> test_5395.txt
+
+mkdir $PBS_O_WORKDIR/test_5396
+cd $PBS_O_WORKDIR/test_5396
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 2213498 &> test_5396.txt
+
+mkdir $PBS_O_WORKDIR/test_5397
+cd $PBS_O_WORKDIR/test_5397
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 33894523 &> test_5397.txt
+
+mkdir $PBS_O_WORKDIR/test_5398
+cd $PBS_O_WORKDIR/test_5398
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 48421511 &> test_5398.txt
+
+mkdir $PBS_O_WORKDIR/test_5399
+cd $PBS_O_WORKDIR/test_5399
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 14016310 &> test_5399.txt
+
+mkdir $PBS_O_WORKDIR/test_5400
+cd $PBS_O_WORKDIR/test_5400
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 3499554 &> test_5400.txt
+
+mkdir $PBS_O_WORKDIR/test_5401
+cd $PBS_O_WORKDIR/test_5401
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 29884266 &> test_5401.txt
+
+mkdir $PBS_O_WORKDIR/test_5402
+cd $PBS_O_WORKDIR/test_5402
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 29985142 &> test_5402.txt
+
+mkdir $PBS_O_WORKDIR/test_5403
+cd $PBS_O_WORKDIR/test_5403
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 43260060 &> test_5403.txt
+
+mkdir $PBS_O_WORKDIR/test_5404
+cd $PBS_O_WORKDIR/test_5404
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 29458452 &> test_5404.txt
+
+mkdir $PBS_O_WORKDIR/test_5405
+cd $PBS_O_WORKDIR/test_5405
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 41425214 &> test_5405.txt
+
+mkdir $PBS_O_WORKDIR/test_5406
+cd $PBS_O_WORKDIR/test_5406
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 15790246 &> test_5406.txt
+
+mkdir $PBS_O_WORKDIR/test_5407
+cd $PBS_O_WORKDIR/test_5407
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 4698768 &> test_5407.txt
+
+mkdir $PBS_O_WORKDIR/test_5408
+cd $PBS_O_WORKDIR/test_5408
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 27445573 &> test_5408.txt
+
+mkdir $PBS_O_WORKDIR/test_5409
+cd $PBS_O_WORKDIR/test_5409
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 27854961 &> test_5409.txt
+
+mkdir $PBS_O_WORKDIR/test_5410
+cd $PBS_O_WORKDIR/test_5410
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 25018560 &> test_5410.txt
+
+mkdir $PBS_O_WORKDIR/test_5411
+cd $PBS_O_WORKDIR/test_5411
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 11483856 &> test_5411.txt
+
+mkdir $PBS_O_WORKDIR/test_5412
+cd $PBS_O_WORKDIR/test_5412
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 20816862 &> test_5412.txt
+
+mkdir $PBS_O_WORKDIR/test_5413
+cd $PBS_O_WORKDIR/test_5413
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 39712380 &> test_5413.txt
+
+mkdir $PBS_O_WORKDIR/test_5414
+cd $PBS_O_WORKDIR/test_5414
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 45694144 &> test_5414.txt
+
+mkdir $PBS_O_WORKDIR/test_5415
+cd $PBS_O_WORKDIR/test_5415
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 39613920 &> test_5415.txt
+
+mkdir $PBS_O_WORKDIR/test_5416
+cd $PBS_O_WORKDIR/test_5416
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 34299504 &> test_5416.txt
+
+mkdir $PBS_O_WORKDIR/test_5417
+cd $PBS_O_WORKDIR/test_5417
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 9616111 &> test_5417.txt
+
+mkdir $PBS_O_WORKDIR/test_5418
+cd $PBS_O_WORKDIR/test_5418
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 20564153 &> test_5418.txt
+
+mkdir $PBS_O_WORKDIR/test_5419
+cd $PBS_O_WORKDIR/test_5419
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 49478951 &> test_5419.txt
+
+mkdir $PBS_O_WORKDIR/test_5420
+cd $PBS_O_WORKDIR/test_5420
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 17132369 &> test_5420.txt
+
+mkdir $PBS_O_WORKDIR/test_5421
+cd $PBS_O_WORKDIR/test_5421
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 5671883 &> test_5421.txt
+
+mkdir $PBS_O_WORKDIR/test_5422
+cd $PBS_O_WORKDIR/test_5422
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 13894114 &> test_5422.txt
+
+mkdir $PBS_O_WORKDIR/test_5423
+cd $PBS_O_WORKDIR/test_5423
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 47224169 &> test_5423.txt
+
+mkdir $PBS_O_WORKDIR/test_5424
+cd $PBS_O_WORKDIR/test_5424
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 41136454 &> test_5424.txt
+
+mkdir $PBS_O_WORKDIR/test_5425
+cd $PBS_O_WORKDIR/test_5425
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 13266999 &> test_5425.txt
+
+mkdir $PBS_O_WORKDIR/test_5426
+cd $PBS_O_WORKDIR/test_5426
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 7026867 &> test_5426.txt
+
+mkdir $PBS_O_WORKDIR/test_5427
+cd $PBS_O_WORKDIR/test_5427
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 37680702 &> test_5427.txt
+
+mkdir $PBS_O_WORKDIR/test_5428
+cd $PBS_O_WORKDIR/test_5428
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 47630834 &> test_5428.txt
+
+mkdir $PBS_O_WORKDIR/test_5429
+cd $PBS_O_WORKDIR/test_5429
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 1281415 &> test_5429.txt
+
+mkdir $PBS_O_WORKDIR/test_5430
+cd $PBS_O_WORKDIR/test_5430
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 37584575 &> test_5430.txt
+
+mkdir $PBS_O_WORKDIR/test_5431
+cd $PBS_O_WORKDIR/test_5431
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 46353701 &> test_5431.txt
+
+mkdir $PBS_O_WORKDIR/test_5432
+cd $PBS_O_WORKDIR/test_5432
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 38313632 &> test_5432.txt
+
+mkdir $PBS_O_WORKDIR/test_5433
+cd $PBS_O_WORKDIR/test_5433
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 41319510 &> test_5433.txt
+
+mkdir $PBS_O_WORKDIR/test_5434
+cd $PBS_O_WORKDIR/test_5434
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 43610878 &> test_5434.txt
+
+mkdir $PBS_O_WORKDIR/test_5435
+cd $PBS_O_WORKDIR/test_5435
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 30256460 &> test_5435.txt
+
+mkdir $PBS_O_WORKDIR/test_5436
+cd $PBS_O_WORKDIR/test_5436
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 49370121 &> test_5436.txt
+
+mkdir $PBS_O_WORKDIR/test_5437
+cd $PBS_O_WORKDIR/test_5437
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 4736469 &> test_5437.txt
+
+mkdir $PBS_O_WORKDIR/test_5438
+cd $PBS_O_WORKDIR/test_5438
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 22350000 &> test_5438.txt
+
+mkdir $PBS_O_WORKDIR/test_5439
+cd $PBS_O_WORKDIR/test_5439
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 20646836 &> test_5439.txt
+
+mkdir $PBS_O_WORKDIR/test_5440
+cd $PBS_O_WORKDIR/test_5440
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 18796864 &> test_5440.txt
+
+mkdir $PBS_O_WORKDIR/test_5441
+cd $PBS_O_WORKDIR/test_5441
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 49652536 &> test_5441.txt
+
+mkdir $PBS_O_WORKDIR/test_5442
+cd $PBS_O_WORKDIR/test_5442
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 2054988 &> test_5442.txt
+
+mkdir $PBS_O_WORKDIR/test_5443
+cd $PBS_O_WORKDIR/test_5443
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 45081449 &> test_5443.txt
+
+mkdir $PBS_O_WORKDIR/test_5444
+cd $PBS_O_WORKDIR/test_5444
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 35506895 &> test_5444.txt
+
+mkdir $PBS_O_WORKDIR/test_5445
+cd $PBS_O_WORKDIR/test_5445
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 30604461 &> test_5445.txt
+
+mkdir $PBS_O_WORKDIR/test_5446
+cd $PBS_O_WORKDIR/test_5446
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 42261875 &> test_5446.txt
+
+mkdir $PBS_O_WORKDIR/test_5447
+cd $PBS_O_WORKDIR/test_5447
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 6998744 &> test_5447.txt
+
+mkdir $PBS_O_WORKDIR/test_5448
+cd $PBS_O_WORKDIR/test_5448
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 37040830 &> test_5448.txt
+
+mkdir $PBS_O_WORKDIR/test_5449
+cd $PBS_O_WORKDIR/test_5449
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 17335369 &> test_5449.txt
+
+mkdir $PBS_O_WORKDIR/test_5450
+cd $PBS_O_WORKDIR/test_5450
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 44985960 &> test_5450.txt
+
+mkdir $PBS_O_WORKDIR/test_5451
+cd $PBS_O_WORKDIR/test_5451
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 18955300 &> test_5451.txt
+
+mkdir $PBS_O_WORKDIR/test_5452
+cd $PBS_O_WORKDIR/test_5452
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 45796086 &> test_5452.txt
+
+mkdir $PBS_O_WORKDIR/test_5453
+cd $PBS_O_WORKDIR/test_5453
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 8408836 &> test_5453.txt
+
+mkdir $PBS_O_WORKDIR/test_5454
+cd $PBS_O_WORKDIR/test_5454
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 9256282 &> test_5454.txt
+
+mkdir $PBS_O_WORKDIR/test_5455
+cd $PBS_O_WORKDIR/test_5455
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 48241086 &> test_5455.txt
+
+mkdir $PBS_O_WORKDIR/test_5456
+cd $PBS_O_WORKDIR/test_5456
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 30256998 &> test_5456.txt
+
+mkdir $PBS_O_WORKDIR/test_5457
+cd $PBS_O_WORKDIR/test_5457
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 8195402 &> test_5457.txt
+
+mkdir $PBS_O_WORKDIR/test_5458
+cd $PBS_O_WORKDIR/test_5458
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 37899683 &> test_5458.txt
+
+mkdir $PBS_O_WORKDIR/test_5459
+cd $PBS_O_WORKDIR/test_5459
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 32480225 &> test_5459.txt
+
+mkdir $PBS_O_WORKDIR/test_5460
+cd $PBS_O_WORKDIR/test_5460
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 5547068 &> test_5460.txt
+
+mkdir $PBS_O_WORKDIR/test_5461
+cd $PBS_O_WORKDIR/test_5461
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 39987775 &> test_5461.txt
+
+mkdir $PBS_O_WORKDIR/test_5462
+cd $PBS_O_WORKDIR/test_5462
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 29876800 &> test_5462.txt
+
+mkdir $PBS_O_WORKDIR/test_5463
+cd $PBS_O_WORKDIR/test_5463
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 5210779 &> test_5463.txt
+
+mkdir $PBS_O_WORKDIR/test_5464
+cd $PBS_O_WORKDIR/test_5464
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 14734640 &> test_5464.txt
+
+mkdir $PBS_O_WORKDIR/test_5465
+cd $PBS_O_WORKDIR/test_5465
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 23555985 &> test_5465.txt
+
+mkdir $PBS_O_WORKDIR/test_5466
+cd $PBS_O_WORKDIR/test_5466
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 45784504 &> test_5466.txt
+
+mkdir $PBS_O_WORKDIR/test_5467
+cd $PBS_O_WORKDIR/test_5467
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 35452561 &> test_5467.txt
+
+mkdir $PBS_O_WORKDIR/test_5468
+cd $PBS_O_WORKDIR/test_5468
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 16480959 &> test_5468.txt
+
+mkdir $PBS_O_WORKDIR/test_5469
+cd $PBS_O_WORKDIR/test_5469
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 1411315 &> test_5469.txt
+
+mkdir $PBS_O_WORKDIR/test_5470
+cd $PBS_O_WORKDIR/test_5470
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 39006868 &> test_5470.txt
+
+mkdir $PBS_O_WORKDIR/test_5471
+cd $PBS_O_WORKDIR/test_5471
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 30656342 &> test_5471.txt
+
+mkdir $PBS_O_WORKDIR/test_5472
+cd $PBS_O_WORKDIR/test_5472
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 28359745 &> test_5472.txt
+
+mkdir $PBS_O_WORKDIR/test_5473
+cd $PBS_O_WORKDIR/test_5473
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 16683692 &> test_5473.txt
+
+mkdir $PBS_O_WORKDIR/test_5474
+cd $PBS_O_WORKDIR/test_5474
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 13370585 &> test_5474.txt
+
+mkdir $PBS_O_WORKDIR/test_5475
+cd $PBS_O_WORKDIR/test_5475
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 12303997 &> test_5475.txt
+
+mkdir $PBS_O_WORKDIR/test_5476
+cd $PBS_O_WORKDIR/test_5476
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 1030429 &> test_5476.txt
+
+mkdir $PBS_O_WORKDIR/test_5477
+cd $PBS_O_WORKDIR/test_5477
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 6848008 &> test_5477.txt
+
+mkdir $PBS_O_WORKDIR/test_5478
+cd $PBS_O_WORKDIR/test_5478
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 24038982 &> test_5478.txt
+
+mkdir $PBS_O_WORKDIR/test_5479
+cd $PBS_O_WORKDIR/test_5479
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 32350875 &> test_5479.txt
+
+mkdir $PBS_O_WORKDIR/test_5480
+cd $PBS_O_WORKDIR/test_5480
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 45385488 &> test_5480.txt
+
+mkdir $PBS_O_WORKDIR/test_5481
+cd $PBS_O_WORKDIR/test_5481
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 4614957 &> test_5481.txt
+
+mkdir $PBS_O_WORKDIR/test_5482
+cd $PBS_O_WORKDIR/test_5482
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 1446714 &> test_5482.txt
+
+mkdir $PBS_O_WORKDIR/test_5483
+cd $PBS_O_WORKDIR/test_5483
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 1474452 &> test_5483.txt
+
+mkdir $PBS_O_WORKDIR/test_5484
+cd $PBS_O_WORKDIR/test_5484
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 3060526 &> test_5484.txt
+
+mkdir $PBS_O_WORKDIR/test_5485
+cd $PBS_O_WORKDIR/test_5485
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 26164941 &> test_5485.txt
+
+mkdir $PBS_O_WORKDIR/test_5486
+cd $PBS_O_WORKDIR/test_5486
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 45845677 &> test_5486.txt
+
+mkdir $PBS_O_WORKDIR/test_5487
+cd $PBS_O_WORKDIR/test_5487
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 46908962 &> test_5487.txt
+
+mkdir $PBS_O_WORKDIR/test_5488
+cd $PBS_O_WORKDIR/test_5488
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 39559215 &> test_5488.txt
+
+mkdir $PBS_O_WORKDIR/test_5489
+cd $PBS_O_WORKDIR/test_5489
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 30542957 &> test_5489.txt
+
+mkdir $PBS_O_WORKDIR/test_5490
+cd $PBS_O_WORKDIR/test_5490
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 47087941 &> test_5490.txt
+
+mkdir $PBS_O_WORKDIR/test_5491
+cd $PBS_O_WORKDIR/test_5491
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 11017445 &> test_5491.txt
+
+mkdir $PBS_O_WORKDIR/test_5492
+cd $PBS_O_WORKDIR/test_5492
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 20465845 &> test_5492.txt
+
+mkdir $PBS_O_WORKDIR/test_5493
+cd $PBS_O_WORKDIR/test_5493
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 21559224 &> test_5493.txt
+
+mkdir $PBS_O_WORKDIR/test_5494
+cd $PBS_O_WORKDIR/test_5494
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 32224736 &> test_5494.txt
+
+mkdir $PBS_O_WORKDIR/test_5495
+cd $PBS_O_WORKDIR/test_5495
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 48182136 &> test_5495.txt
+
+mkdir $PBS_O_WORKDIR/test_5496
+cd $PBS_O_WORKDIR/test_5496
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 31994377 &> test_5496.txt
+
+mkdir $PBS_O_WORKDIR/test_5497
+cd $PBS_O_WORKDIR/test_5497
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 25995284 &> test_5497.txt
+
+mkdir $PBS_O_WORKDIR/test_5498
+cd $PBS_O_WORKDIR/test_5498
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 36811986 &> test_5498.txt
+
+mkdir $PBS_O_WORKDIR/test_5499
+cd $PBS_O_WORKDIR/test_5499
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 49062518 &> test_5499.txt
+
+mkdir $PBS_O_WORKDIR/test_5500
+cd $PBS_O_WORKDIR/test_5500
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 40847160 &> test_5500.txt
+
+mkdir $PBS_O_WORKDIR/test_5501
+cd $PBS_O_WORKDIR/test_5501
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 18547263 &> test_5501.txt
+
+mkdir $PBS_O_WORKDIR/test_5502
+cd $PBS_O_WORKDIR/test_5502
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 25767113 &> test_5502.txt
+
+mkdir $PBS_O_WORKDIR/test_5503
+cd $PBS_O_WORKDIR/test_5503
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 21923780 &> test_5503.txt
+
+mkdir $PBS_O_WORKDIR/test_5504
+cd $PBS_O_WORKDIR/test_5504
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 25190534 &> test_5504.txt
+
+mkdir $PBS_O_WORKDIR/test_5505
+cd $PBS_O_WORKDIR/test_5505
+/home/calhou3/research/einar/strassen --stateFile /home/calhou3/research/FlipIt//.einar 11621502 &> test_5505.txt

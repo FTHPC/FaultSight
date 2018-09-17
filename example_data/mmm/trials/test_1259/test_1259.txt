@@ -1,0 +1,16 @@
+Fault injector seed: 49185175
+Starting faulty computation.
+
+/*********************************Start**************************************/
+
+Successfully injected Integer Data error!!
+Rank: 0
+Total # faults injected: 1
+Bit position is: 9
+Index of the fault site: 12479
+Fault site probability: 1.000000e-08
+Chosen random probability is: 6.599336e-09
+Attempts since last injection: 264705942
+
+/*********************************End**************************************/
+Number of incorrect elements: 1

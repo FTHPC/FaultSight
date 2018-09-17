@@ -1,0 +1,16 @@
+Fault injector seed: 14826967
+Starting faulty computation.
+
+/*********************************Start**************************************/
+
+Successfully injected 64-bit IEEE Float Data error!!
+Rank: 0
+Total # faults injected: 1
+Bit position is: 2
+Index of the fault site: 12476
+Fault site probability: 1.000000e-08
+Chosen random probability is: 1.962153e-09
+Attempts since last injection: 85361417
+
+/*********************************End**************************************/
+Number of incorrect elements: 2
