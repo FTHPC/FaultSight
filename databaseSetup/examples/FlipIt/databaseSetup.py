@@ -497,7 +497,7 @@ def check_site_exists(db_connection, site):
     return False
 
 
-def check_detection_exists(db_connection):
+def check_detection_exists(db_connection, trial):
     """Checks if a detection exists for the current trial and return detection dictionary if it exists
 
     Args:

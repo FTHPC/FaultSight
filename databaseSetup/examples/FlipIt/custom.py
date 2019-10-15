@@ -84,6 +84,10 @@ def customInit(c):
         c.execute("ALTER TABLE trials ADD COLUMN iter int")
         c.execute("ALTER TABLE trials ADD COLUMN converged int")
     """
+        
+    extend_trial_table(c, "numIterations", 'INTEGER', default_value = 500)
+
+
 
 def hpccg_custom_parse(c, line, trial):
     # update iteration count for the current trial, if relevant
@@ -91,7 +95,8 @@ def hpccg_custom_parse(c, line, trial):
     if iteration_check(split_line):
         print("Updating iteration count")
         iterations = get_iterations(split_line)
-        update_trial_num_iterations(c, iterations)
+        update_trial_custom_field(c, "numIterations", iterations)
+        #update_trial_num_iterations(c, iterations)
 
     if detection_check(split_line):
         print("Inserting Detection")
@@ -101,7 +106,8 @@ def hpccg_custom_parse(c, line, trial):
         insert_detection(c, row_arguments)
 
 def detection_check(split):
-    if split[0] == '[RESIDUAL' and split[1] == 'CHECK]:':
+    if detectMessage in " ".join(split):#split[0] == '[RESIDUAL' and split[1] == 'CHECK]:':
+        print(">>>>>>>DETECTION!!!")
         return True
     return False
 

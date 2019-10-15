@@ -277,7 +277,7 @@ def readTrials(c, filePrefix, customParser = None):
             if detectMessage in l:
                 detected = True
                 #c.execute("SELECT * FROM DETECTIONS WHERE trial = ?", (trial,))
-                result = check_detection_exists(c)
+                result = check_detection_exists(c, trial)
                 if result == None:
                     #c.execute("INSERT INTO detections VALUES (?,?,?)", (trial, -1, "---"))
                     row_arguments = {
